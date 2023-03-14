@@ -1,6 +1,6 @@
 # We-R-Finished
 ## Overview
-Welcome! You are currently in the official repository of We R Finished, a DS 311 group consisting of Russel Chan, Ana Paula De Queiroz, Gabrielle Salamanca, and Catarina Tegtmeier. The chosen dataset they are going to explore, analyze, and present is the Data-Drive Industry Salary. 
+Welcome! You are currently in the official repository of We R Finished, a DS 311 group consisting of Russell Chan, Ana Paula De Queiroz, Gabrielle Salamanca, and Catarina Tegtmeier. The chosen dataset they are going to explore, analyze, and present is the Data-Drive Industry Salary. 
 ## Within the Repo
 1. salary
   - analysis plan
@@ -23,7 +23,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 2. Familiarize yourself with the dataset, play around with it in your desired coding langauge
 3. Consider which of the three given questions you want to do
 > Thinking of three more will come later
-### Russel
+### Russell
 N/A
 ### Ana
 N/A

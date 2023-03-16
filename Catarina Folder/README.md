@@ -30,4 +30,5 @@ N/A
 ### Gabrielle
 N/A
 ### Catarina
-N/A
+- Working on Data Exploration
+- Working on Questions 3 and developing Question 4

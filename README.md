@@ -19,6 +19,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 >   - There is a work log for each member. This is to keep the overview from being too crowded, and it allows the others to keep track of their work besides on the git bash log
 5. [Git Collaboration Exercise Repository](https://github.com/San-Francisco-State-University-DS/Git-Collaboration-Exercise)
 > This repository gives a general overview of how a group project repository should look like. It also includes instructions on the process of making a new branch, a pull request, and merging; and much more.
+
 ***IMPORTANT***
 1. After making a pull request, place at **LEAST** 2 assignees to review it
 2. After the pull request is approved, **DELETE** your branch

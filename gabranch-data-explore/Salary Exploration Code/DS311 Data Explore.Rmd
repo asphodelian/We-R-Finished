@@ -1,0 +1,112 @@
+---
+title: "DS311 Data Explore"
+author: "Gabrielle Salamanca"
+date: "March 14, 2023"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## We-R-Finished Project
+
+```{r}
+# loading libraries
+library(readxl)
+library(caret)
+library(ggplot2)
+library(dplyr)
+
+# dataset overview
+salary <- read_excel("salary_data_states.xlsx", col_names = TRUE)
+dim(salary)
+
+# renaming
+colnames(salary)[1] = "Case Number"
+colnames(salary)[2] = "Case Status"
+colnames(salary)[3] = "Received Date"
+colnames(salary)[4] = "Decision Date"
+colnames(salary)[5] = "Employer Name"
+colnames(salary)[6] = "Submitted Prevail Wage"
+colnames(salary)[7] = "SPrW Unit"
+colnames(salary)[8] = "Submitted Paid Wage"
+colnames(salary)[9] = "SPaW Unit"
+colnames(salary)[10] = "Job Title"
+colnames(salary)[11] = "Work City"
+colnames(salary)[12] = "Required Edu"
+colnames(salary)[13] = "Required College Major"
+colnames(salary)[14] = "Exp Req"
+colnames(salary)[15] = "Exp Req (Months)"
+colnames(salary)[16] = "Citizenship"
+colnames(salary)[17] = "Prevail Wage SOC Code"
+colnames(salary)[18] = "PWSOC Title"
+colnames(salary)[19] = "Work State"
+colnames(salary)[20] = "WS Abb"
+colnames(salary)[21] = "WPostal Code"
+colnames(salary)[22] = "Full Time"
+colnames(salary)[23] = "Visa Class"
+colnames(salary)[24] = "Prevail Wage/Yr"
+colnames(salary)[25] = "Paid Wage/Yr"
+colnames(salary)[26] = "Job Title Sub"
+colnames(salary)[27] = "Order"
+names(salary)
+```
+
+Exploratory Comparison
+
+```{r}
+jobTitleSub <- as.factor(salary$`Job Title Sub`)
+summary(jobTitleSub)
+# dataframe
+Sub_Job <- c("Software Engineer", "Business Analyst", "Assistant Prof", "Teacher",
+         	"Data Scientist", "Data Analyst", "Attorney", "Management Consultant")
+Frequency <- c(99364, 27811, 18866, 13912, 1227, 3840, 1488, 770)
+job2 <- data.frame(Sub_Job, Frequency)
+print(job2)
+```
+
+Was expecting higher number of data scientist and analyst
+No expecting assistant professor & teacher in top 5
+
+```{r}
+city <- as.factor(salary$`Work City`)
+summary(city)
+```
+
+Not surprised NY and CA areas are in top 5 cities
+Expected LA to be in top
+wait i didn't expect to see my city, but it sure is a lot of CA areas
+
+```{r}
+employName <- as.factor(salary$`Employer Name`)
+summary(employName)
+```
+
+Top 5, only 2 surprises
+
+```{r}
+state <- as.factor(salary$`Work State`)
+summary(state)
+```
+
+as expected CA is the largest, didnt expect NJ
+
+```{r}
+jobTitle <- as.factor(salary$`Job Title`)
+summary(jobTitle)
+```
+
+
+```{r}
+paidWageYear <- salary$`Paid Wage/Yr`
+summary(paidWageYear)
+# plots
+par(mfrow=c(2,1))
+plot(paidWageYear, jobTitleSub)
+#ggplot(salary, aes(x = paidWageYear, fill = jobTitleSub)) + geom_bar(position = "fill")
+head(salary)
+```
+
+```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
+```

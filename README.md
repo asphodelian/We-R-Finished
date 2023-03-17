@@ -27,13 +27,11 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
  - It is **NOT** a folder or file that lives during the project life time.
  - It is used as an separated version for easy management when collaborating.
 ## The Current Tasks
-### For all
+### GROUP EFFORT
 1. Clone the repo
-2. Familiarize yourself with the dataset, play around with it in your desired coding langauge
+2. Explore the dataset in your desired coding langauge
 3. Consider which of the three given questions you want to do
-> Thinking of three more will come later
-4. Data exploration
-5. Inital data exploration paper
+4. Inital data exploration paper
 ### Russell
 - Answering Q1
 ### Ana
@@ -44,6 +42,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 - Answering Q3
 - Devveloping Q4
 ### Future Tasks
+- Developing Q6
 - Receive & Implement feedback changes
 - Submit for 2nd review
 - Slide presentation

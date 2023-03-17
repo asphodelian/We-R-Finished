@@ -12,9 +12,9 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 1. [The google drive folder](https://drive.google.com/drive/folders/1M1jYp0MiyeWCBQHbs2pfAfvCYkD61lKU?usp=sharing)
 *This folder holds all the group documentation and any necessary files we may need.*
 > 2. [The overview doc](https://docs.google.com/document/d/1cgqEG4ZgZ36DACn_ysUwfLzuczyHDhThd7bskDm7z7E/edit?usp=sharing)
->   -This doc holds the general overview of the project and includes the task assignments and meeting logs*
+>   - This doc holds the general overview of the project and includes the task assignments and meeting logs*
 > 3. [The Salary Dataset Analysis Plan](https://drive.google.com/file/d/1aWo1OW4jSkv4NkUQj6zRNrlxvscYXNDf/view?usp=sharing)
->   -This pdf is the analysis plan for the chosen dataset
+>   - This pdf is the analysis plan for the chosen dataset
 > 4. Work Logs
 >   - There is a work log for each member. This is to keep the overview from being too crowded, and it allows the others to keep track of their work besides on the git bash log
 5. [Git Collaboration Exercise Repository](https://github.com/San-Francisco-State-University-DS/Git-Collaboration-Exercise)
@@ -43,4 +43,4 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 - Receive & Implement feedback changes
 - Submit for 2nd review
 - Slide presentation
--Final Review
+- Final Review

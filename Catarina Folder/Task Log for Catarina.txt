@@ -8,5 +8,5 @@
 > 	Will the answer change if I take standard of living into account?
 - Develop Question 4
 
-##Task Log:
+##Work Log:
 3/16/2023: Cleaned up branch according to group guidelines, updated ReadMe, and created personal Task Log.

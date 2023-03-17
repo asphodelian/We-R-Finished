@@ -21,7 +21,10 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 > This repository gives a general overview of how a group project repository should look like. It also includes instructions on the process of making a new branch, a pull request, and merging; and much more.
 ***IMPORTANT***
 1. After making a pull request, place at **LEAST** 2 assignees to review it
-2. After the pull request is approved, **DELETE** your branch. The branch is just an image of the project report that is supposed to be short-lived. It is **NOT** a folder or file that lives during the project life time. It is used as an separated version for easy management when collaborating.
+2. After the pull request is approved, **DELETE** your branch
+ - The branch is just an image of the project report that is supposed to be short-lived.
+ - It is **NOT** a folder or file that lives during the project life time.
+ - It is used as an separated version for easy management when collaborating.
 ## The Current Tasks
 ### For all
 1. Clone the repo

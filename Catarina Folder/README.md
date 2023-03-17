@@ -24,11 +24,11 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 3. Consider which of the three given questions you want to do
 > Thinking of three more will come later
 ### Russell
-N/A
+- Data Exploration
 ### Ana
-N/A
+- Data Exploration
 ### Gabrielle
-N/A
+- Data Exploration
 ### Catarina
 - Working on Data Exploration
 - Working on Questions 3 and developing Question 4

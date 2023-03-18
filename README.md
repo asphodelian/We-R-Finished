@@ -17,7 +17,9 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 >   - This pdf is the analysis plan for the chosen dataset
 > 4. Work Logs
 >   - There is a work log for each member. This is to keep the overview from being too crowded, and it allows the others to keep track of their work besides on the git bash log
-5. [Git Collaboration Exercise Repository](https://github.com/San-Francisco-State-University-DS/Git-Collaboration-Exercise)
+> 5. [Project Code](https://docs.google.com/document/d/1SmR8a8j9Hdqpzv-xET0yI8C1_jGyZ_VTP8Bp-1U7CSQ/edit?usp=sharing)
+>   - Gabrielle's code for the project. It is shown for sake of process and ease of transferring data between PC and Mac. Others may use it as a jumping point.
+6. [Git Collaboration Exercise Repository](https://github.com/San-Francisco-State-University-DS/Git-Collaboration-Exercise)
 > This repository gives a general overview of how a group project repository should look like. It also includes instructions on the process of making a new branch, a pull request, and merging; and much more.
 
 ***IMPORTANT***

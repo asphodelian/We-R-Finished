@@ -29,7 +29,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
  - It is **NOT** a folder or file that lives during the project life time.
  - It is used as an separated version for easy management when collaborating.
 ## The Current Tasks
-### GROUP EFFORT
+### For ALL
 1. Clone the repo
 2. Explore the dataset in your desired coding langauge
 3. Consider which of the three given questions you want to do

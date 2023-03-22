@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## We-R-Finished Project
 
+Loading necessary libraries & reading dataset into R
+
 ```{r}
 # loading libraries
 library(readxl)
@@ -21,7 +23,11 @@ library(dplyr)
 # dataset overview
 salary <- read_excel("salary_data_states.xlsx", col_names = TRUE)
 dim(salary)
+```
 
+Renaming columns for sake of ease
+
+```{r}
 # renaming
 colnames(salary)[1] = "Case Number"
 colnames(salary)[2] = "Case Status"
@@ -53,7 +59,7 @@ colnames(salary)[27] = "Order"
 names(salary)
 ```
 
-Exploratory Comparison
+*What are the job title subcategories & their numbers*
 
 ```{r}
 jobTitleSub <- as.factor(salary$`Job Title Sub`)
@@ -72,41 +78,78 @@ No expecting assistant professor & teacher in top 5
 ```{r}
 city <- as.factor(salary$`Work City`)
 summary(city)
+top10 <- c("New York", "Mountain View", "San Francisco", "San Diego", "San Jose", "Houston", "Santa Clara", "Atlanta", "Chicago", "Dallas")
+freq <- c(6714, 6712, 6458, 2983, 2925, 2957, 2684, 2388, 2351, 2277)
+topCity <- data.frame(top10, freq)
+print(topCity)
 ```
 
 Not surprised NY and CA areas are in top 5 cities
 Expected LA to be in top
 wait i didn't expect to see my city, but it sure is a lot of CA areas
 
+*Who are the top 10 employers*
+
 ```{r}
 employName <- as.factor(salary$`Employer Name`)
 summary(employName)
+top10 <- c("Google Inc.", "Fujitsu America, Inc.", "Intel Corporation", 
+           "Microsoft Corporation", "Qualcomm Technologies, Inc.", "Facebook, Inc.", 
+           "Cerner Corporation", "Cisco Systems, Inc.", "Hitachi Consulting Corporation", "Dallas Independent School District")
+freq <- c(6213, 1814, 1781, 1364, 1277, 1210, 1038, 1011, 812, 2277)
+topEmploy <- data.frame(top10, freq)
+print(topEmploy)
 ```
 
-Top 5, only 2 surprises
+We know Google, Intel, Microsoft, Facebook, Cisco. The others I don't recognize. Also Dallas Independent School District is one of the top 10 employers?
+
+*Top 10 states to work in*
 
 ```{r}
 state <- as.factor(salary$`Work State`)
 summary(state)
+top10 <- c("California", "Texas", "New York", "New Jersey", "Illinois",
+           "Massachussets", "Virgina", "Pennsylvania", "Washington", "Michigan")
+freq <- c(46782, 15498, 11373, 10198, 7411, 6848, 6031, 4725, 4610, 3844)
+topState <- data.frame(top10, freq)
+print(topState)
 ```
 
-as expected CA is the largest, didnt expect NJ
+as expected CA is the largest, but WOW did the numbers really vary after. I was expecting TX and NY, but def not NJ. 
+
+*Top 10 Jobs*
 
 ```{r}
 jobTitle <- as.factor(salary$`Job Title`)
 summary(jobTitle)
+top10 <- c("Software Engineer", "Business Analyst", "Sr Software Engineer", "Assistant Professor", "Computer Software Engineer, Apps",
+           "Teacher", "Data Analyst", "Sr Business Analyst", "Staff Software Engineer", "Elementary Bilungual Teacher")
+freq <- c(58221, 19516, 13847, 10134, 1808, 1566, 1524, 1437, 1335, 1020)
+topJob <- data.frame(top10, freq)
+print(topJob)
 ```
 
+Dataset separated the ones with different cases, had to add up a few. Wasn't expecting teachers, esp the last one. engineer and analyst are popular jobs it seems
 
 ```{r}
 paidWageYear <- salary$`Paid Wage/Yr`
 summary(paidWageYear)
 # plots
-par(mfrow=c(2,1))
 plot(paidWageYear, jobTitleSub)
+plot(paidWageYear, jobTitle)
 #ggplot(salary, aes(x = paidWageYear, fill = jobTitleSub)) + geom_bar(position = "fill")
-head(salary)
 ```
+
+Norm seems to be under $500,000 wage/year. If only the table can tell me which sub jobs they were... I will need to revisit the jobTitle one, but the norm still holds.
+
+*Subset time*
+
+```{r}
+salary1 <- salary[,-c(6,7,9)]
+salary2 <- salary1[,-c(9:15)]
+```
+
+Easier to handle the dataset, but also in need to cut down any unnecessary columns. Also doing in increments, because it didn't like how I tried doing range with the first one.
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

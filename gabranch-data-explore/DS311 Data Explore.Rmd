@@ -158,6 +158,12 @@ Easier to handle the dataset, but also in need to cut down any unnecessary colum
 plot(jobTitleSub, paidWageYear)
 ```
 
+Hard to read
+
+```{r}
+sal <- read_excel("~/We-R-Finished/gabranch-data-explore/DS311 Edited Salary.xlsx")
+```
+
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

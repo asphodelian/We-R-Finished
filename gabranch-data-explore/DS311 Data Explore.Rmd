@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## We-R-Finished Project
 
-Loading necessary libraries & reading dataset into R
+### 1. Loading necessary libraries & reading dataset into R
 
 ```{r}
 # loading libraries
@@ -25,7 +25,7 @@ salary <- read_excel("salary_data_states.xlsx", col_names = TRUE)
 dim(salary)
 ```
 
-Renaming columns for sake of ease
+### 2. Renaming columns for sake of ease
 
 ```{r}
 # renaming
@@ -59,7 +59,7 @@ colnames(salary)[27] = "Order"
 names(salary)
 ```
 
-*What are the job title subcategories & their numbers*
+### 3. What are the job title subcategories & their numbers
 
 ```{r}
 jobTitleSub <- as.factor(salary$`Job Title Sub`)
@@ -88,7 +88,7 @@ Not surprised NY and CA areas are in top 5 cities
 Expected LA to be in top
 wait i didn't expect to see my city, but it sure is a lot of CA areas
 
-*Who are the top 10 employers*
+### 4. Who are the top 10 employers
 
 ```{r}
 employName <- as.factor(salary$`Employer Name`)
@@ -103,7 +103,7 @@ print(topEmploy)
 
 We know Google, Intel, Microsoft, Facebook, Cisco. The others I don't recognize. Also Dallas Independent School District is one of the top 10 employers?
 
-*Top 10 states to work in*
+### 5. Top 10 states to work in
 
 ```{r}
 state <- as.factor(salary$`Work State`)
@@ -117,7 +117,7 @@ print(topState)
 
 as expected CA is the largest, but WOW did the numbers really vary after. I was expecting TX and NY, but def not NJ. 
 
-*Top 10 Jobs*
+### 6. Top 10 Jobs
 
 ```{r}
 jobTitle <- as.factor(salary$`Job Title`)
@@ -142,14 +142,23 @@ plot(paidWageYear, jobTitle)
 
 Norm seems to be under $500,000 wage/year. If only the table can tell me which sub jobs they were... I will need to revisit the jobTitle one, but the norm still holds.
 
-*Subset time*
+### 7. Subset time
 
 ```{r}
 salary1 <- salary[,-c(6,7,9)]
 salary2 <- salary1[,-c(9:15)]
+salary3 <- salary2[, -c(10:15)]
+salary4 <- salary3[,-c(1:4)]
 ```
 
 Easier to handle the dataset, but also in need to cut down any unnecessary columns. Also doing in increments, because it didn't like how I tried doing range with the first one.
+
+### 8. Trying the plots again
+
+```{r}
+
+```
+
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

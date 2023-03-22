@@ -21,7 +21,7 @@ library(ggplot2)
 library(dplyr)
 
 # dataset overview
-salary <- read_excel("salary_data_states.xlsx", col_names = TRUE)
+salary <- read_excel("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/salary/salary_data_states.xlsx")
 dim(salary)
 ```
 
@@ -137,7 +137,6 @@ summary(paidWageYear)
 # plots
 plot(paidWageYear, jobTitleSub)
 plot(paidWageYear, jobTitle)
-#ggplot(salary, aes(x = paidWageYear, fill = jobTitleSub)) + geom_bar(position = "fill")
 ```
 
 Norm seems to be under $500,000 wage/year. If only the table can tell me which sub jobs they were... I will need to revisit the jobTitle one, but the norm still holds.
@@ -156,7 +155,7 @@ Easier to handle the dataset, but also in need to cut down any unnecessary colum
 ### 8. Trying the plots again
 
 ```{r}
-
+plot(jobTitleSub, paidWageYear)
 ```
 
 

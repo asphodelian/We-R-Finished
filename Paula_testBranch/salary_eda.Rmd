@@ -1,0 +1,260 @@
+---
+title: "Salary Data Set Analysis"
+author: "Ana Paula Felix de Queiroz"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{=html}
+<style type="text/css">
+
+h1.title {
+  font-size: 38px;
+  font-family: "Times New Roman", Times, serif;
+  color: #2a6592;
+  text-align: center;
+}
+h4.author { /* Header 4 - and the author and data headers use this too  */
+    font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: #2a6592;
+  text-align: center;
+}
+h4.date { /* Header 4 - and the author and data headers use this too  */
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: DarkBlue;
+  text-align: center;
+}
+</style>
+```
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(root.dir = "C:/Users/pauli/OneDrive/Documentos/Classes 2023/311_tech")
+
+library(car)
+
+```
+
+Summary complete data:
+
+```{r}
+library(readxl)
+df <- read_excel("salary_data_states.xlsx", col_types = c("text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text"))
+
+summary(df)
+```
+
+Column names, head, missing values check.
+
+```{r}
+names(df)
+head(df)
+#View(df)
+attach(df)
+
+
+
+#check for missing values
+missing_values <- is.na(df)
+
+# Count the number of missing values per column
+colSums(missing_values)
+
+# Remove rows with missing values if needed
+#cleaned_data <- na.omit(data)
+# Save the cleaned data
+#write.csv(cleaned_data, "cleaned_data.csv")
+
+```
+
+Paid wage per year:
+
+```{r}
+
+
+#str(df)
+
+#number of rows 167278
+nrow(df)
+
+#mean Salary per year
+PAID_WAGE_PER_YEAR <- as.numeric(PAID_WAGE_PER_YEAR)
+mean(PAID_WAGE_PER_YEAR)
+
+min(PAID_WAGE_PER_YEAR)
+max(PAID_WAGE_PER_YEAR)
+
+
+unique(JOB_TITLE_SUBGROUP)
+
+```
+
+Job Title subgroup \
+
+```{r}
+#clean the data and keep only data related jobs.
+
+# Define the job titles you want to keep
+JOB_TITLE_DATA <- c("software engineer", "business analyst", "management consultant", "data analyst", "data scientist")
+
+# Filter the data to keep only the specified job titles
+data <- df[df$JOB_TITLE_SUBGROUP %in% JOB_TITLE_DATA, ]
+
+# Check the number of rows in the cleaned data
+nrow(data)
+
+data$PAID_WAGE_PER_YEAR <- as.numeric(data$PAID_WAGE_PER_YEAR)
+
+hist(data$PAID_WAGE_PER_YEAR)
+
+boxplot(data$PAID_WAGE_PER_YEAR, horizontal = TRUE)
+
+
+# Calculate summary statistics for the salary distribution
+summary(data$PAID_WAGE_PER_YEAR)
+
+
+#looking at the median in this case is helpful since it is less sensitive to outliers.
+summary(data$PAID_WAGE_PER_YEAR)
+
+
+# Calculate median salary by job title subgroup
+med_salary <- aggregate(PAID_WAGE_PER_YEAR ~ JOB_TITLE_SUBGROUP, data, median)
+
+# Print the results
+med_salary
+
+
+# Calculate median salary by job title subgroup
+mean_salary <- aggregate(PAID_WAGE_PER_YEAR ~ JOB_TITLE_SUBGROUP, data, mean)
+
+# Print the results
+mean_salary
+
+
+library(ggplot2)
+# Generate the bar graph
+ggplot(med_salary, aes(x=JOB_TITLE_SUBGROUP, y=PAID_WAGE_PER_YEAR)) +
+  geom_bar(stat="identity", fill="#69b3a2", alpha=0.8) +
+  ggtitle("Median Salary by Job Title Subgroup") +
+  xlab("Job Title Subgroup") +
+  ylab("Median Salary")
+
+
+
+# Create the box plot to look at the outliers by each group
+ggplot(data, aes(x = JOB_TITLE_SUBGROUP, y = PAID_WAGE_PER_YEAR)) +
+  geom_boxplot() +
+  xlab("Job Title Subgroup") +
+  ylab("Salary (USD per year)") +
+  ggtitle("Distribution of Salary by Job Title Subgroup")
+
+
+library(dplyr)
+library(ggplot2)
+attach(data)
+
+# Group data by job title subgroup and calculate median salary
+med_salary <- data %>%
+  group_by(JOB_TITLE_SUBGROUP) %>%
+  summarize(median_salary = median(PAID_WAGE_PER_YEAR))
+
+# Create box plots for each subgroup
+ggplot(data, aes(x = JOB_TITLE_SUBGROUP, y = PAID_WAGE_PER_YEAR)) +
+  geom_boxplot() +
+  facet_wrap(~ JOB_TITLE_SUBGROUP, scales = "free") +
+  labs(title = "Salary Distribution by Job Title Subgroup", y = "Salary", x = "Job Title Subgroup") +
+  theme_bw()
+
+
+ggplot(data %>% filter(JOB_TITLE_SUBGROUP == "data scientist"), aes(x = JOB_TITLE_SUBGROUP, y = PAID_WAGE_PER_YEAR)) +
+  geom_boxplot() +
+  labs(title = "Salary Distribution for Data Scientists", y = "Salary", x = "") +
+  theme_bw()
+
+#Create a scatter plot of paid wage vs work state
+#this will take a while to work.   
+attach(data)
+# Create a scatter plot of paid wage vs work state
+ggplot(data, aes(x = WORK_STATE, y = PAID_WAGE_PER_YEAR)) +
+  geom_point() +
+  labs(x = "Work State", y = "Paid Wage per Year") +
+  ggtitle("Paid Wage vs Work State for Data-Related Jobs")
+
+
+# Calculate median salary by state
+med_salary_by_state <- aggregate(PAID_WAGE_PER_YEAR ~ WORK_STATE, data, median)
+# Sort by descending salary
+med_salary_by_state <- med_salary_by_state[order(-med_salary_by_state$PAID_WAGE_PER_YEAR),]
+# Print the top 10 states with the highest median salary
+head(med_salary_by_state, 10)
+
+
+
+library(dplyr)
+
+median_salary <- data %>%
+  group_by(WORK_STATE, JOB_TITLE_SUBGROUP) %>%
+  summarise(median_salary = median(PAID_WAGE_PER_YEAR, na.rm = TRUE)) %>%
+  arrange(desc(median_salary))
+
+print(median_salary)
+
+
+# Group the data by job title subgroup and state and calculate the median salary
+data_median <- data %>% group_by(JOB_TITLE_SUBGROUP, WORK_STATE) %>% summarize(median_salary = median(PAID_WAGE_PER_YEAR))
+
+# Create the grouped bar plot
+ggplot(data_median, aes(x = WORK_STATE, y = median_salary, fill = JOB_TITLE_SUBGROUP)) + 
+  geom_bar(stat = "identity", position = "dodge") + 
+  ggtitle("Median Salary by State and Job Title Subgroup") + 
+  xlab("State") + 
+  ylab("Median Salary")
+
+
+
+
+library(dplyr)
+library(ggplot2)
+
+# Calculate median salary by state and job title subgroup
+median_salary <- data %>%
+  group_by(JOB_TITLE_SUBGROUP, WORK_STATE) %>%
+  summarise(median_salary = median(PAID_WAGE_PER_YEAR)) %>%
+  ungroup()
+
+# Get top 5 and bottom 5 states based on median salary for each job title subgroup
+top_states <- median_salary %>%
+  group_by(JOB_TITLE_SUBGROUP) %>%
+  top_n(5, median_salary) %>%
+  arrange(JOB_TITLE_SUBGROUP, desc(median_salary))
+
+bottom_states <- median_salary %>%
+  group_by(JOB_TITLE_SUBGROUP) %>%
+  top_n(-5, median_salary) %>%
+  arrange(JOB_TITLE_SUBGROUP, median_salary)
+
+# Filter data to only include top and bottom states
+data_filtered <- data %>%
+  filter(WORK_STATE %in% c(top_states$WORK_STATE, bottom_states$WORK_STATE))
+
+# Create ggplot2 graph
+ggplot(data_filtered, aes(x = WORK_STATE, y = PAID_WAGE_PER_YEAR, fill = JOB_TITLE_SUBGROUP)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~JOB_TITLE_SUBGROUP, scales = "free") +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = "Median Salaries by State and Job Title Subgroup",
+       x = "State",
+       y = "Median Salary ($)") +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+
+
+```

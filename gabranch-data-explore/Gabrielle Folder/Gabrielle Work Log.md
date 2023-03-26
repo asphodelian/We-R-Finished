@@ -37,3 +37,14 @@
 - Added new files
 	- Gabrielle README
 	- Gabrielle Work Log
+## March 19
+- Editing R markdown of DS311 Data Explore
+	- Made top 10 charts
+## March 21
+- Editing dataset in Rmarkdown
+	- Cutting out any unnecessary columns
+	- Not entirely efficient
+- Wondering why my branch is saying there’s nothing to add though with how im editing…
+- Duplicated salary dataset to personally edit
+
+

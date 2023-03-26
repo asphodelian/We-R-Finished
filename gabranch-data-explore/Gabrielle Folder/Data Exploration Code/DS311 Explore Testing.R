@@ -51,8 +51,17 @@ summary(jobTitle)
 summary(jobTitleSub)
 summary(city)
 
-# plots
+# plots for reference
 plot(Rnames$call,Rnames$experience)
 pie(table(jobTitleSub))
 ggplot(Rnames,aes(x=call,fill=ethnicity))+geom_bar(position="fill")
 par(mfrow=c(2,2))
+
+# from Ana
+#clean the data and keep only data related jobs.
+
+# Define the job titles you want to keep
+JOB_TITLE_DATA <- c("software engineer", "business analyst", "management consultant", "data analyst", "data scientist")
+
+# Filter the data to keep only the specified job titles
+data <- df[df$JOB_TITLE_SUBGROUP %in% JOB_TITLE_DATA, ]

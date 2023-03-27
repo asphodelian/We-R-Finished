@@ -40,7 +40,17 @@ library(car)
 
 ```
 
-Summary complete data:
+## **Da**ta Cleaning
+
+In this code chunk, I am performing data cleaning and data filtering tasks.
+
+Firstly, I am using the **`names`** function to get the column names of the dataframe and the **`head`** function to get the first few rows of the dataframe. I am also using the **`attach`** function to attach the dataframe to the search path so that the column names can be used directly without specifying the dataframe name.
+
+Next, I am checking for missing values in the dataframe by using the **`is.na`** function to create a logical matrix of missing values and then using the **`colSums`** function to count the number of missing values in each column.
+
+After that, I am filtering the dataframe to keep only the data-related jobs. I define the job titles I want to keep as a vector and then filter the data using the **`%in%`** operator. I then check the number of rows in the cleaned data and the original dataframe using the **`nrow`** function.
+
+Lastly, I am commenting out the code that removes rows with missing values and saves the cleaned data, as it is not being used in this analysis.
 
 ```{r}
 library(readxl)
@@ -48,8 +58,6 @@ df <- read_excel("salary_data_states.xlsx", col_types = c("text", "text", "text"
 
 summary(df)
 ```
-
-Column names, head, missing values check.
 
 ```{r}
 names(df)
@@ -70,35 +78,10 @@ colSums(missing_values)
 # Save the cleaned data
 #write.csv(cleaned_data, "cleaned_data.csv")
 
-```
-
-Paid wage per year:
-
-```{r}
-
-
-#str(df)
-
-#number of rows 167278
-nrow(df)
-
-#mean Salary per year
-PAID_WAGE_PER_YEAR <- as.numeric(PAID_WAGE_PER_YEAR)
-mean(PAID_WAGE_PER_YEAR)
-
-min(PAID_WAGE_PER_YEAR)
-max(PAID_WAGE_PER_YEAR)
-
 
 unique(JOB_TITLE_SUBGROUP)
 
-```
-
-Job Title subgroup \
-
-```{r}
 #clean the data and keep only data related jobs.
-
 # Define the job titles you want to keep
 JOB_TITLE_DATA <- c("software engineer", "business analyst", "management consultant", "data analyst", "data scientist")
 
@@ -107,20 +90,45 @@ data <- df[df$JOB_TITLE_SUBGROUP %in% JOB_TITLE_DATA, ]
 
 # Check the number of rows in the cleaned data
 nrow(data)
+nrow(df)
+attach(data)
 
+```
+
+## Descriptive statistics
+
+In this section, I will be exploring the distribution of salaries in the dataset. I will be calculating summary statistics for the salary distribution, including mean and median, and creating visualizations such as histograms and boxplots to better understand the distribution of salaries.
+
+```{r}
+
+#str(df)
+
+attach(data)
+#mean Salary per year
 data$PAID_WAGE_PER_YEAR <- as.numeric(data$PAID_WAGE_PER_YEAR)
-
-hist(data$PAID_WAGE_PER_YEAR)
-
-boxplot(data$PAID_WAGE_PER_YEAR, horizontal = TRUE)
-
 
 # Calculate summary statistics for the salary distribution
 summary(data$PAID_WAGE_PER_YEAR)
 
 
 #looking at the median in this case is helpful since it is less sensitive to outliers.
-summary(data$PAID_WAGE_PER_YEAR)
+median(data$PAID_WAGE_PER_YEAR)
+
+
+hist(data$PAID_WAGE_PER_YEAR)
+
+boxplot(data$PAID_WAGE_PER_YEAR, horizontal = TRUE)
+
+
+```
+
+## Descriptive Stats and Visualization by Job Title Subgroup
+
+Here, I'm looking at how much people in different job groups get paid. I'm using the median and mean salaries for each job group to get a sense of what's typical. This helps me compare salaries across different job titles and see if some job groups pay more than others.
+
+The bar graph helps visualizing the median salaries for each job group. This way we can see which job groups pay the most and which ones pay the least.
+
+```{r}
 
 
 # Calculate median salary by job title subgroup
@@ -145,19 +153,18 @@ ggplot(med_salary, aes(x=JOB_TITLE_SUBGROUP, y=PAID_WAGE_PER_YEAR)) +
   xlab("Job Title Subgroup") +
   ylab("Median Salary")
 
+```
 
+## **Outlier Analysis**
 
-# Create the box plot to look at the outliers by each group
-ggplot(data, aes(x = JOB_TITLE_SUBGROUP, y = PAID_WAGE_PER_YEAR)) +
-  geom_boxplot() +
-  xlab("Job Title Subgroup") +
-  ylab("Salary (USD per year)") +
-  ggtitle("Distribution of Salary by Job Title Subgroup")
+In this code, we are examining the distribution of salaries across different job title subgroups to identify any potential outliers. Outliers are values that are significantly different from the majority of the data and can have a disproportionate impact on summary statistics and model accuracy.
 
+To accomplish this, we first group the data by job title subgroup and calculate the median salary for each subgroup. We then create box plots for each subgroup, which show the distribution of salaries and any potential outliers. The box plots are separated by subgroup to allow for easier comparison between subgroups.
+
+```{r}
 
 library(dplyr)
 library(ggplot2)
-attach(data)
 
 # Group data by job title subgroup and calculate median salary
 med_salary <- data %>%
@@ -177,14 +184,62 @@ ggplot(data %>% filter(JOB_TITLE_SUBGROUP == "data scientist"), aes(x = JOB_TITL
   labs(title = "Salary Distribution for Data Scientists", y = "Salary", x = "") +
   theme_bw()
 
+```
+
+**Wage payed across different US states:**
+
+This code is used to analyze and visualize the paid wage for data-related jobs across different states in the US. I created a scatter plot of paid wage versus work state, with the x-axis representing the states' abbreviations and the y-axis representing the median paid wage per year.
+
+I also Identified the top and bottom five states with the highest and lowest median paid wages per year. These states are grouped and arranged by their median wage values in descending and ascending order, respectively.
+
+In the third block of code, a scatter plot is created to show the paid wage versus work state, but only for the top and bottom five states identified in the second block.
+
+The fourth block of code calculates and prints the top ten states with the highest median paid wages.
+
+```{r}
+
+
+
+
 #Create a scatter plot of paid wage vs work state
 #this will take a while to work.   
-attach(data)
+
 # Create a scatter plot of paid wage vs work state
-ggplot(data, aes(x = WORK_STATE, y = PAID_WAGE_PER_YEAR)) +
+ggplot(data, aes(x = WORK_STATE_ABBREVIATION, y = PAID_WAGE_PER_YEAR)) +
   geom_point() +
   labs(x = "Work State", y = "Paid Wage per Year") +
   ggtitle("Paid Wage vs Work State for Data-Related Jobs")
+
+
+
+# Find the top and bottom 5 states by PAID_WAGE_PER_YEAR
+top_states <- data %>%
+  group_by(WORK_STATE) %>%
+  summarize(median_wage = median(PAID_WAGE_PER_YEAR)) %>%
+  arrange(desc(median_wage)) %>%
+  slice_head(n = 5)
+print(top_states)
+
+bottom_states <- data %>%
+  group_by(WORK_STATE) %>%
+  summarize(median_wage = median(PAID_WAGE_PER_YEAR)) %>%
+  arrange(median_wage) %>%
+  slice_head(n = 5) %>%
+  arrange(desc(median_wage)) # add this line to sort the bottom states in descending order
+print(bottom_states)
+
+# Create a scatter plot of paid wage vs work state for the top and bottom 5 states
+ggplot(data %>% filter(WORK_STATE %in% c(top_states$WORK_STATE)), 
+       aes(x = WORK_STATE, y = PAID_WAGE_PER_YEAR)) +
+  geom_point() +
+  labs(x = "Work State", y = "Paid Wage per Year") +
+  ggtitle("Paid Wage vs Work State for Top and Bottom 5 States by Median Wage")
+
+
+
+
+
+
 
 
 # Calculate median salary by state
@@ -195,11 +250,27 @@ med_salary_by_state <- med_salary_by_state[order(-med_salary_by_state$PAID_WAGE_
 head(med_salary_by_state, 10)
 
 
+```
+
+## **State, Job Title Subgroup and Salary**
+
+Here, i am exploring the relationship between median salary, job title subgroup, and state.
+
+I am using the data on wage payed, state, and job title to gain insights into median salaries across different states and job title subgroups.
+
+I first group the data by work state and job title subgroup and calculate the median salary for each combination of these two variables. This allows me to see how median salaries vary for different job titles in different states.
+
+Then, I create a grouped bar plot to visualize the median salaries for each job title subgroup in each state. This plot provides an easily interpretable visual representation of the differences in median salaries across job title subgroups and states.
+
+This analysis is important because it allows me to identify patterns in median salaries across different states and job title subgroups, which can provide insights into the factors that influence salaries in different fields and locations. This information can be valuable for making decisions related to career planning, job searching, and negotiating salaries.
+
+```{r}
+
 
 library(dplyr)
 
 median_salary <- data %>%
-  group_by(WORK_STATE, JOB_TITLE_SUBGROUP) %>%
+  group_by(WORK_STATE_ABBREVIATION, JOB_TITLE_SUBGROUP) %>%
   summarise(median_salary = median(PAID_WAGE_PER_YEAR, na.rm = TRUE)) %>%
   arrange(desc(median_salary))
 
@@ -207,15 +278,25 @@ print(median_salary)
 
 
 # Group the data by job title subgroup and state and calculate the median salary
-data_median <- data %>% group_by(JOB_TITLE_SUBGROUP, WORK_STATE) %>% summarize(median_salary = median(PAID_WAGE_PER_YEAR))
+data_median <- data %>% group_by(JOB_TITLE_SUBGROUP, WORK_STATE_ABBREVIATION) %>% summarize(median_salary = median(PAID_WAGE_PER_YEAR))
 
 # Create the grouped bar plot
-ggplot(data_median, aes(x = WORK_STATE, y = median_salary, fill = JOB_TITLE_SUBGROUP)) + 
+ggplot(data_median, aes(x = WORK_STATE_ABBREVIATION, y = median_salary, fill = JOB_TITLE_SUBGROUP)) + 
   geom_bar(stat = "identity", position = "dodge") + 
   ggtitle("Median Salary by State and Job Title Subgroup") + 
   xlab("State") + 
   ylab("Median Salary")
+```
 
+In this code block, the user is analyzing data related to salaries across different states and job title subgroups. They are using the dplyr and ggplot2 libraries to group and filter the data, and to create visualizations that help them identify patterns and trends in the data.
+
+First, they calculate the median salary by state and job title subgroup using the group_by and summarise functions. They then identify the top 5 and bottom 5 states based on median salary for each job title subgroup using the top_n and arrange functions.
+
+Next, they filter the data to only include the top and bottom states using the filter function. Finally, they create a grouped bar plot using ggplot2 that shows median salaries by state and job title subgroup, with each subgroup shown in a separate facet.
+
+This approach is useful because it allows the user to easily compare salaries across different states and job title subgroups, and to identify which states have the highest and lowest median salaries for each subgroup. The visualization makes it easy to see patterns and trends in the data, and can help the user identify areas where further investigation or action may be needed.
+
+```{r}
 
 
 
@@ -224,7 +305,7 @@ library(ggplot2)
 
 # Calculate median salary by state and job title subgroup
 median_salary <- data %>%
-  group_by(JOB_TITLE_SUBGROUP, WORK_STATE) %>%
+  group_by(JOB_TITLE_SUBGROUP, WORK_STATE_ABBREVIATION) %>%
   summarise(median_salary = median(PAID_WAGE_PER_YEAR)) %>%
   ungroup()
 
@@ -241,10 +322,10 @@ bottom_states <- median_salary %>%
 
 # Filter data to only include top and bottom states
 data_filtered <- data %>%
-  filter(WORK_STATE %in% c(top_states$WORK_STATE, bottom_states$WORK_STATE))
+  filter(WORK_STATE_ABBREVIATION %in% c(top_states$WORK_STATE_ABBREVIATION, bottom_states$WORK_STATE_ABBREVIATION))
 
 # Create ggplot2 graph
-ggplot(data_filtered, aes(x = WORK_STATE, y = PAID_WAGE_PER_YEAR, fill = JOB_TITLE_SUBGROUP)) +
+ggplot(data_filtered, aes(x = WORK_STATE_ABBREVIATION, y = PAID_WAGE_PER_YEAR, fill = JOB_TITLE_SUBGROUP)) +
   geom_col(position = "dodge") +
   facet_wrap(~JOB_TITLE_SUBGROUP, scales = "free") +
   scale_fill_brewer(palette = "Set1") +
@@ -256,5 +337,20 @@ ggplot(data_filtered, aes(x = WORK_STATE, y = PAID_WAGE_PER_YEAR, fill = JOB_TIT
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 
 
+########################
+
+#by companies 
+library(dplyr)
+
+top_employers <- data %>%
+  group_by(EMPLOYER_NAME, JOB_TITLE_SUBGROUP) %>%
+  summarize(mean_salary = mean(PAID_WAGE_PER_YEAR)) %>%
+  arrange(desc(mean_salary)) %>%
+  group_by(JOB_TITLE_SUBGROUP) %>%
+  top_n(n = 10, wt = mean_salary)
+
+print(top_employers)
 
 ```
+
+\

@@ -21,6 +21,8 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 >   - Gabrielle's code for the project. It is shown for sake of process and ease of transferring data between PC and Mac. Others may use it as a jumping point.
 6. [Git Collaboration Exercise Repository](https://github.com/San-Francisco-State-University-DS/Git-Collaboration-Exercise)
 > This repository gives a general overview of how a group project repository should look like. It also includes instructions on the process of making a new branch, a pull request, and merging; and much more.
+7. [Project Data Summary](https://docs.google.com/document/d/1vna-GMBn4NaDKrJd44n8afmORMDqZ7tGsFa45WtSnyk/edit?usp=sharing)
+>   - The summary of the group's findings in their data exploration
 
 ***IMPORTANT***
 1. After making a pull request, place at **LEAST** 2 assignees to review it

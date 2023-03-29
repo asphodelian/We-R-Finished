@@ -1,0 +1,153 @@
+---
+title: "DS311 Data Explore"
+author: "Gabrielle Salamanca"
+date: "March 14, 2023"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## We-R-Finished Project
+
+### 1. Loading necessary libraries & reading dataset into R
+
+```{r}
+# loading libraries
+library(readxl)
+library(caret)
+library(ggplot2)
+library(dplyr)
+
+# dataset overview
+salary <- read_excel("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/salary/salary_data_states.xlsx")
+dim(salary)
+```
+
+### 2. Renaming columns for sake of ease
+
+```{r}
+# renaming
+colnames(salary)[1] = "Case Number"
+colnames(salary)[2] = "Case Status"
+colnames(salary)[3] = "Received Date"
+colnames(salary)[4] = "Decision Date"
+colnames(salary)[5] = "Employer Name"
+colnames(salary)[6] = "Submitted Prevail Wage"
+colnames(salary)[7] = "SPrW Unit"
+colnames(salary)[8] = "Submitted Paid Wage"
+colnames(salary)[9] = "SPaW Unit"
+colnames(salary)[10] = "Job Title"
+colnames(salary)[11] = "Work City"
+colnames(salary)[12] = "Required Edu"
+colnames(salary)[13] = "Required College Major"
+colnames(salary)[14] = "Exp Req"
+colnames(salary)[15] = "Exp Req (Months)"
+colnames(salary)[16] = "Citizenship"
+colnames(salary)[17] = "Prevail Wage SOC Code"
+colnames(salary)[18] = "PWSOC Title"
+colnames(salary)[19] = "Work State"
+colnames(salary)[20] = "WS Abb"
+colnames(salary)[21] = "WPostal Code"
+colnames(salary)[22] = "Full Time"
+colnames(salary)[23] = "Visa Class"
+colnames(salary)[24] = "Prevail Wage/Yr"
+colnames(salary)[25] = "Paid Wage/Yr"
+colnames(salary)[26] = "Job Title Sub"
+colnames(salary)[27] = "Order"
+names(salary)
+```
+
+### 3. What are the job title subcategories & their numbers
+
+```{r}
+jobTitleSub <- as.factor(salary$`Job Title Sub`)
+summary(jobTitleSub)
+# dataframe
+Sub_Job <- c("Software Engineer", "Business Analyst", "Assistant Prof", "Teacher",
+         	"Data Scientist", "Data Analyst", "Attorney", "Management Consultant")
+Frequency <- c(99364, 27811, 18866, 13912, 1227, 3840, 1488, 770)
+job2 <- data.frame(Sub_Job, Frequency)
+print(job2)
+```
+
+Was expecting higher number of data scientist and analyst
+Not expecting assistant professor & teacher in top 5
+
+```{r}
+city <- as.factor(salary$`Work City`)
+summary(city)
+top10 <- c("New York", "Mountain View", "San Francisco", "San Diego", "San Jose", "Houston", "Santa Clara", "Atlanta", "Chicago", "Dallas")
+freq <- c(6714, 6712, 6458, 2983, 2925, 2957, 2684, 2388, 2351, 2277)
+topCity <- data.frame(top10, freq)
+print(topCity)
+```
+
+Not surprised NY and CA areas are in top 5 cities
+Expected LA to be in top
+Wait i didn't expect to see my city, but it sure is a lot of CA areas
+
+### 4. Who are the top 10 employers
+
+```{r}
+employName <- as.factor(salary$`Employer Name`)
+summary(employName)
+top10 <- c("Google Inc.", "Fujitsu America, Inc.", "Intel Corporation", 
+           "Microsoft Corporation", "Qualcomm Technologies, Inc.", "Facebook, Inc.", 
+           "Cerner Corporation", "Cisco Systems, Inc.", "Hitachi Consulting Corporation", "Dallas Independent School District")
+freq <- c(6213, 1814, 1781, 1364, 1277, 1210, 1038, 1011, 812, 2277)
+topEmploy <- data.frame(top10, freq)
+print(topEmploy)
+```
+
+We know Google, Intel, Microsoft, Facebook, Cisco. The others I don't recognize. Also Dallas Independent School District is one of the top 10 employers?
+
+### 5. Top 10 states to work in
+
+```{r}
+state <- as.factor(salary$`Work State`)
+summary(state)
+top10 <- c("California", "Texas", "New York", "New Jersey", "Illinois",
+           "Massachussets", "Virgina", "Pennsylvania", "Washington", "Michigan")
+freq <- c(46782, 15498, 11373, 10198, 7411, 6848, 6031, 4725, 4610, 3844)
+topState <- data.frame(top10, freq)
+print(topState)
+```
+
+as expected CA is the largest, but WOW did the numbers really vary after. I was expecting TX and NY, but def not NJ. 
+
+### 6. Top 10 Jobs
+
+```{r}
+jobTitle <- as.factor(salary$`Job Title`)
+summary(jobTitle)
+top10 <- c("Software Engineer", "Business Analyst", "Sr Software Engineer", "Assistant Professor", "Computer Software Engineer, Apps",
+           "Teacher", "Data Analyst", "Sr Business Analyst", "Staff Software Engineer", "Elementary Bilungual Teacher")
+freq <- c(58221, 19516, 13847, 10134, 1808, 1566, 1524, 1437, 1335, 1020)
+topJob <- data.frame(top10, freq)
+print(topJob)
+```
+
+Dataset separated the ones with different cases, had to add up a few. Wasn't expecting teachers, esp the last one. engineer and analyst are popular jobs it seems
+
+```{r}
+paidWageYear <- salary$`Paid Wage/Yr`
+summary(paidWageYear)
+# plots
+plot(paidWageYear, jobTitleSub)
+plot(paidWageYear, jobTitle)
+```
+
+Norm seems to be under $500,000 wage/year. If only the table can tell me which sub jobs they were... I will need to revisit the jobTitle one, but the norm still holds.
+
+### 7. Trying the plots again
+
+```{r}
+plot(jobTitleSub, paidWageYear)
+```
+
+Hard to read
+
+```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
+```

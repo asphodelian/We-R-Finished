@@ -73,7 +73,7 @@ print(job2)
 ```
 
 Was expecting higher number of data scientist and analyst
-No expecting assistant professor & teacher in top 5
+Not expecting assistant professor & teacher in top 5
 
 ```{r}
 city <- as.factor(salary$`Work City`)
@@ -86,7 +86,7 @@ print(topCity)
 
 Not surprised NY and CA areas are in top 5 cities
 Expected LA to be in top
-wait i didn't expect to see my city, but it sure is a lot of CA areas
+Wait i didn't expect to see my city, but it sure is a lot of CA areas
 
 ### 4. Who are the top 10 employers
 
@@ -148,7 +148,6 @@ plot(jobTitleSub, paidWageYear)
 ```
 
 Hard to read
-
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

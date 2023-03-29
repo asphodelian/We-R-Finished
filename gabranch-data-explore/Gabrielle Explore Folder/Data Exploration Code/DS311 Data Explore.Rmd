@@ -2,7 +2,11 @@
 title: "DS311 Data Explore"
 author: "Gabrielle Salamanca"
 date: "March 28, 2023"
-output: word_document
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}

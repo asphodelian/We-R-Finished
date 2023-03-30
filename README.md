@@ -30,21 +30,19 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
  - It is used as an separated version for easy management when collaborating.
 ## The Current Tasks
 ### For ALL
-1. Clone the repo
-2. Explore the dataset in your desired coding langauge
-3. Consider which of the three given questions you want to do
-4. Inital data exploration paper
+Answer the assigned questions.
 ### Russell
 - Answering Q1
+- Answering Q6 with Gabrielle
 ### Ana
 - Developing Q5
 ### Gabrielle
 - Answering Q3
+- Answering Q6 with Russel
 ### Catarina
 - Answering Q3
-- Devveloping Q4
+- Answering Q4
 ### Future Tasks
-- Developing Q6
 - Receive & Implement feedback changes
 - Submit for 2nd review
 - Slide presentation

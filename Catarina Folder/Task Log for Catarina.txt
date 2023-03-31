@@ -10,3 +10,5 @@
 
 ##Work Log:
 3/16/2023: Cleaned up branch according to group guidelines, updated ReadMe, and created personal Task Log.
+
+3/28/2023: Did some exploratory data analysis and worked on group document.

@@ -6,7 +6,16 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
   - analysis plan
   - dataset description
   - the excel sheet 
-2. README
+2. Data Exploration
+  - Catarina Folder
+  - Paula_testBranch
+  - gabranch-data-explore/Gabrielle Folder
+  - russelfolder
+3. CostOfLiving
+  - csv file for standard of living question
+4. Group Summary Report
+  - a report of the initial data exploration
+3. README
   - What you're reading now!
 ## Links
 1. [The google drive folder](https://drive.google.com/drive/folders/1M1jYp0MiyeWCBQHbs2pfAfvCYkD61lKU?usp=sharing)
@@ -25,7 +34,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 > This repository gives a general overview of how a group project repository should look like. It also includes instructions on the process of making a new branch, a pull request, and merging; and much more.
 
 ***IMPORTANT***
-1. After making a pull request, place at **LEAST** 2 assignees to review it
+1. Pull request approval to be done on meeting day
 2. After the pull request is approved, **DELETE** your branch
  - The branch is just an image of the project report that is supposed to be short-lived.
  - It is **NOT** a folder or file that lives during the project life time.
@@ -41,7 +50,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 ### Ana
 - Developing Q5
 ### Gabrielle
-- Answering Q3
+- Answering Q2
 ### Catarina
 - Answering Q3
 - Devveloping Q4

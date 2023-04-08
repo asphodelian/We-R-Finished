@@ -53,7 +53,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 - Answering Q2
 ### Catarina
 - Answering Q3
-- Devveloping Q4
+- Developing Q4
 ### Future Tasks
 - Developing Q6
 - Receive & Implement feedback changes

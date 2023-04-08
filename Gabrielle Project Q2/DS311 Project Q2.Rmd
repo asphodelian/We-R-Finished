@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## We-R-Finished
 
+Before we can dive into the question, we must load in the necessary libraries and read the dataset into the markdown.
+
 ```{r}
 # loading libraries
 library(readxl)
@@ -20,7 +22,52 @@ library(dplyr)
 
 # dataset overview
 salary <- read_excel("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/salary/salary_data_states.xlsx")
-dim(salary)
+```
+
+Next, let's rename the columns to make it easier for us to read.
+
+```{r}
+# renaming
+colnames(salary)[1] = "Case Number"
+colnames(salary)[2] = "Case Status"
+colnames(salary)[3] = "Received Date"
+colnames(salary)[4] = "Decision Date"
+colnames(salary)[5] = "Employer Name"
+colnames(salary)[6] = "Submitted Prevail Wage"
+colnames(salary)[7] = "SPrW Unit"
+colnames(salary)[8] = "Submitted Paid Wage"
+colnames(salary)[9] = "SPaW Unit"
+colnames(salary)[10] = "Job Title"
+colnames(salary)[11] = "Work City"
+colnames(salary)[12] = "Required Edu"
+colnames(salary)[13] = "Required College Major"
+colnames(salary)[14] = "Exp Req"
+colnames(salary)[15] = "Exp Req (Months)"
+colnames(salary)[16] = "Citizenship"
+colnames(salary)[17] = "Prevail Wage SOC Code"
+colnames(salary)[18] = "PWSOC Title"
+colnames(salary)[19] = "Work State"
+colnames(salary)[20] = "WS Abb"
+colnames(salary)[21] = "WPostal Code"
+colnames(salary)[22] = "Full Time"
+colnames(salary)[23] = "Visa Class"
+colnames(salary)[24] = "Prevail Wage/Yr"
+colnames(salary)[25] = "Paid Wage/Yr"
+colnames(salary)[26] = "Job Title Sub"
+colnames(salary)[27] = "Order"
+```
+
+Now, we must remove the sub job titles that have teaching jobs. The question specifically asks for data-related salaries in the job sub-categories, therefore we must remove: professor, attorney, assistant professor, and teacher.
+
+```{r}
+# filter
+sal <- salary %>%
+  filter(!grepl("professor", `Job Title Sub`, ignore.case = TRUE) & 
+           !grepl("attorney", `Job Title Sub`, ignore.case = TRUE) &
+           !grepl("assistant professor", `Job Title Sub`, ignore.case = TRUE) & 
+           !grepl("teacher", `Job Title Sub`, ignore.case = TRUE))
+jobTitleSub <- as.factor(sal$`Job Title Sub`)
+summary(jobTitleSub)
 ```
 
 ### II. What states (of those I am willing to move to) have the highest paying data-related salaries?

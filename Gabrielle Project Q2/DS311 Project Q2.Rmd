@@ -72,6 +72,20 @@ summary(jobTitleSub)
 
 ### II. What states (of those I am willing to move to) have the highest paying data-related salaries?
 
+This is quite a broad range of states, but we will remove any US territories first and foremost for obvious reasons. This means Guam, Guamam, Palau, Northern Mariana Islands, Puerto Rico, and Virgin Islands will not be considered. 
+
+```{r}
+# filtering states
+datsal <- sal %>%
+  filter(!grepl("Guam", `Work State`, ignore.case = TRUE) & 
+           !grepl("Guamam", `Work State`, ignore.case = TRUE) &
+           !grepl("Palau", `Work State`, ignore.case = TRUE) & 
+           !grepl("Northern Mariana Islands", `Work State`, ignore.case = TRUE) &
+           !grepl("Puerto Rico", `Work State`, ignore.case = TRUE) &
+           !grepl("Virgin Islands", `Work State`, ignore.case = TRUE))
+```
+
+
 #### a. Differences between job sub-categories?
 
 #### b. Which companies have the highest salaries for those sub-types?

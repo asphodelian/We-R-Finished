@@ -11,6 +11,18 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## We-R-Finished
 
+```{r}
+# loading libraries
+library(readxl)
+library(caret)
+library(ggplot2)
+library(dplyr)
+
+# dataset overview
+salary <- read_excel("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/salary/salary_data_states.xlsx")
+dim(salary)
+```
+
 ### II. What states (of those I am willing to move to) have the highest paying data-related salaries?
 
 #### a. Differences between job sub-categories?

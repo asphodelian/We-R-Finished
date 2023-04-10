@@ -123,11 +123,18 @@ ggplot(ssal, aes(x = jobSub, fill = stateAbb)) +
   geom_bar() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   labs(x = "Job Title Sub", y = "Count", title = "States for Each Job Subcategory")
-
 ```
 
+We see that software engineer and business analyst are the largest proportions compared to any other job sub-category in the first graph, especially in the second.
 
 #### b. Which companies have the highest salaries for those sub-types?
+
+```{r}
+employer <- as.factor(ssal$`Employer Name`)
+summary(employer)
+paidWage <- ssal$`Paid Wage/Yr`
+```
+
 
 #### c. Will the answer change if I take standard of living into account?
 

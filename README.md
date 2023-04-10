@@ -39,23 +39,33 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
  - The branch is just an image of the project report that is supposed to be short-lived.
  - It is **NOT** a folder or file that lives during the project life time.
  - It is used as an separated version for easy management when collaborating.
-## The Current Tasks
+## The Tasks
 ### For ALL
 1. Clone the repo
 2. Explore the dataset in your desired coding langauge
 3. Consider which of the three given questions you want to do
-4. Inital data exploration paper
+4. Inital data exploration 
+5. Initial EDA paper turned in
 ### Russell
-- Answering Q1
+- Q1
+  - EDA about finished
+  - Writing up analysis
+  - Answering
 ### Ana
-- Developing Q5
+- Q5
+  - Developed
+  - Answering
 ### Gabrielle
-- Answering Q2
+- Q2
+  - EDA
+  - Answering
 ### Catarina
-- Answering Q3
-- Developing Q4
+- Preliminary setup work
+  - Q3
+  - Q4
+### Group Effort
+- Q6 Development
 ### Future Tasks
-- Developing Q6
 - Receive & Implement feedback changes
 - Submit for 2nd review
 - Slide presentation

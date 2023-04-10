@@ -94,8 +94,24 @@ topState <- c("CA", "TX", "NY", "NJ", "IL", "MA", "VA", "PA", "WA","MI")
 datsal <- datsal[datsal$`WS Abb` %in% topState, ]
 ```
 
-
 #### a. Differences between job sub-categories?
+
+```{r}
+stateAbb <- datsal$`WS Abb`
+jobSub <- datsal$`Job Title Sub`
+# job sub/state plot
+ggplot(datsal, aes(x = stateAbb, fill = jobSub)) + 
+  geom_bar() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(x = "Work State Abbreviation", y = "Count", title = "Job Subcategories in Each State")
+# state/job sub
+ggplot(datsal, aes(x = jobSub, fill = stateAbb)) + 
+  geom_bar() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(x = "Job Title Sub", y = "Count", title = "States for Each Job Subcategory")
+
+```
+
 
 #### b. Which companies have the highest salaries for those sub-types?
 

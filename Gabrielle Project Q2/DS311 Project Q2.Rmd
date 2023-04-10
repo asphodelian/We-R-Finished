@@ -85,6 +85,15 @@ datsal <- sal %>%
            !grepl("Virgin Islands", `Work State`, ignore.case = TRUE))
 ```
 
+Now, that still leaves us with a large amount of states. When I tried running graphs to include work state and the job title sub variables, R had difficulty running them, because it was far too many to handle. 
+
+Now, the question asks *"What states (of those I am willing to move to)"*. Considering the group is staying in the Bay Area, we may be more picky about where we would want to live. California is much more friendly towards immigrants and quite open to people of all walks of life. We may be biased to stay within the West Coast, especially considering the natural disasters and how certain minorities are treated here either by law or general perception. This would greatly narrow the scope, so I have decided to use the top 10 work states as my pool.
+
+```{r}
+topState <- c("CA", "TX", "NY", "NJ", "IL", "MA", "VA", "PA", "WA","MI")
+datsal <- datsal[datsal$`WS Abb` %in% topState, ]
+```
+
 
 #### a. Differences between job sub-categories?
 

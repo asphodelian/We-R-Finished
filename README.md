@@ -54,7 +54,8 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 ### Ana
 - Q5
   - Developed
-  - Answering
+  - Answering last question
+  - Planning to write up report
 ### Gabrielle
 - Q2
   - EDA

@@ -61,9 +61,8 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
   - EDA
   - Answering
 ### Catarina
-- Preliminary setup work
-  - Q3
-  - Q4
+- Q3 60% done
+- Q4 10% done
 ### Group Effort
 - Q6 Development
 ### Future Tasks

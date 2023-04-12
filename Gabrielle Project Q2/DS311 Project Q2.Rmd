@@ -117,9 +117,9 @@ California would skew the graphs if it were included, so we will only use these 
 
 ```{r}
 topState <- c("Texas", "New York",
-          	"New Jersey", "Illinois", "Massachussetts",
+          	"New Jersey", "Illinois", "Massachusetts",
           	"Virginia", "Pennsylvania", "Washington",
-          	"Michigan", "North Coralina")
+          	"Michigan", "North Carolina")
 ssal <- datsal[datsal$`Work State` %in% topState, ]
 ```
 
@@ -203,10 +203,11 @@ ssal %>%
 
 # Massachussetts
 ssal %>%
-  filter(`Work State` == "Massachussetts") %>%
+  filter(`Work State` == "Massachusetts", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) %>%
   ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
   geom_boxplot(fill = "goldenrod2", color = "darkslateblue") +
-  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Massachussetts")
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Massachusetts")
 
 # Virginia
 ssal %>%
@@ -238,7 +239,8 @@ ssal %>%
 
 # North Carolina
 ssal %>%
-  filter(`Work State` == "North Carolina") %>%
+  filter(`Work State` == "North Carolina", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) %>%
   ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
   geom_boxplot(fill = "skyblue", color = "steelblue") +
   labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in North Carolina")

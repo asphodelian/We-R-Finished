@@ -55,9 +55,9 @@ datsal <- sal %>%
            !grepl("Virgin Islands", `Work State`, ignore.case = TRUE))
 
 topState <- c("Texas", "New York",
-              "New Jersey", "Illinois", "Massachussetts",
+              "New Jersey", "Illinois", "Massachusetts",
               "Virginia", "Pennsylvania", "Washington",
-              "Michigan", "North Coralina")
+              "Michigan", "North Carolina")
 ssal <- datsal[datsal$`Work State` %in% topState, ]
 
 # added new col
@@ -69,7 +69,7 @@ ssal %>%
 
 # Massachussetts
 ssal %>%
-  filter(`Work State` == "Massachussetts") %>%
+  filter(`Work State` == "Massachusetts") %>%
   ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
   geom_boxplot(fill = "goldenrod2", color = "darkslateblue") +
   labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Massachussetts")
@@ -80,3 +80,4 @@ ssal %>%
   ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
   geom_boxplot(fill = "skyblue", color = "steelblue") +
   labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in North Carolina")
+

@@ -204,7 +204,6 @@ ssal %>%
 # Massachussetts
 ssal %>%
   filter(`Work State` == "Massachusetts", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
-  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) %>%
   ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
   geom_boxplot(fill = "goldenrod2", color = "darkslateblue") +
   labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Massachusetts")
@@ -240,12 +239,12 @@ ssal %>%
 # North Carolina
 ssal %>%
   filter(`Work State` == "North Carolina", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
-  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) %>%
   ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
   geom_boxplot(fill = "skyblue", color = "steelblue") +
   labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in North Carolina")
 ```
 
+We see in these graphs, generally the data scientist, management consultant, and software engineer are the higher paying jobs compared to the analyst jobs. Which one had the higher salary shifted in each state. But the most common patterns were, from highest to lowest: data scientist, management consultant, and software engineer; management consultant, data scientist, and software engineer. The most striking graph in these 10 was North Carolina, where data scientist was the lowest of the top 3. We even see that the analyst jobs even have a much larger quartile box, and that data scientist and management consultant have the lowest medians in the NC graph.
 
 #### b. Which companies have the highest salaries for those sub-types?
 

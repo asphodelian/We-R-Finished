@@ -252,8 +252,6 @@ Ultimately, there is a difference in salaries between the job sub-types. The ana
 
 #### b. Which companies have the highest salaries for those sub-types?
 
-Get top 5 for each sub-type
-
 ```{r}
 # max salary
 ssal %>%
@@ -264,9 +262,30 @@ ssal %>%
   top_n(n = 5, wt = max_salary)
 ```
 
+For each job sub type, we see the top 5 employers in terms of who has the highest salary ceiling. Business analyst's highest ceiling is 125,0784 with the University of Texas Administration, data analyst's is 185,000 with Knowledgent Group Inc, data scientist is with the PNC Services Group Inc at 205,000, management consultant at 450,000 with Baker Botts LLP, and software engineer at 1,224,801 with Abacus Technical Services LLC. Admittedly, these may be outliers, especially concerning software engineer. 
 
+Let's try restricting the percentiles to see if this will change the top companies.
+
+```{r}
+ssal %>%
+  filter(`Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  group_by(Sub, `Employer Name`) %>%
+  summarise(max_salary = max(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(max_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = max_salary)
+```
+
+We do end up with changes in the samples and different companies when we restrict the percentiles. Business analyst, data analyst, and software engineer expanded; while data scientist and management consultant stayed the same. 
+
+There is definitely a change in max salary for each one. Business analyst's went down 180 for 124,898 at Tesoro Companies Inc, data analyst went down 6,300 for 122,000 at UBS Services LLC, data scientist went down 80,200 for 124,800 at Edataforce Consulting LLC, management consultant went down 325,428.8 for 124571.2 at Dell USA LP, and software engineer went down 1,099,801 for 124999.9 at Zulily Inc. Software engineer had the greatest loss out of all the job sub types, yet it still makes more out of all of them. This is quite confounding admittedly, how software engineer is such an umbrella term.
 
 #### c. Will the answer change if I take standard of living into account?
+
+If I took the standard of living into account, my answer will change. 
+
+
+
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

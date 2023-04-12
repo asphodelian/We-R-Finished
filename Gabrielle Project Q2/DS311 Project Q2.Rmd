@@ -140,7 +140,28 @@ ggplot(ssal, aes(x = jobSub, fill = stateAbb)) +
   labs(x = "Job Title Sub", y = "Count", title = "States for Each Job Subcategory")
 ```
 
-We see that software engineer and business analyst are the largest proportions compared to any other job sub-category in the first graph, especially in the second.
+We see that software engineer and business analyst are the largest proportions compared to any other job sub-category in the first graph, especially in the second. Let's see how each sub-type does in terms of salary.
+
+```{r}
+paidWage <- ssal$`Paid Wage/Yr`
+# paid wage boxplot
+ggplot(ssal, aes(x = jobSub, y = paidWage, fill = jobSub)) +
+  geom_boxplot() +
+  labs(title = "Paid Wage/Year by Job Sub-Type",
+   	x = "Job Sub-Type",
+   	y = "Paid Wage/Year",
+   	fill = "Job Sub-Type")
+# no outliers
+ggplot(ssal, aes(x = jobSub, y = paidWage, fill = jobSub)) +
+  geom_boxplot() +
+  labs(title = "Paid Wage/Year by Job Sub-Type",
+   	x = "Job Sub-Type",
+   	y = "Paid Wage/Year",
+   	fill = "Job Sub-Type") +
+  scale_y_continuous(limits = quantile(paidWage, c(0.1, 0.9)))
+```
+
+We see that we have many outliers, especially in software engineer. But it seems management consultant and data scientist have larger salary ranges compared to the rest of the job sub-types. Now if we did get rid of the outliers outside of 10th and 90th percentile, we get pretty much a similar story. An analyst makes less than a data scientist, management consultant, and software engineer. These three jobs pay well, but it seems software engineer is the only one that's being advertised to the most out of the them. Let's see if it holds true for each state. We will only showcase without the outliers.
 
 #### b. Which companies have the highest salaries for those sub-types?
 

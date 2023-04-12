@@ -260,6 +260,14 @@ ssal %>%
   arrange(Sub, desc(max_salary)) %>%
   group_by(Sub) %>%
   top_n(n = 5, wt = max_salary)
+
+# avg salary
+ssal %>%
+  group_by(Sub, `Employer Name`) %>%
+  summarise(avg_salary = mean(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(avg_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = avg_salary)
 ```
 
 For each job sub type, we see the top 5 employers in terms of who has the highest salary ceiling. Business analyst's highest ceiling is 125,0784 with the University of Texas Administration, data analyst's is 185,000 with Knowledgent Group Inc, data scientist is with the PNC Services Group Inc at 205,000, management consultant at 450,000 with Baker Botts LLP, and software engineer at 1,224,801 with Abacus Technical Services LLC. Admittedly, these may be outliers, especially concerning software engineer. 
@@ -267,6 +275,7 @@ For each job sub type, we see the top 5 employers in terms of who has the highes
 Let's try restricting the percentiles to see if this will change the top companies.
 
 ```{r}
+#max salary
 ssal %>%
   filter(`Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
   group_by(Sub, `Employer Name`) %>%
@@ -274,6 +283,15 @@ ssal %>%
   arrange(Sub, desc(max_salary)) %>%
   group_by(Sub) %>%
   top_n(n = 5, wt = max_salary)
+
+# avg salary
+ssal %>%
+  filter(`Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  group_by(Sub, `Employer Name`) %>%
+  summarise(avg_salary = mean(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(avg_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = avg_salary)
 ```
 
 We do end up with changes in the samples and different companies when we restrict the percentiles. Business analyst, data analyst, and software engineer expanded; while data scientist and management consultant stayed the same. 
@@ -283,7 +301,6 @@ There is definitely a change in max salary for each one. Business analyst's went
 #### c. Will the answer change if I take standard of living into account?
 
 If I took the standard of living into account, my answer will change. 
-
 
 
 

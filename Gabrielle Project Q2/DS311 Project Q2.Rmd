@@ -247,14 +247,17 @@ ssal %>%
 
 #### b. Which companies have the highest salaries for those sub-types?
 
+Get top 5 for each sub-type
+
 ```{r}
 employer <- as.factor(ssal$`Employer Name`)
 summary(employer)
-paidWage <- ssal$`Paid Wage/Yr`
 ```
 
 
 #### c. Will the answer change if I take standard of living into account?
+
+
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

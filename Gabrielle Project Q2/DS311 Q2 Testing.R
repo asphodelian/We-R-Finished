@@ -59,3 +59,24 @@ topState <- c("Texas", "New York",
               "Virginia", "Pennsylvania", "Washington",
               "Michigan", "North Coralina")
 ssal <- datsal[datsal$`Work State` %in% topState, ]
+
+# added new col
+ssal$Sub <- factor(ssal$`Job Title Sub`, levels = c("business analyst", "data analyst", "data scientist", "management consultant", "software engineer"))
+
+ssal %>%
+  filter(`Work State` == "Massachusetts") %>%
+  nrow()
+
+# Massachussetts
+ssal %>%
+  filter(`Work State` == "Massachussetts") %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "goldenrod2", color = "darkslateblue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Massachussetts")
+
+# North Carolina
+ssal %>%
+  filter(`Work State` == "North Carolina") %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "skyblue", color = "steelblue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in North Carolina")

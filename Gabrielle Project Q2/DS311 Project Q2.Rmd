@@ -116,8 +116,11 @@ stateFreq
 California would skew the graphs if it were included, so we will only use these states for this question.
 
 ```{r}
-topState <- c("TX", "NY", "NJ", "IL", "MA", "VA", "PA", "WA","MI", "NC")
-ssal <- datsal[datsal$`WS Abb` %in% topState, ]
+topState <- c("Texas", "New York",
+          	"New Jersey", "Illinois", "Massachussetts",
+          	"Virginia", "Pennsylvania", "Washington",
+          	"Michigan", "North Coralina")
+ssal <- datsal[datsal$`Work State` %in% topState, ]
 ```
 
 #### a. Differences between job sub-categories?

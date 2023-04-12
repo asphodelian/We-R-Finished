@@ -94,14 +94,26 @@ CAfreq <- table(datsal$`Work State`)["California"]
 CAfreq
 ```
 
-This state completely dwarfs the others. Consider Texas, it has a frequency of:
+This state completely dwarfs the others. See here:
 
 ```{r}
 TXfreq <- table(datsal$`Work State`)["Texas"]
-TXfreq
+NYfreq <- table(datsal$`Work State`)["New York"]
+NJfreq <- table(datsal$`Work State`)["New Jersey"]
+ILfreq <- table(datsal$`Work State`)["Illinois"]
+MAfreq <- table(datsal$`Work State`)["Massachusetts"]
+VAfreq <- table(datsal$`Work State`)["Virginia"]
+PAfreq <- table(datsal$`Work State`)["Pennsylvania"]
+WAfreq <- table(datsal$`Work State`)["Washington"]
+MIfreq <- table(datsal$`Work State`)["Michigan"]
+NCfreq <- table(datsal$`Work State`)["North Carolina"]
+# dataframe
+Frequency <- c(TXfreq, NYfreq, NJfreq, ILfreq, MAfreq, VAfreq, PAfreq, WAfreq, MIfreq, NCfreq)
+stateFreq <- data.frame(Frequency)
+stateFreq
 ```
 
-This will greatly skew the graphs if there's a roughly 30,000 difference between these two, especially if the majority of the rest are only in the single digit 1000s.
+California would skew the graphs if it were included, so we will only use these states for this question.
 
 ```{r}
 topState <- c("TX", "NY", "NJ", "IL", "MA", "VA", "PA", "WA","MI", "NC")

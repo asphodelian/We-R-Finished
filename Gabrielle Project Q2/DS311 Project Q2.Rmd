@@ -126,13 +126,16 @@ ssal <- datsal[datsal$`Work State` %in% topState, ]
 #### a. Differences between job sub-categories?
 
 ```{r}
+# variables
 stateAbb <- ssal$`WS Abb`
 jobSub <- ssal$`Job Title Sub`
+
 # job sub/state plot
 ggplot(ssal, aes(x = stateAbb, fill = jobSub)) + 
   geom_bar() + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   labs(x = "Work State Abbreviation", y = "Count", title = "Job Subcategories in Each State")
+
 # state/job sub
 ggplot(ssal, aes(x = jobSub, fill = stateAbb)) + 
   geom_bar() + 
@@ -143,7 +146,9 @@ ggplot(ssal, aes(x = jobSub, fill = stateAbb)) +
 We see that software engineer and business analyst are the largest proportions compared to any other job sub-category in the first graph, especially in the second. Let's see how each sub-type does in terms of salary.
 
 ```{r}
+# variable(s)
 paidWage <- ssal$`Paid Wage/Yr`
+
 # paid wage boxplot
 ggplot(ssal, aes(x = jobSub, y = paidWage, fill = jobSub)) +
   geom_boxplot() +
@@ -151,6 +156,7 @@ ggplot(ssal, aes(x = jobSub, y = paidWage, fill = jobSub)) +
    	x = "Job Sub-Type",
    	y = "Paid Wage/Year",
    	fill = "Job Sub-Type")
+
 # no outliers
 ggplot(ssal, aes(x = jobSub, y = paidWage, fill = jobSub)) +
   geom_boxplot() +
@@ -161,7 +167,81 @@ ggplot(ssal, aes(x = jobSub, y = paidWage, fill = jobSub)) +
   scale_y_continuous(limits = quantile(paidWage, c(0.1, 0.9)))
 ```
 
-We see that we have many outliers, especially in software engineer. But it seems management consultant and data scientist have larger salary ranges compared to the rest of the job sub-types. Now if we did get rid of the outliers outside of 10th and 90th percentile, we get pretty much a similar story. An analyst makes less than a data scientist, management consultant, and software engineer. These three jobs pay well, but it seems software engineer is the only one that's being advertised to the most out of the them. Let's see if it holds true for each state. We will only showcase without the outliers.
+We see that we have many outliers in the first graph, especially in software engineer. But it seems management consultant and data scientist have larger salary ranges compared to the rest of the job sub-types. Now, if we did get rid of the data points outside of 10th and 90th percentile, we get pretty much a similar story. An analyst makes less than a data scientist, management consultant, and software engineer. These three jobs pay well, but it seems software engineer is the only one that's being advertised to the most out of the them. Let's see if it holds true for each state. We will only showcase the graphs without the outliers.
+
+```{r}
+ssal$Sub <- factor(ssal$`Job Title Sub`, levels = c("business analyst", "data analyst", "data scientist", "management consultant", "software engineer"))
+# Texas
+ssal %>%
+  filter(`Work State` == "Texas", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Texas")
+
+# New York
+ssal %>%
+  filter(`Work State` == "New York", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in New York")
+
+# New Jersey
+ssal %>%
+  filter(`Work State` == "New Jersey", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in New Jersey")
+
+# Illinois
+ssal %>%
+  filter(`Work State` == "Illinois", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Illinois")
+
+# Massachussetts
+ssal %>%
+  filter(`Work State` == "Massachussetts") %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Massachussetts")
+
+# Virginia
+ssal %>%
+  filter(`Work State` == "Virginia", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Virginia")
+
+# Pennsylvania
+ssal %>%
+  filter(`Work State` == "Pennsylvania", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Pennsylvania")
+
+# Washington
+ssal %>%
+  filter(`Work State` == "Washington", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution Washington")
+
+# Michigan
+ssal %>%
+  filter(`Work State` == "Michigan", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution Michigan")
+
+# North Carolina
+ssal %>%
+  filter(`Work State` == "North Carolina") %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "blue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in North Carolina")
+```
+
 
 #### b. Which companies have the highest salaries for those sub-types?
 

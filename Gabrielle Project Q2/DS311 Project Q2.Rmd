@@ -259,11 +259,9 @@ Get top 5 for each sub-type
 ssal %>%
   group_by(Sub, `Employer Name`) %>%
   summarise(max_salary = max(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(max_salary)) %>%
+  group_by(Sub) %>%
   top_n(n = 5, wt = max_salary)
-
-# Business analyst
-Employer <- c("University of Texas System Administration")
-Max_Salary <- c(1250784)
 ```
 
 

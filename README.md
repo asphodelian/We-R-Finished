@@ -1,6 +1,7 @@
 # We-R-Finished
 ## Overview
 Welcome! You are currently in the official repository of We R Finished, a DS 311 group consisting of Russell Chan, Ana Paula De Queiroz, Gabrielle Salamanca, and Catarina Tegtmeier. The chosen dataset they are going to explore, analyze, and present is the Data-Drive Industry Salary. 
+
 ## Within the Repo
 1. salary
   - analysis plan
@@ -17,6 +18,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
   - a report of the initial data exploration
 3. README
   - What you're reading now!
+
 ## Links
 1. [The google drive folder](https://drive.google.com/drive/folders/1M1jYp0MiyeWCBQHbs2pfAfvCYkD61lKU?usp=sharing)
 - This folder holds all the group documentation and any necessary files we may need.*
@@ -39,6 +41,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
  - The branch is just an image of the project report that is supposed to be short-lived.
  - It is **NOT** a folder or file that lives during the project life time.
  - It is used as an separated version for easy management when collaborating.
+ 
 ## The Tasks
 ### For ALL
 1. Clone the repo
@@ -59,7 +62,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 ### Gabrielle
 - Q2
   - EDA
-  - Answering
+  - Answering & Analyzing
 ### Catarina
 - Q3 60% done
 - Q4 10% done

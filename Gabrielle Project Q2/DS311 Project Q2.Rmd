@@ -29,7 +29,7 @@ salary <- read_excel("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/salar
 Next, let's rename the columns to make it easier for us to read.
 
 ```{r}
-# renaming
+# renaming columns
 colnames(salary)[1] = "Case Number"
 colnames(salary)[2] = "Case Status"
 colnames(salary)[3] = "Received Date"
@@ -271,6 +271,8 @@ ssal %>%
 ```
 
 For each job sub type, we see the top 5 employers in terms of who has the highest salary ceiling. Business analyst's highest ceiling is 125,0784 with the University of Texas Administration, data analyst's is 185,000 with Knowledgent Group Inc, data scientist is with the PNC Services Group Inc at 205,000, management consultant at 450,000 with Baker Botts LLP, and software engineer at 1,224,801 with Abacus Technical Services LLC. Admittedly, these may be outliers, especially concerning software engineer. 
+
+Now, how does this compare to the average salary? For the business analyst, the top 2 companies are unchanged: University of Texas Administration and Officemax Incorporated. Data analyst has stayed pretty consistent with its top 5, just shifting around the rankings.
 
 Let's try restricting the percentiles to see if this will change the top companies.
 

@@ -272,9 +272,11 @@ ssal %>%
 
 For each job sub type, we see the top 5 employers in terms of who has the highest salary ceiling. Business analyst's highest ceiling is 125,0784 with the University of Texas Administration, data analyst's is 185,000 with Knowledgent Group Inc, data scientist is with the PNC Services Group Inc at 205,000, management consultant at 450,000 with Baker Botts LLP, and software engineer at 1,224,801 with Abacus Technical Services LLC. Admittedly, these may be outliers, especially concerning software engineer. 
 
-Now, how does this compare to the average salary? For the business analyst, the top 2 companies are unchanged: University of Texas Administration and Officemax Incorporated. Data analyst has stayed pretty consistent with its top 5, just shifting around the rankings. For data scientist, the first and last companies are unchanged
+Now, how does this compare to the average salary? For the business analyst, the top 2 companies are unchanged: University of Texas Administration and Officemax Incorporated. Data analyst has stayed pretty consistent with its top 5, just shifting around the rankings. For data scientist, the first and last companies are unchanged. The management consultant salary is nearly the same, the last entry has changed. Finally, software engineer had the most change, only one company has stayed and has become the top rank. 
 
-Let's try restricting the percentiles to see if this will change the top companies.
+so we see that for best highest salary ceiling, the order is software engineer, business analyst, management consultant, data scientist, and data analyst. Management consultant, data scientist, and data analyst have stayed in the same place, while business analyst and software engineer have switched places depending the type of salary.
+
+Let's try restricting the percentiles to see if this will change the top companies and the order.
 
 ```{r}
 #max salary
@@ -296,13 +298,15 @@ ssal %>%
   top_n(n = 5, wt = avg_salary)
 ```
 
-We do end up with changes in the samples and different companies when we restrict the percentiles. Business analyst, data analyst, and software engineer expanded; while data scientist and management consultant stayed the same. 
+We do end up with changes in the samples and different companies when we restrict the percentiles. In the max salary, business analyst, data analyst, and software engineer expanded; while data scientist and management consultant stayed the same. The order is software engineer, business analyst, data scientist, management consultant, and data analyst.
 
-There is definitely a change in max salary for each one. Business analyst's went down 180 for 124,898 at Tesoro Companies Inc, data analyst went down 6,300 for 122,000 at UBS Services LLC, data scientist went down 80,200 for 124,800 at Edataforce Consulting LLC, management consultant went down 325,428.8 for 124571.2 at Dell USA LP, and software engineer went down 1,099,801 for 124999.9 at Zulily Inc. Software engineer had the greatest loss out of all the job sub types, yet it still makes more out of all of them. This is quite confounding admittedly, how software engineer is such an umbrella term.
+For the average salary, business analyst, management consultant, data analyst, and management consultant stayed the same sample size; and data scientist has greatly increased in that area. Business analyst, data scientist, and software have the same average: 124800. Data analyst falls short with 122000, as well as management consultant at 120000. 
+
+We see that every single sub type went down in salary when we restricted the percentiles to 5th through 95th. Software engineer had the greatest loss out of all the job sub types, yet it still makes more out of all of them. This is quite confounding admittedly, how software engineer is such an umbrella term. But I suppose this means you do have more diverse skills, therefore could have a higher salary than most.
 
 #### c. Will the answer change if I take standard of living into account?
 
-If I took the standard of living into account, my answer will change. 
+If I took the standard of living into account, my answer will change. I would not want to move to New York, knowing how it's equally as expensive as the Bay Area. 
 
 
 

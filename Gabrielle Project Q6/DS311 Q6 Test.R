@@ -1,31 +1,11 @@
----
-title: "DS311 Q6"
-author: "Gabrielle Salamanca"
-date: "April 13, 2023"
-output: word_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
-
-## We-R-Finished
-
-### Q6 EDA
-
-Reading the data into R
-
-```{r}
 library(readr)
 library(dplyr)
+
 # dataset
 COL2023 <- read_csv("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/CostOfLiving2023.csv", show_col_types = FALSE)
 coldf <- COL2023[, !(names(COL2023) %in% c("fips"))]
-```
 
-Making columns into variables
-
-```{r}
+# variables
 state <- coldf$state
 density <- coldf$densityMi
 pop2023 <- coldf$pop2023
@@ -42,14 +22,18 @@ housing <- coldf$housingCost
 utility <- coldf$utilitiesCost
 transport <- coldf$transportationCost
 misc <- coldf$miscCost
-```
 
-Top 10 states
-
-```{r}
-
-```
-
-
-```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
-```
+# top10 states
+TX <- coldf[state == "Texas", ]
+NY <- coldf[state == "New York", ]
+NJ <- coldf[state == "New Jersey", ]
+IL <- coldf[state == "Illinois", ]
+MA <- coldf[state == "Massachusetts", ]
+VA <- coldf[state == "Virginia", ]
+PA <- coldf[state == "Pennsylvania", ]
+WA <- coldf[state == "Washington", ]
+MI <- coldf[state == "Michigan", ]
+NC <- coldf[state == "North Carolina", ]
+state <- c(TX, NY, NJ, IL, MA, VA, PA, WA, MI, NC)
+top10 <- rbind(state)
+print(top10)

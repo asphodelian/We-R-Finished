@@ -1,0 +1,17 @@
+---
+title: "DS311 Q6"
+author: "Gabrielle Salamanca"
+date: "April 13, 2023"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## We-R-Finished
+
+### Q6 EDA
+
+```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
+```

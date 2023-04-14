@@ -44,6 +44,24 @@ transport <- coldf$transportationCost
 misc <- coldf$miscCost
 ```
 
+Top 10 states
+
+```{r}
+TX <- coldf[state == "Texas", ]
+NY <- coldf[state == "New York", ]
+NJ <- coldf[state == "New Jersey", ]
+IL <- coldf[state == "Illinois", ]
+MA <- coldf[state == "Massachusetts", ]
+VA <- coldf[state == "Virginia", ]
+PA <- coldf[state == "Pennsylvania", ]
+WA <- coldf[state == "Washington", ]
+MI <- coldf[state == "Michigan", ]
+NC <- coldf[state == "North Carolina", ]
+state <- c(TX, NY, NJ, IL, MA, VA, PA, WA, MI, NC)
+top10 <- rbind(state)
+print(top10)
+```
+
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

@@ -13,12 +13,35 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### Q6 EDA
 
+Reading the data into R
+
 ```{r}
 library(readr)
 library(dplyr)
 # dataset
 COL2023 <- read_csv("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/CostOfLiving2023.csv", show_col_types = FALSE)
 coldf <- COL2023[, !(names(COL2023) %in% c("fips"))]
+```
+
+Making columns into variables
+
+```{r}
+state <- coldf$state
+density <- coldf$densityMi
+pop2023 <- coldf$pop2023
+pop2022 <- coldf$pop2022
+pop2020 <- coldf$pop2019
+pop2019 <- coldf$pop2019
+pop2010 <- coldf$pop2010
+growthRate <- coldf$growthRate
+growth <- coldf$growth
+growth2010 <- coldf$growthSince2010
+costIndex <- coldf$costIndex
+grocery <- coldf$groceryCost
+housing <- coldf$housingCost
+utility <- coldf$utilitiesCost
+transport <- coldf$transportationCost
+misc <- coldf$miscCost
 ```
 
 

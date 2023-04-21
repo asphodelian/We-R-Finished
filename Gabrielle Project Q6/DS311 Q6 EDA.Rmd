@@ -123,6 +123,19 @@ trueWA <- 111.6
 cat("The average index in Washington is", WAcost, ", and the cost index is", trueWA)
 ```
 
+**Explaining cost of index definition**
+
+World Population Review. “Cost of Living Index by State 2023.” Cost of Living Index by State 2023, World Population Review , 2023, https://worldpopulationreview.com/state-rankings/cost-of-living-index-by-state. 
+
+Cost of living refers to the amount needed to cover basic expenses, such as food, shelter, transportation, and healthcare. However, costs of living can vary significantly across regions. Cost of living indexes help a person better understand and quantify these differences. Cost of living indexes are used by employers when determining wages or government agencies when determining the need for interventions, such as annual adjustments to Social Security benefits. Individuals also use these metrics when considering relocating, especially for a job.
+
+Cost of living indexes are calculated by first determining a baseline for comparison. When comparing costs across states, the average cost of living in the United States is used as the baseline set at 100. States are then measured against this baseline. For example, a state with a cost of living index of 200 is twice as expensive as the national average. Likewise, living in a state with an index of 50 will cost about half the national average.
+
+A closer look at the national costs of living is needed to better understand costs across states. The average household in the United States spends 61,334 a year on expenses. On average, 34.9% of spending, or roughly 1,784 a month, is dedicated to housing and housing-related costs. The median price of a single-family home in the United States is 273,992. Nationwide, the average rent for a two-bedroom apartment runs $1,154 a month.
+
+The average American household dedicates a further 16% of spending to transportation, an average of 9,826 a year. Annual healthcare costs average another 5,177 annually. Food, including groceries and eating out, costs another 7,317 a year or 609.75 a month. The average monthly cost for utilities in the U.S. is 370.16.
+
+Nationwide, the median household income is 67,521 a year, while personal income for individuals is 35,805. The living wage for the United States is 68,808 annually for a family of four.
 
 
 

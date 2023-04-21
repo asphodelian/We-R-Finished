@@ -11,6 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## We-R-Finished
 
+```{r}
+library(readr)
+library(readxl)
+library(dplyr)
+```
+
+
 ### Question 6
 
 When looking over at the three given questions, there was a common sub-question:
@@ -31,16 +38,35 @@ There could be many reasons for this such as the population density, tax rates, 
 
 ### Why is it important?
 
-In our particular project, having data on the cost of living for each region helps employers determine the wage of the job. Of course, certain *genre* of jobs will have higher pay than others, and specific *types* of jobs within that genre will have better wage than the others.
+In our particular project, having data on the cost of living for each region helps employers determine the wage of the job. Of course, certain *genre* of jobs will have higher pay than others, and specific *types* of jobs within that genre will have better wage than the others. When we take the salary dataset into account, we can use this data to find out if one would be able to live in a state with the salary they will receive. Of course, I will only use the top 10 states for data-related jobs I found in Q2.
+
+```{r}
+# reading salary dataset
+salary <- read_excel("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/salary/salary_data_states.xlsx")
+colnames(salary)[19] = "Work State"
+colnames(salary)[26] = "Job Title Sub"
+# filtering
+sal <- salary %>%
+  filter(!grepl("professor", `Job Title Sub`, ignore.case = TRUE) &
+       	!grepl("attorney", `Job Title Sub`, ignore.case = TRUE) &
+       	!grepl("assistant professor", `Job Title Sub`, ignore.case = TRUE) &
+       	!grepl("teacher", `Job Title Sub`, ignore.case = TRUE))
+datsal <- sal %>%
+  filter(!grepl("Guam", `Work State`, ignore.case = TRUE) &
+       	!grepl("Guamam", `Work State`, ignore.case = TRUE) &
+       	!grepl("Palau", `Work State`, ignore.case = TRUE) &
+       	!grepl("Northern Mariana Islands", `Work State`, ignore.case = TRUE) &
+       	!grepl("Puerto Rico", `Work State`, ignore.case = TRUE) &
+       	!grepl("Virgin Islands", `Work State`, ignore.case = TRUE))
+```
+
 
 ### About the dataset
 
 The Cost of Living dataset is from the same site I have mentioned in the previous question, which was found by Russell Chan.
 
 ```{r}
-library(readr)
-library(dplyr)
-# dataset
+# reading CoL dataset
 COL <- read_csv("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/CostOfLiving2023.csv", show_col_types = FALSE)
 coldf <- COL[, !(names(COL) %in% c("fips"))]
 head(coldf)

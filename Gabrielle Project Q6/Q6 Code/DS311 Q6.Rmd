@@ -60,7 +60,6 @@ datsal <- sal %>%
        	!grepl("Virgin Islands", `Work State`, ignore.case = TRUE))
 ```
 
-
 ### About the dataset
 
 The Cost of Living dataset is from the same site I have mentioned in the previous question, which was found by Russell Chan.
@@ -73,6 +72,20 @@ head(coldf)
 ```
 
 Within this dataset, there are 50 entries, one for each state in the USA. It contains data on the population, the growth, and various cost indexes for each state. The main columns we are interested in are the cost and the state, because we are planning to merge the CoL and salary dataset.
+
+### Prepping the dataset
+
+We first create a subset in coldf with only the state and costIndex columns before merging it with the salary dataset.
+
+```{r}
+# subset
+costate <- subset(coldf, select = c(state, costIndex))
+# merging
+salcost <- merge(datsal, costate,  by.x = "Work State", by.y = "state")
+head(salcost)
+```
+
+Next, we will make a new column to create an adjusted wage, where we divide the paid wage per year by the cost index to 
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

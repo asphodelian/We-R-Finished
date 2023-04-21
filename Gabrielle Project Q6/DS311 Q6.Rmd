@@ -1,0 +1,24 @@
+---
+title: "DS311 Q6"
+author: "Gabrielle Salamanca"
+date: "April 20, 2023"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## We-R-Finished 
+
+### Question 6
+
+When looking over at the three given questions, there was a common sub-question:
+
+**Will the answer change if I take standard of living into account?**
+
+While it leans more hypothetical, it did bring thoughts of perhaps we need to quantify it. In this question, we're going to compare the standard of living
+
+
+```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
+```

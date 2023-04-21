@@ -28,6 +28,12 @@
 - Will add on russel’s code for handling COL & salary dataset
 	- Will use for Q6
 - Starting Q6 RMD
+	- Main question I want to answer
+	- Definition of standard/cost of living
+		- Why is it important
+	- About the CoL dataset
+		- Prepping it for question
+
 
 
 

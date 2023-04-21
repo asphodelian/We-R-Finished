@@ -17,9 +17,36 @@ When looking over at the three given questions, there was a common sub-question:
 
 **Will the answer change if I take standard of living into account?**
 
-While it leans more hypothetical, it did bring thoughts of perhaps we need to quantify it to answer it. In this question, we're going to dive a bit deeper on that question using the Cost of Living Dataset and the salary dataset.
+While it leans more hypothetical, it did bring thoughts of perhaps we need to quantify it to answer it. In this question, we're going to dive a bit deeper on that question using the Cost of Living and the salary dataset.
 
+### What is standard/cost of living?
 
+From https://worldpopulationreview.com/state-rankings/cost-of-living-index-by-state:
+
+"Cost of living refers to the amount needed to cover basic expenses, such as food, shelter, transportation, and healthcare."
+
+Of course, each state will vary in their cost of living. From what we know, California is one of the most expensive states to live in. Let's take the shelter expense for example. We know that housing prices have risen to insane numbers in this state. For example, in San Mateo, a single family home can cost upwards to 2 million USD. If one goes to Hillsborough, known to be an expensive area, is double that. Rent is also extremely high, a one bedroom apartment can range between 2 thousand to 4 thousand USD. 
+
+There could be many reasons for this such as the population density, tax rates, etc. When moving out of California, or at least the highly populated areas of the state, the costs will go down. Let's say perhaps somewhere in the Midwest or the South. Housing prices are more likely to be less than 1 million USD, therefore the cost of living index may lower.
+
+### Why is it important?
+
+In our particular project, having data on the cost of living for each region helps employers determine the wage of the job. Of course, certain *genre* of jobs will have higher pay than others, and specific *types* of jobs within that genre will have better wage than the others.
+
+### About the dataset
+
+The Cost of Living dataset is from the same site I have mentioned in the previous question, which was found by Russell Chan.
+
+```{r}
+library(readr)
+library(dplyr)
+# dataset
+COL <- read_csv("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/CostOfLiving2023.csv", show_col_types = FALSE)
+coldf <- COL[, !(names(COL) %in% c("fips"))]
+head(coldf)
+```
+
+Within this dataset, there are 50 entries, one for each state in the USA. It contains data on the population, the growth, and various cost indexes for each state. The main columns we are interested in are the cost and the state, because we are planning to merge the CoL and salary dataset.
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

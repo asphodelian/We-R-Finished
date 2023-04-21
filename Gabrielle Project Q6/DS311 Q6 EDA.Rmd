@@ -13,17 +13,18 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### Q6 EDA
 
-Reading the data into R
+1. Reading the data into R
 
 ```{r}
 library(readr)
 library(dplyr)
 # dataset
-COL2023 <- read_csv("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/CostOfLiving2023.csv", show_col_types = FALSE)
-coldf <- COL2023[, !(names(COL2023) %in% c("fips"))]
+COL <- read_csv("./CostOfLiving2023.csv", show_col_types = FALSE)
+coldf <- COL[, !(names(COL) %in% c("fips"))]
+head(coldf)
 ```
 
-Making columns into variables
+2. Making columns into variables
 
 ```{r}
 state <- coldf$state
@@ -44,11 +45,19 @@ transport <- coldf$transportationCost
 misc <- coldf$miscCost
 ```
 
-Top 10 states
+3. Top 10 states
 
 ```{r}
-
+top10 <- c("Texas", "New York", "New Jersey", "Illinois", 
+           "Massachusetts", "Virginia", "Pennsylvania", 
+           "Washington", "Michigan", "North Carolina")
+# filter
+live <- coldf[, -2:-10]
+live <- live[order(live$state), decreasing = TRUE,]
+top <- live[c(13, 21, 22, 30, 32, 33, 38, 43, 46, 47),]
+top
 ```
+
 
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}

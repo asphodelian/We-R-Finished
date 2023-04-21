@@ -85,7 +85,7 @@ salcost <- merge(datsal, costate,  by.x = "Work State", by.y = "state")
 head(salcost)
 ```
 
-Next, we will make a new column to create an adjusted wage, where we divide the paid wage per year by the cost index to even the field. We will also have a specific subset that only includes: employer name, job title, job title sub, work state, paid wage per year, adjusted year, and Cost index.
+Next, we will make a new column to create an adjusted wage, where we divide the paid wage per year by the cost index to even the field. We will also have a specific subset that only includes: employer name, job title sub, work state, paid wage per year, adjusted year, and Cost index.
 
 ```{r}
 # adjusted wage
@@ -102,6 +102,15 @@ colnames(sc)[7] = "Cost Index"
 head(sc)
 ```
 
+### The Question
+
+What I aim to answer with the merged dataset is this:
+
+With the adjusted wage in mind, could one be able to move and live in the work state they desire? Which job subcategory would allow you to do so?
+
+Previously in Q2, I have used the average and max to answer it. Cost of living dataset does use averages to then make a baseline, so we will use averages to answer this question.
+
+### Diving In
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

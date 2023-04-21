@@ -9,7 +9,7 @@ output: word_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## We-R-Finished 
+## We-R-Finished
 
 ### Question 6
 
@@ -17,7 +17,8 @@ When looking over at the three given questions, there was a common sub-question:
 
 **Will the answer change if I take standard of living into account?**
 
-While it leans more hypothetical, it did bring thoughts of perhaps we need to quantify it. In this question, we're going to compare the standard of living
+While it leans more hypothetical, it did bring thoughts of perhaps we need to quantify it to answer it. In this question, we're going to dive a bit deeper on that question using the Cost of Living Dataset and the salary dataset.
+
 
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}

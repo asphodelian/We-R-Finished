@@ -85,7 +85,24 @@ salcost <- merge(datsal, costate,  by.x = "Work State", by.y = "state")
 head(salcost)
 ```
 
-Next, we will make a new column to create an adjusted wage, where we divide the paid wage per year by the cost index to 
+Next, we will make a new column to create an adjusted wage, where we divide the paid wage per year by the cost index to even the field. We will also have a specific subset that only includes: employer name, job title, job title sub, work state, paid wage per year, adjusted year, and Cost index.
+
+```{r}
+# adjusted wage
+salcost$ADJUSTED_WAGE <- salcost$PAID_WAGE_PER_YEAR / salcost$costIndex
+
+# new subset
+sc <- salcost[, c("EMPLOYER_NAME", "JOB_TITLE", "Job Title Sub", "Work State", "PAID_WAGE_PER_YEAR", "ADJUSTED_WAGE", "costIndex")]
+
+# rename columns
+colnames(sc)[1] = "Employer"
+colnames(sc)[2] = "Job Title"
+colnames(sc)[5] = "Paid Wage/Yr"
+colnames(sc)[6] = "Adjusted Wage"
+colnames(sc)[7] = "Cost Index"
+head(sc)
+```
+
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

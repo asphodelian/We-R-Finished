@@ -23,3 +23,11 @@ Created new branches for upcoming questions 3 and 4.
 Began preliminary setup work for Questions 3 and 4.
 
 4/3/2023: Began work on questions #3 and #4.
+
+4/8/2023: More data cleaning
+
+4/9/2023: Graph attempts
+
+4/10/2023: More graph attempts that still didn't work out.
+
+4/12/2023: Meeting with instructor gave me some clarity on how to fix the problems. Will simplify data more going forward.

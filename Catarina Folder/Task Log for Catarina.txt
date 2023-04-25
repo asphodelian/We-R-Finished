@@ -31,3 +31,5 @@ Began preliminary setup work for Questions 3 and 4.
 4/10/2023: More graph attempts that still didn't work out.
 
 4/12/2023: Meeting with instructor gave me some clarity on how to fix the problems. Will simplify data more going forward.
+
+4/24/2023: Finished Q3a properly. Began work on Q3b, about 80% done.

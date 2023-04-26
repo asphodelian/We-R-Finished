@@ -119,6 +119,16 @@ topState <- c("Texas", "New York",
      		 "Michigan", "North Carolina")
 salcost <- salcost[salcost$`Work State` %in% topState, ]
 
+# mean
+salcost %>%
+  filter(`Adjusted Wage` > quantile(`Adjusted Wage`, 0.05) & 
+           `Adjusted Wage` < quantile(`Adjusted Wage`, 0.95)) %>%
+  group_by(Sub, `Employer`) %>%
+  summarise(mean_salary = mean(`Adjusted Wage`)) %>%
+  arrange(Sub, desc(mean_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = mean_salary)
+
 # median
 salcost %>%
   filter(`Adjusted Wage` > quantile(`Adjusted Wage`, 0.05) & 

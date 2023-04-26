@@ -106,7 +106,7 @@ head(salcost)
 
 What I aim to answer with the merged dataset is this:
 
-With the adjusted wage in mind, could one be able to move and live in the work state they desire? Which job subcategory would allow you to do so?
+What are the states with the largest change in salary adjusted wage? which are the top and bottom states in terms of salary considering adjusted wage? If we look at job subtitles, how does salary change for top and bottom 5 considering the cost of living?
 
 Previously in Q2, I have used the average and max to answer it. Cost of living dataset does use averages to then make a baseline, and I was planning to use averages to answer this question. But, by Ana's suggestion, median would be far more stable than using the mean. The mean tends to be skewed if there's more or less of something, and knowing that software engineer has major outliers, this made much more sense.
 

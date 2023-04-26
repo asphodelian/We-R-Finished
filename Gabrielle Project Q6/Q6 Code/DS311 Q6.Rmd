@@ -92,14 +92,14 @@ Next, we will make a new column to create an adjusted wage, where we divide the 
 salcost$ADJUSTED_WAGE <- salcost$PAID_WAGE_PER_YEAR / salcost$costIndex
 
 # new subset
-sc <- salcost[, c("EMPLOYER_NAME", "Job Title Sub", "Work State", "PAID_WAGE_PER_YEAR", "ADJUSTED_WAGE", "costIndex")]
+salcost <- salcost[, c("EMPLOYER_NAME", "Job Title Sub", "Work State", "PAID_WAGE_PER_YEAR", "ADJUSTED_WAGE", "costIndex")]
 
 # rename columns
-colnames(sc)[1] = "Employer"
-colnames(sc)[5] = "Paid Wage/Yr"
-colnames(sc)[6] = "Adjusted Wage"
-colnames(sc)[7] = "Cost Index"
-head(sc)
+colnames(salcost)[1] = "Employer"
+colnames(salcost)[4] = "Paid Wage/Yr"
+colnames(salcost)[5] = "Adjusted Wage"
+colnames(salcost)[6] = "Cost Index"
+head(salcost)
 ```
 
 ### The Question

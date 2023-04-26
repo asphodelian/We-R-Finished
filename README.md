@@ -41,12 +41,12 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 ### Ana
 - Developing Q5
 ### Gabrielle
-- Answering Q3
+- Answering Q2
+- EDA for Q6
 ### Catarina
 - Answering Q3
 - Devveloping Q4
 ### Future Tasks
-- Developing Q6
 - Receive & Implement feedback changes
 - Submit for 2nd review
 - Slide presentation

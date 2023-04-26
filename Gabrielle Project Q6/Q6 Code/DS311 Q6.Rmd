@@ -92,18 +92,18 @@ Next, we will make a new column to create an adjusted wage, where we divide the 
 
 ```{r}
 # adjusted wage
-salcost$ADJUSTED_WAGE <- salcost$PAID_WAGE_PER_YEAR/salcost$costIndex
+salcost$ADJUSTED_WAGE <- (salcost$PAID_WAGE_PER_YEAR/salcost$costIndex)*100
 # new subset
 salcost <- salcost[, c("EMPLOYER_NAME", "Job Title Sub", "Work State", "WORK_STATE_ABBREVIATION", "PAID_WAGE_PER_YEAR", "ADJUSTED_WAGE", "costIndex")]
 
 # for each state
-allAdjustMed <- aggregate(salcost$ADJUSTED_WAGE, by = list(salcost$Work_State), FUN = median)
+allAdjustMed <- aggregate(salcost$ADJUSTED_WAGE, by = list(salcost$`Work State`), FUN = median)
 names(allAdjustMed) <- c("State", "Median Adjusted Wage")
 # sorting
 allAdjustMed <- allAdjustMed[order(-allAdjustMed$'Median Adjusted Wage'),]
 
 #paid for each state
-allPaidMed <- aggregate(salcost$PAID_WAGE_PER_YEAR, by = list(salcost$Work_State), FUN = median)
+allPaidMed <- aggregate(salcost$PAID_WAGE_PER_YEAR, by = list(salcost$`Work State`), FUN = median)
 names(allPaidMed) <- c("State", "Median Paid Wage")
 # Sort
 allPaidMed <- allPaidMed[order(-allPaidMed$'Median Paid Wage'),]

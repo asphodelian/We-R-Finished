@@ -1,0 +1,384 @@
+---
+title: "Q6"
+author: "Ana Paula Felix de Queiroz"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{=html}
+<style type="text/css">
+
+h1.title {
+  font-size: 38px;
+  font-family: "Times New Roman", Times, serif;
+  color: #2a6592;
+  text-align: center;
+}
+h4.author { /* Header 4 - and the author and data headers use this too  */
+    font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: #2a6592;
+  text-align: center;
+}
+h4.date { /* Header 4 - and the author and data headers use this too  */
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: DarkBlue;
+  text-align: center;
+}
+</style>
+```
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(root.dir = "C:/Users/pauli/OneDrive/Documentos/Classes 2023/311_tech")
+
+library(car)
+
+```
+
+
+## We-R-Finished
+
+```{r}
+library(readr)
+library(readxl)
+library(dplyr)
+```
+
+### Question 6
+
+When looking over at the three given questions, there was a common sub-question:
+
+**Will the answer change if I take standard of living into account?**
+
+While it leans more hypothetical, it did bring thoughts of perhaps we need to quantify it to answer it. In this question, we're going to dive a bit deeper on that question using the Cost of Living and the salary dataset.
+
+### What is standard/cost of living?
+
+From https://worldpopulationreview.com/state-rankings/cost-of-living-index-by-state:
+
+"Cost of living refers to the amount needed to cover basic expenses, such as food, shelter, transportation, and healthcare."
+
+Of course, each state will vary in their cost of living. From what we know, California is one of the most expensive states to live in. Let's take the shelter expense for example. We know that housing prices have risen to insane numbers in this state. For example, in San Mateo, a single family home can cost upwards to 2 million USD. If one goes to Hillsborough, known to be an expensive area, is double that. Rent is also extremely high, a one bedroom apartment can range between 2 thousand to 4 thousand USD.
+
+There could be many reasons for this such as the population density, tax rates, etc. When moving out of California, or at least the highly populated areas of the state, the costs will go down. Let's say perhaps somewhere in the Midwest or the South. Housing prices are more likely to be less than 1 million USD, therefore the cost of living index may lower.
+
+### Why is it important?
+
+In our particular project, having data on the cost of living for each region helps employers determine the wage of the job. Of course, certain *genre* of jobs will have higher pay than others, and specific *types* of jobs within that genre will have better wage than the others. When we take the salary dataset into account, we can use this data to find out if one would be able to live in a state with the salary they will receive. Of course, I will only use the top 10 states for data-related jobs I found in Q2.
+
+```{r}
+# reading salary dataset
+salary <- read_excel("salary_data_states.xlsx")
+names(salary)
+dim(salary)
+colnames(salary)[19] = "Work_State"
+colnames(salary)[26] = "Job_Title_Sub"
+# filtering
+sal <- salary %>%
+  filter(!grepl("professor", `Job_Title_Sub`, ignore.case = TRUE) &
+  		 !grepl("attorney", `Job_Title_Sub`, ignore.case = TRUE) &
+  		 !grepl("assistant professor", `Job_Title_Sub`, ignore.case = TRUE) &
+  		 !grepl("teacher", `Job_Title_Sub`, ignore.case = TRUE))
+datsal <- sal %>%
+  filter(!grepl("Guam", `Work_State`, ignore.case = TRUE) &
+  		 !grepl("Guamam", `Work_State`, ignore.case = TRUE) &
+  		 !grepl("Palau", `Work_State`, ignore.case = TRUE) &
+  		 !grepl("Northern Mariana Islands", `Work_State`, ignore.case = TRUE) &
+  		 !grepl("Puerto Rico", `Work_State`, ignore.case = TRUE) &
+  		 !grepl("Virgin Islands", `Work_State`, ignore.case = TRUE))
+```
+
+### About the dataset
+
+The Cost of Living dataset is from the same site I have mentioned in the previous question, which was found by Russell Chan.
+
+```{r}
+# reading CoL dataset
+COL <- read_csv("CostOfLiving2023.csv", show_col_types = FALSE)
+coldf <- COL[, !(names(COL) %in% c("fips"))]
+head(coldf)
+```
+
+Within this dataset, there are 50 entries, one for each state in the USA. It contains data on the population, the growth, and various cost indexes for each state. The main columns we are interested in are the cost and the state, because we are planning to merge the CoL and salary dataset.
+
+### Prepping the dataset
+
+We first create a subset in coldf with only the state and costIndex columns before merging it with the salary dataset.
+
+```{r}
+# subset
+costate <- subset(coldf, select = c(state, costIndex))
+# merging
+salcost <- merge(datsal, costate,  by.x = "Work_State", by.y = "state")
+head(salcost)
+
+```
+
+Next, we will make a new column to create an adjusted wage, where we divide the paid wage per year by the cost index to even the field. We will also have a specific subset that only includes: employer name, job title sub, work state, paid wage per year, adjusted year, and Cost index.
+
+
+```{r}
+salcost$ADJUSTED_WAGE <- (salcost$PAID_WAGE_PER_YEAR / salcost$costIndex)*100
+
+# new subset
+salcost <- salcost[, c("EMPLOYER_NAME", "Job_Title_Sub", "Work_State", "PAID_WAGE_PER_YEAR", "ADJUSTED_WAGE", "costIndex", "WORK_STATE_ABBREVIATION")]
+
+
+unique(salcost$Job_Title_Sub)
+
+```
+
+
+
+### The Question
+
+What I aim to answer with the merged dataset is this:
+
+With the adjusted wage in mind, could one be able to move and live in the work state they desire? Which job subcategory would allow you to do so?
+
+Previously in Q2, I have used the average and max to answer it. Cost of living dataset does use averages to then make a baseline, and I was planning to use averages to answer this question. But, by Ana's suggestion, median would be far more stable than using the mean. The mean tends to be skewed if there's more or less of something, and knowing that software engineer has major outliers, this made much more sense.
+
+```{r}
+
+#  ADJUSTED_WAGE for each state
+state_means <- aggregate(salcost$ADJUSTED_WAGE, by = list(salcost$Work_State), FUN = mean)
+names(state_means) <- c("State", "Mean_Adjusted_Wage")
+
+# Sort the state_means data frame by Mean_Adjusted_Wage in descending order
+state_means <- state_means[order(-state_means$Mean_Adjusted_Wage),]
+
+
+
+
+###################################################
+# First, extract the top 5 states
+top_states <- head(state_means, 5)$State
+
+# Filter the data by the top 5 states
+top_states_data <- salcost[salcost$Work_State %in% top_states, ]
+
+# Calculate the mean ADJUSTED_WAGE by job subtitle and state
+state_job_means <- aggregate(top_states_data$ADJUSTED_WAGE, 
+                             by = list(top_states_data$Work_State, top_states_data$Job_Title_Sub),
+                             FUN = mean)
+
+# Rename the columns of the state_job_means data frame
+names(state_job_means) <- c("State", "Job_Title_Sub", "Mean_Adjusted_Wage")
+
+# Order the data frame by state and mean adjusted wage in descending order
+state_job_means <- state_job_means[order(state_job_means$State, -state_job_means$Mean_Adjusted_Wage),]
+
+# Print the state_job_means data frame
+print(state_job_means)
+
+
+
+
+###################comparison paid wage##################
+########### comparison with payed wage  ################
+
+#  ADJUSTED_WAGE for each state
+state_means_paid <- aggregate(salcost$PAID_WAGE_PER_YEAR, by = list(salcost$Work_State), FUN = mean)
+names(state_means_paid) <- c("State", "Mean_paid_Wage")
+
+# Sort the state_means data frame by Mean_Adjusted_Wage in descending order
+state_means_paid <- state_means_paid[order(-state_means_paid$Mean_paid_Wage),]
+
+
+
+
+# Calculate the mean PAID_WAGE_PER_YEAR by job subtitle and state
+state_job_means_paidwage <- aggregate(top_states_data$PAID_WAGE_PER_YEAR, 
+                             by = list(top_states_data$Work_State, top_states_data$Job_Title_Sub),
+                             FUN = mean)
+
+# Rename the columns of the state_job_means data frame
+names(state_job_means_paidwage) <- c("State", "Job_Title_Sub", "Mean_Paid_Wage")
+
+# Order the data frame by state and mean paid wage in descending order
+state_job_means_paidwage <- state_job_means_paidwage[order(state_job_means_paidwage$State, -state_job_means_paidwage$Mean_Paid_Wage),]
+
+# Print the state_job_means data frame
+print(state_job_means_paidwage)
+
+
+
+
+
+###############################
+
+# First, extract the bottom 5 states
+bottom_states <- tail(state_means, 5)$State
+
+# Filter the data by the top 5 states
+bottom_states_data <- salcost[salcost$Work_State %in% bottom_states, ]
+
+# Calculate the mean ADJUSTED_WAGE by job subtitle and state
+state_job_means_b <- aggregate(bottom_states_data$ADJUSTED_WAGE, 
+                             by = list(bottom_states_data$Work_State, bottom_states_data$Job_Title_Sub),
+                             FUN = mean)
+
+# Rename the columns of the state_job_means data frame
+names(state_job_means_b) <- c("State", "Job_Title_Sub", "Mean_Adjusted_Wage")
+
+# Order the data frame by state and mean adjusted wage in descending order
+state_job_means_b <- state_job_means_b[order(state_job_means_b$State, -state_job_means_b$Mean_Adjusted_Wage),]
+
+# Print the state_job_means data frame
+print(state_job_means_b)
+
+
+
+# Load ggplot2 library
+library(ggplot2)
+
+# Create a new data frame by merging state_job_means and state_job_means_paidwage data frames
+state_job_means_all <- merge(state_job_means, state_job_means_paidwage, by = c("State", "Job_Title_Sub"))
+
+# Create the grouped bar plot
+ggplot(state_job_means_all, aes(x = State, y = Mean_Adjusted_Wage, fill = Job_Title_Sub)) +
+  geom_bar(position = "dodge", stat = "identity", width = 0.6) +
+  geom_bar(aes(y = Mean_Paid_Wage), position = "dodge", stat = "identity", width = 0.6, alpha = 0.5) +
+  scale_fill_manual(values = c("#F8766D", "#00BA38", "#619CFF", "#FC8D62", "#8B00FF")) +
+  labs(x = "State", y = "Mean Salary", fill = "Job Title Sub") +
+  ggtitle("Comparison of Mean Adjusted and Paid Wages by Job Title Sub and State") +
+  theme(plot.title = element_text(size = 16, hjust = 0.5), axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+
+
+```
+
+
+
+looking at cost index by state
+```{r}
+# Calculate the mean cost index by state
+state_cost_index <- aggregate(salcost$costIndex, by = list(salcost$Work_State), FUN = mean)
+
+# Rename the columns of the state_cost_index data frame
+names(state_cost_index) <- c("State", "Mean_Cost_Index")
+
+# Order the data frame by mean cost index in descending order
+state_cost_index <- data.frame(state_cost_index[order(-state_cost_index$Mean_Cost_Index), ])
+
+# Print the state_cost_index data frame
+print(state_cost_index)
+
+head(salcost)
+
+```
+
+
+```{r}
+# Calculate the mean paid wage per year by state
+state_all_means <- aggregate(PAID_WAGE_PER_YEAR ~ Work_State, data = salcost, FUN = mean)
+
+# Rename the columns of the state_means data frame
+names(state_all_means) <- c("State", "Mean_Paid_Wage_Per_Year")
+
+# Order the data frame by mean paid wage per year in descending order
+state_all_means <- state_all_means[order(-state_all_means$Mean_Paid_Wage_Per_Year),]
+
+# Print the state_means data frame
+#print(state_all_means)
+
+# Calculate the mean adjusted wage by state
+state_all_means_adjusted <- aggregate(ADJUSTED_WAGE ~ Work_State, data = salcost, FUN = mean)
+
+# Rename the columns of the state_means_adjusted data frame
+names(state_all_means_adjusted) <- c("State", "Mean_Adjusted_Wage")
+
+# Merge the state_means and state_means_adjusted data frames by state
+merged_means <- merge(state_all_means, state_all_means_adjusted, by = "State")
+
+
+
+# Add the WORK_STATE_ABBREVIATION column to merged_means
+merged_means$WORK_STATE_ABBREVIATION <- salcost$WORK_STATE_ABBREVIATION[match(merged_means$State, salcost$Work_State)]
+
+
+# Calculate the percentage change of the adjusted wage
+merged_means$Percent_Change <- (merged_means$Mean_Adjusted_Wage - merged_means$Mean_Paid_Wage_Per_Year) / merged_means$Mean_Paid_Wage_Per_Year * 100
+
+# Add a column indicating whether the percentage change is positive or negative
+merged_means$Positive_Change <- ifelse(merged_means$Percent_Change > 0, "Yes", "No")
+
+# Order the data frame by percent change in descending order
+merged_means <- merged_means[order(-merged_means$Percent_Change),]
+
+# Print the merged_means data frame
+print(merged_means)
+
+
+
+
+
+
+
+
+
+
+
+ggplot(data = merged_means, aes(x = State)) +
+  geom_bar(aes(y = Percent_Change, fill = Positive_Change), alpha = 0.8, stat = "identity") +
+  scale_fill_manual(values = c("red", "green"), guide = FALSE) +
+  geom_text(aes(y = Percent_Change, label = paste0(round(Percent_Change, 1), "%")), vjust = -0.5) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(title = "Mean Adjusted Wage and Percent Change by State",
+       x = "State",
+       y = "Percent Change",
+       color = "Positive Change") +
+  theme_minimal()
+
+
+ggplot(data = merged_means, aes(x = WORK_STATE_ABBREVIATION)) +
+  geom_bar(aes(y = Percent_Change, fill = Positive_Change), alpha = 0.8, stat = "identity") +
+  scale_fill_manual(values = c("red", "green"), guide = FALSE) +
+  geom_text(aes(y = Percent_Change, label = paste0(round(Percent_Change, 1), "%")), vjust = -0.5) +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(title = "Mean Adjusted Wage and Percent Change by State",
+       x = "State Abbreviation",
+       y = "Percent Change",
+       color = "Positive Change") +
+  theme_minimal()
+
+
+
+```
+
+
+
+
+```{r}
+salcost$Sub <- factor(salcost$`Job Title Sub`, levels = c("business analyst", "data analyst", "data scientist", "management consultant", "software engineer"))
+salcost$'Median Salary' <- median(salcost$`Adjusted Wage`)
+topState <- c("Texas", "New York",
+     		 "New Jersey", "Illinois", "Massachusetts",
+     		 "Virginia", "Pennsylvania", "Washington",
+     		 "Michigan", "North Carolina")
+salcost <- salcost[salcost$`Work State` %in% topState, ]
+# median
+salcost %>%
+  filter(`Adjusted Wage` > quantile(`Adjusted Wage`, 0.05) & 
+           `Adjusted Wage` < quantile(`Adjusted Wage`, 0.95)) %>%
+  group_by(Sub, `Employer`) %>%
+  summarise(med_salary = median(`Adjusted Wage`)) %>%
+  arrange(Sub, desc(med_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = med_salary)
+
+
+
+```
+
+### Diving In
+
+```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
+```

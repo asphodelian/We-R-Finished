@@ -17,7 +17,6 @@ library(readxl)
 library(dplyr)
 ```
 
-
 ### Question 6
 
 When looking over at the three given questions, there was a common sub-question:
@@ -92,13 +91,14 @@ Next, we will make a new column to create an adjusted wage, where we divide the 
 salcost$ADJUSTED_WAGE <- salcost$PAID_WAGE_PER_YEAR / salcost$costIndex
 
 # new subset
-salcost <- salcost[, c("EMPLOYER_NAME", "Job Title Sub", "Work State", "PAID_WAGE_PER_YEAR", "ADJUSTED_WAGE", "costIndex")]
+salcost <- salcost[, c("EMPLOYER_NAME", "Job Title Sub", "Work State", "WORK_STATE_ABBREVIATION", "PAID_WAGE_PER_YEAR", "ADJUSTED_WAGE", "costIndex")]
 
 # rename columns
 colnames(salcost)[1] = "Employer"
-colnames(salcost)[4] = "Paid Wage/Yr"
-colnames(salcost)[5] = "Adjusted Wage"
-colnames(salcost)[6] = "Cost Index"
+colnames(salcost)[4] = "State Abb"
+colnames(salcost)[5] = "Paid Wage/Yr"
+colnames(salcost)[6] = "Adjusted Wage"
+colnames(salcost)[7] = "Cost Index"
 head(salcost)
 ```
 

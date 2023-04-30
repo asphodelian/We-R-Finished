@@ -2,8 +2,8 @@
 title: "Q 5 Salary Data"
 author: "Ana Paula Felix de Queiroz"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
   html_document: default
 editor_options:
   chunk_output_type: console
@@ -40,7 +40,12 @@ library(car)
 
 ```
 
-
+### Question 5: 
+  
+  
+####  Are specific job titles being offered to candidates of a specific nationality? 
+####  What jobs title subgroup are being offered in each country?
+####  Does the nationality of the candidate affect the status of case?
 
 ```{r}
 library(readxl)

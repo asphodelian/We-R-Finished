@@ -1,0 +1,108 @@
+---
+title: "Q 5 Salary Data"
+author: "Ana Paula Felix de Queiroz"
+output:
+  word_document: default
+  pdf_document: default
+  html_document: default
+editor_options:
+  chunk_output_type: console
+---
+
+```{=html}
+<style type="text/css">
+
+h1.title {
+  font-size: 38px;
+  font-family: "Times New Roman", Times, serif;
+  color: #2a6592;
+  text-align: center;
+}
+h4.author { /* Header 4 - and the author and data headers use this too  */
+    font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: #2a6592;
+  text-align: center;
+}
+h4.date { /* Header 4 - and the author and data headers use this too  */
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: DarkBlue;
+  text-align: center;
+}
+</style>
+```
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(root.dir = "C:/Users/pauli/OneDrive/Documentos/Classes 2023/311_tech")
+
+library(car)
+
+```
+
+
+
+```{r}
+library(readxl)
+df <- read_excel("salary_data_states.xlsx", col_types = c("text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text"))
+
+#summary(df)
+```
+
+```{r}
+#names(df)
+#head(df)
+#View(df)
+attach(df)
+
+
+
+#check for missing values
+missing_values <- is.na(df)
+
+# Count the number of missing values per column
+colSums(missing_values)
+
+# Remove rows with missing values if needed
+#cleaned_data <- na.omit(data)
+# Save the cleaned data
+#write.csv(cleaned_data, "cleaned_data.csv")
+
+
+#unique(JOB_TITLE_SUBGROUP)
+
+#clean the data and keep only data related jobs.
+# Define the job titles you want to keep
+
+```
+
+# data pre processing 
+
+```{r}
+
+JOB_TITLE_DATA <- c("software engineer", "business analyst", "management consultant", "data analyst", "data scientist")
+
+# Filter the data to keep only the specified job titles
+data <- df[df$JOB_TITLE_SUBGROUP %in% JOB_TITLE_DATA, ]
+
+# Check the number of rows in the cleaned data
+#nrow(data)
+#nrow(df)
+
+
+attach(data)
+# Define a function to map case status to short initials
+map_case_status <- function(x) {
+  ifelse(x == "denied", "D", 
+         ifelse(x == "certified-withdrawn", "CW",
+                ifelse(x == "certified", "C",
+                       ifelse(x == "withdrawn", "W", 
+                              ifelse(x == "certified-expired", "CE", "U"))))) # "U" for unknown
+}
+
+# Apply the function to create a new variable
+data$CASE_STATUS_SHORT <- map_case_status(data$CASE_STATUS)
+
+```
+
+

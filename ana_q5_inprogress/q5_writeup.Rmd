@@ -46,6 +46,8 @@ library(car)
 
 #### - Does the nationality of the candidate affect the status of case?
 
+#### - Does job subtitle of the candidate affect the status o the case? 
+
 ```{r}
 library(readxl)
 df <- read_excel("salary_data_states.xlsx", col_types = c("text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text", "text"))
@@ -60,26 +62,13 @@ names(df)
 attach(df)
 
 
-check_missing_values <- function(df) {
-  for (col in names(df)) {
-    n_missing <- sum(is.na(df[[col]]))
-    if (n_missing > 0) {
-      message(paste0("Column ", col, " has ", n_missing, " missing values."))
-    } else {
-      message(paste0("Column ", col, " has no missing values."))
-    }
-  }
-}
-
-
-check_missing_values(df)
 summary(df)
 
 
 
 
 # Count the number of missing values in each column
-sapply(df, function(x) sum(is.na(x)))
+#sapply(df, function(x) sum(is.na(x)))
 
 
 # Remove rows with missing values if needed
@@ -131,8 +120,8 @@ data$COUNTRY_OF_CITIZENSHIP <- replace(data$COUNTRY_OF_CITIZENSHIP, data$COUNTRY
 
 dim(data)
 # Omit rows with NA values
-data <- na.omit(data)
-dim(data)
+#data <- na.omit(data)
+#dim(data)
 
 ```
 
@@ -165,24 +154,18 @@ Key takeaways considering the top 10 countries with higher hiring percentage:
 
 #### - Does the nationality of the candidate affect the status of case?
 
-We wanted to investigate whether the nationality of the candidate affects the status of the case (positive or negative) in the context of immigration applications. In order to have a binary response we code certified withdraw (which means the candidate withdraw their application after it was accepted) as positive together with certified, and we code certified-expired (which meant cadidate was aproved but company didnt went through with aplication We analyzed a dataset that contains information on the status of immigration cases for ten different countries. We used logistic regression analysis and ANOVA to test the significance of nationality as a predictor of case status.
+We wanted to investigate whether the nationality of the candidate affects the status of the case (positive or negative) in the context of immigration applications.
 
-The logistic regression analysis showed that the intercept is significant (p \< 0.001), indicating that there is a significant relationship between the predictor variable (country) and the response variable (positive or negative status). However, the individual coefficients for the different countries were not all significant (p \> 0.05). The ANOVA test also showed that there is a significant difference between at least two groups (p = 0.008), but it does not indicate which specific groups differ significantly.
+![](images/case_status_topcountries_table.png)
 
-Therefore, we conclude that the nationality of the candidate does have an effect on the status of the case, but the effect is not the same for all countries. Some countries may have a more significant impact on the case status than others. Further analysis is needed to identify which specific countries have a significant effect on the case status.
+In order to have a binary response we code certified withdraw, certified-expired and certified as positive and denied as negative. We used logistic regression analysis and ANOVA to test the significance of nationality as a predictor of case status.
 
-It is also important to note that the current analysis does not take into account other variables that may affect the case status, such as the type of visa application, the qualifications of the candidate, or the reasons for denial. Therefore, the current analysis should be considered as a preliminary investigation, and further research is necessary to fully understand the factors that affect the status of immigration cases.
+The logistic regression analysis showed that the intercept is significant (p \< 0.001), indicating that there is a significant relationship between the predictor variable (country) and the response variable (positive or negative status). However, the individual coefficients for the different countries were not all significant (p \> 0.05).
 
-In conclusion, while the nationality of the candidate does have a significant impact on the status of the case, the effect varies between different countries. Therefore, it is important to consider the candidate's nationality when analyzing the status of immigration cases, but it is also necessary to consider other factors that may affect the case status.
-
-Therefore, we can conclude that there is no significant evidence that the nationality of the candidate affects the status of the case, based on the data provided.
+Therefore, we conclude that the nationality of the candidate does not have an effect on the status of the case. ion cases, but it is also necessary to consider other factors that may affect the case status.
 
 ```{r}
 
-# Replace "NA" with NA in the COUNTRY_OF_CITIZENSHIP column
-data$COUNTRY_OF_CITIZENSHIP <- replace(data$COUNTRY_OF_CITIZENSHIP, data$COUNTRY_OF_CITIZENSHIP == "NA", NA)
-
-dim(data)
 
 # Select the top 10 countries by count
 top_countries <- names(sort(table(data$COUNTRY_OF_CITIZENSHIP), decreasing=TRUE))[1:10]
@@ -196,6 +179,7 @@ table_pct <- prop.table(table, margin = 1) * 100
 
 
 
+
 # Create a data frame from the table
 status <- data.frame(
   country = rownames(table),
@@ -206,59 +190,90 @@ status <- data.frame(
 )
 
 # Perform chi-squared test of independence
-chisq.test(status[, -1])
+chisq.test(status[,-1])
 
-#######################################################################
-# Subset the data for Canada
-canada_data <- subset(data, COUNTRY_OF_CITIZENSHIP == "CANADA")
-
-# Create a contingency table
-canada_table <- table(canada_data$COUNTRY_OF_CITIZENSHIP, canada_data$CASE_STATUS)
-
-# Perform chi-squared test
-chisq.test(canada_table)
-
-# Subset the data for Canada
-china_data <- subset(data, COUNTRY_OF_CITIZENSHIP == "CHINA")
-
-# Create a contingency table
-china_table <- table(china_data$COUNTRY_OF_CITIZENSHIP, china_data$CASE_STATUS)
-
-# Perform chi-squared test
-chisq.test(canada_table)
 
 
 
 #####################################################################
 
-# Create a new data frame with the binary response variables
-status_response <- data.frame(Country = rownames(status), 
-                              Positive = rowSums(status[, c("certified", "withdrawn", "certified_expired")]), 
-                              Negative = rowSums(status[, c("denied")]))
-# Merge certified_expired and certified as Positive
-status_response$Positive[status_response$Country %in% names(status) & !is.na(names(status))] <- 
-  rowSums(status[, c("certified", "certified_expired")])[status_response$Country %in% names(status) & !is.na(names(status))]
-
-# Remove rows with NAs
-status_response <- na.omit(status_response)
 
 
+summarize_status <- function(status) {
+  # Merge certified_expired and certified as Positive
+  status$Positive <- rowSums(status[, c("certified", "certified_expired", "withdrawn")])
+  
+  # Remove certified_expired, certified and withdrawn columns
+  status <- status[, !colnames(status) %in% c("certified", "certified_expired", "withdrawn")]
+  
+  # Rename denied column to Negative
+  colnames(status)[colnames(status) == "denied"] <- "Negative"
+  
+  return(status)
+}
 
-# Create a logistic regression model with country as predictor and positive case status as response
-model_pos <- glm(cbind(Positive,Negative) ~ factor(Country), data = status_response, family = binomial)
+new_status <- summarize_status(status)
+
+
+model_pos <- glm(cbind(Positive,Negative) ~ factor(country), data = new_status, family = binomial)
+
+
+
 
 # Check the model summary
 summary(model_pos)
-
+library(car)
 Anova(model_pos)
 
+# create contingency table
+cont_table <- matrix(c(new_status$Negative, new_status$Positive), nrow = 2, byrow = TRUE)
 
+fisher.test(cont_table, simulate.p.value = TRUE, B = 10000)
 
 
 ```
 
-\
+#### Does job subtitle of the candidate affect the status o the case? 
 
-\
+We used python to visualize the relationship between job title subgroup and case status using a stacked bar chart shown bellow. It seems like the difference between case status frequency for job title subgroup does not change much, so we decided to run a chi square for independence to check if our assumption is correct.
+Although the result of the chi-square test suggests that there is a significant association between job title subgroup and case status. The very small p-value (\< 2.2e-16) indicates that the null hypothesis of independence between the two variables can be rejected. Therefore, the job title subgroup of the candidate does seem to have an effect on the case status.
 
-\
+![](images/case_status_vs_jobsubgroup.png)
+
+```{r}
+
+
+# Create a contingency table of job title subgroup and case status
+ct <- table(data$CASE_STATUS_SHORT, data$JOB_TITLE_SUBGROUP)
+
+# Conduct a chi-square test of independence
+res <- chisq.test(ct)
+
+# Interpret the results
+if (res$p.value < 0.05) {
+  print("There is a significant association between job title subgroup and case status.")
+} else {
+  print("There is no significant association between job title subgroup and case status.")
+}
+
+test_result <- chisq.test(ct)
+
+```
+
+To further explore this we will look at the mosaic graph which can give us a better idea of what is happening with the status considering job title subgroup.
+
+Business analysts are more likelly to be certified than software engineers, and are and less likely to have their certification expired or withdraw compared to software engineers.
+
+Data analysts are d less likely to have their certification expired or withdrawn compared to software engineers.
+
+Software Engineers are more likely to have a denied a visa. They are more less likely to have a certified case status compared to business analysts and are more likely to have their certification expired , which means companies didn't move forward with the hiring after their case was certified, as well as have their certification withdrawn, which means that the applicant didn't move forward with the application after the the case was certified.
+
+```{r}
+
+# Load the necessary packages
+library(vcd)
+
+# Create the mosaic plot
+mosaicplot(table(data$CASE_STATUS_SHORT, data$JOB_TITLE_SUBGROUP), shade=TRUE, 
+           main="Mosaic plot of CASE_STATUS and JOB_TITLE_SUBGROUP")
+```

@@ -96,16 +96,14 @@ salcost$ADJUSTED_WAGE <- (salcost$PAID_WAGE_PER_YEAR/salcost$costIndex)*100
 # new subset
 salcost <- salcost[, c("EMPLOYER_NAME", "Job Title Sub", "Work State", "WORK_STATE_ABBREVIATION", "PAID_WAGE_PER_YEAR", "ADJUSTED_WAGE", "costIndex")]
 
-# for each state
+# for each state, median
 allAdjustMed <- aggregate(salcost$ADJUSTED_WAGE, by = list(salcost$`Work State`), FUN = median)
 names(allAdjustMed) <- c("State", "Median Adjusted Wage")
-# sorting
-allAdjustMed <- allAdjustMed[order(-allAdjustMed$'Median Adjusted Wage'),]
-
-#paid for each state
 allPaidMed <- aggregate(salcost$PAID_WAGE_PER_YEAR, by = list(salcost$`Work State`), FUN = median)
 names(allPaidMed) <- c("State", "Median Paid Wage")
-# Sort
+
+# sorting
+allAdjustMed <- allAdjustMed[order(-allAdjustMed$'Median Adjusted Wage'),]
 allPaidMed <- allPaidMed[order(-allPaidMed$'Median Paid Wage'),]
 
 # rename columns
@@ -128,11 +126,11 @@ Previously in Q2, I have used the average and max to answer part b and . Cost of
 ```{r}
 salcost$Sub <- factor(salcost$`Job Title Sub`, levels = c("business analyst", "data analyst", "data scientist", "management consultant", "software engineer"))
 salcost$'Median Salary' <- median(salcost$`Adjusted Wage`)
-topState <- c("Texas", "New York",
-     		 "New Jersey", "Illinois", "Massachusetts",
-     		 "Virginia", "Pennsylvania", "Washington",
-     		 "Michigan", "North Carolina")
-salcost <- salcost[salcost$`Work State` %in% topState, ]
+# topState <- c("Texas", "New York",
+#     		 "New Jersey", "Illinois", "Massachusetts",
+#     		 "Virginia", "Pennsylvania", "Washington",
+#     		 "Michigan", "North Carolina")
+# salcost <- salcost[salcost$`Work State` %in% topState, ]
 
 # mean
 salcost %>%
@@ -154,8 +152,6 @@ salcost %>%
   group_by(Sub) %>%
   top_n(n = 5, wt = med_salary)
 ```
-
-### Diving In
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

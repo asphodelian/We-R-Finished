@@ -2,8 +2,6 @@ knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_knit$set(root.dir = "C:/Users/pauli/OneDrive/Documentos/Classes 2023/311_tech")
 
 library(car)
-
-
 library(readr)
 library(readxl)
 library(dplyr)

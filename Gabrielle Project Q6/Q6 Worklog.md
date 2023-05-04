@@ -34,6 +34,25 @@
 	- About the CoL dataset
 		- Prepping it for question
 
+## Apr 25, 2023
+- Changed average/mean to median
+	- Ana's suggestion
+	- More stable than former
+- Changed Paid wage/yr to adjusted wage
+
+## Apr 26, 2023
+- Did all of the above into PC
+- Added ana's median paid/adjusted wage
+	- had to troubleshoot
+
+## May 4, 2023
+- Meeting with ana & russell
+	- Q6 task clarification
+		- Leave write-up to ana/russell
+		- Removed my diving in part
+- Push branch upstream
+
+
 
 
 

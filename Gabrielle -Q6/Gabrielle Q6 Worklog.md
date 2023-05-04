@@ -2,52 +2,67 @@
 
 [Work Log Doc](https://docs.google.com/document/d/1SmR8a8j9Hdqpzv-xET0yI8C1_jGyZ_VTP8Bp-1U7CSQ/edit?usp=sharing)
 
-## March 10
-- Made R script & markdown
-- Failed to get dataset read in either
+## Apr 13, 2023
+- Cost of Living 2023 
+	- Will start new branch
+	- Begin EDA
+	- Q6 Development
+- RMD of Q6
+	- Loaded necessary libraries
+	- Dataset
+		- Read
+		- Filtered out fips
+	- Columns → variables
+	- Make top10 dataframe
+		- Seems like TX doesn’t like trying to be read
+		- At first assuming it’s because i named the filtered dataset as col
+		- Therefore it’s reading it somehow like column? Or something similar
+		- So renamed as coldf & changed the necessary lines
+		- Apparently not, always have to run previous chunks to make it run ok
+			- Not sure what problem is
+		- Dataframe readability difficulty, will need to try something else
 
-## March 13
-- Dataset finally read with the help of Norman/Junjie
-- Deleted old markdown
-	- Script
-	- Overview of dataset
-	- Renamed columns
-	- Strings as factors for certain vars
-- Made new markdown for Q2
-	- Copy-pasted some lines from script
-	- Typed out the specific questions and sub-q’s 
-- New personal doc so code is easier to copy-paste between pc and mac
+## Apr 20, 2023
+- Trying to filter Q6 data
+	- Figured it out after getting logical subscript errors
+	- Top 10 states
+- Cost index comparison
+	- Checking if getting avg = true cost
+- Will add on russel’s code for handling COL & salary dataset
+	- Will use for Q6 for new dataset
+	- Will also even out numbers
+- Starting Q6 RMD
+	- Main question I want to answer
+	- Definition of standard/cost of living
+	- Why is it important
+	- About the CoL dataset
+		- Prepping it for question
+	- Filtering & merging CoL & salary dataset 
 
-## March 14
-- Looking over some variable stats
-- Making tables/plots
+## Apr 25, 2023
+- Q6
+	- Changed average/mean to median
+		- Ana’s suggestion 
+		- More stable to previous 
+	- Changed paid wage/yr to adjusted wage 
+		- Realized because adjusted is the one I'm actually looking at
+		- Not paid wage 
 
-## March 16
-- Figuring out how to make plot w/ paid wage & jobsub
-- Have not figured it out yet
+## Apr 26, 2023
+- Q6
+	- Did all of the above  into PC
+	- Added ana’s median paid/adjusted wage
+		- Had to troubleshoot
 
-## March 17
-- Renamed og DS311 Project Q2 as DS311 Project Explore
-- New R markdown file for Q2 specifically
-	- Copy pasted it from DS311 Project Explore
-- Made & deleted branches
-- Added back files
-	- [Salary Exploration Code (https://docs.google.com/document/d/1jgnS1GDQvXlwJ1S3jXlHAvzuZNWJ4VKkyA2SFynoTA0/edit?usp=sharing)
-- Made sure to also keep in R Storage folder in pc JUST IN CASE
-- Added new files
-	- Gabrielle README
-	- Gabrielle Work Log
-## March 19
-- Editing R markdown of DS311 Data Explore
-	- Made top 10 charts
-## March 21
-- Editing dataset in Rmarkdown
-	- Cutting out any unnecessary columns
-	- Not entirely efficient
-- Wondering why my branch is saying there’s nothing to add though with how im editing…
-- Duplicated salary dataset to personally edit
+## May 4, 2023
+- Meeting with ana & russell
+	- Q6 task clarification
+		- Removed diving in part
+		- Will leave write-up to ana/russell
+- Pushing my Q6 branch upstream
+	- Accidentally merged to main
+	- Deleted from repo & locally
+	- Making new branch with all og files 
+		- Will push that instead
 
-## March 28
-- Removed any unnecessary code in markdown
-- Updated readme
 

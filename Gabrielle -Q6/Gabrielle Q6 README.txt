@@ -1,18 +1,19 @@
 # Overview
-Welcome! You are currently in Gabrielle's Folder within the official repository of We R Finished. 
+Welcome! You are currently in Gabrielle's Q6 Folder within the official repository of We R Finished. 
 ## Within the Folder
-1. Salary Exploration Code
-	- DS311 Data Explore
-		- R Markdown file to officially run coding from DS311 Explore Testing
-	- DS311 Explore Testing
-		- R Script to:
-			- test out code before pasting it into DS311 Data Explore
-			- keeping any helpful code from others/other files
+1. Code
+	- Ana Q6 Code
+		- Ana's code for Q6
+		- contains helpful eda
+	- Project Q6 EDA
+		- Exploratory data analysis of Q6
+	- Project Q6
+		- Actual initial write-up
   - DS311 Project Q2 
 	- A R Markdown file for question 2 of the project
-2. Gabrielle README
+2. Gabrielle Q6 README
   - What you're reading now!
-3. Gabrielle Work Log
+3. Gabrielle Q6 Worklog
 	- Documentation of:
 		- days of worked
 		- what they did day 

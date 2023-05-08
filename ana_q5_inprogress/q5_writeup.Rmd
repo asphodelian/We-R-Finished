@@ -46,7 +46,7 @@ library(car)
 
 #### - Does the nationality of the candidate affect the status of case?
 
-#### - Does job subtitle of the candidate affect the status o the case? 
+#### - Does job subtitle of the candidate affect the status o the case?
 
 ```{r}
 library(readxl)
@@ -217,6 +217,8 @@ new_status <- summarize_status(status)
 
 model_pos <- glm(cbind(Positive,Negative) ~ factor(country), data = new_status, family = binomial)
 
+library(brglm2)
+?brglm2
 
 
 
@@ -233,10 +235,9 @@ fisher.test(cont_table, simulate.p.value = TRUE, B = 10000)
 
 ```
 
-#### Does job subtitle of the candidate affect the status o the case? 
+#### Does job subtitle of the candidate affect the status o the case?
 
-We used python to visualize the relationship between job title subgroup and case status using a stacked bar chart shown bellow. It seems like the difference between case status frequency for job title subgroup does not change much, so we decided to run a chi square for independence to check if our assumption is correct.
-Although the result of the chi-square test suggests that there is a significant association between job title subgroup and case status. The very small p-value (\< 2.2e-16) indicates that the null hypothesis of independence between the two variables can be rejected. Therefore, the job title subgroup of the candidate does seem to have an effect on the case status.
+We used python to visualize the relationship between job title subgroup and case status using a stacked bar chart shown bellow. It seems like the difference between case status frequency for job title subgroup does not change much, so we decided to run a chi square for independence to check if our assumption is correct. Although the result of the chi-square test suggests that there is a significant association between job title subgroup and case status. The very small p-value (\< 2.2e-16) indicates that the null hypothesis of independence between the two variables can be rejected. Therefore, the job title subgroup of the candidate does seem to have an effect on the case status.
 
 ![](images/case_status_vs_jobsubgroup.png)
 

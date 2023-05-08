@@ -326,7 +326,10 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 1))
 
 looking at cost index by state\
 
-**What are the states with the largest percentage change in adjusted wage?  \
+**What are the states with the largest percentage change in adjusted wage?**
+
+A look into the percentage change in Wages after cost of living is taken into account. We see that Hawaii has the highest negative percentage change with an adjusted salary of almost 48%, followed by New York, California, Massachusetts, and Oregon.\
+On the other hand, the highest change in positive percentage change was Oregon with a 20% change followed by Kansas, Alabama, Oklahoma, and Georgia. **\
 **
 
 | State                         | Positive % Change | Negative % Change  |
@@ -360,7 +363,6 @@ state_cost_index <- data.frame(state_cost_index[order(-state_cost_index$Median_C
 ```
 
 A look into the percentage change in Wages after cost of living is taken into account. We see that Hawaii has the highest percentage change with an adjusted salary of almost 48%, followed by\
-\
 
 ```{r}
 # Calculate the mean paid wage per year by state

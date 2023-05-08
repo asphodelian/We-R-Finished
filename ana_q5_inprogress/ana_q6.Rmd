@@ -350,8 +350,14 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 1))
 
 **What are the states with the largest percentage change in adjusted wage?**
 
-A look into the percentage change in Wages after cost of living is taken into account. We see that Hawaii has the highest negative percentage change with an adjusted salary of almost 48%, followed by New York, California, Massachusetts, and Oregon.\
-On the other hand, the highest change in positive percentage change was Oregon with a 20% change followed by Kansas, Alabama, Oklahoma, and Georgia. **\
+We take look into the percentage change in Wages after cost of living is taken into account.
+A positive percentage change indicates an increase in wages, while a negative percentage change indicates a decrease in wages.
+
+The states with higher positive percentage changes, namely Mississippi, Kansas, Alabama, Oklahoma, and Georgia, have low costs of living, which means that people can live comfortably with lower salaries. The positive percentage change indicates that people in these states are experiencing an increase in their purchasing power.
+
+On the other hand, the states with highest negative percentage changes, namely Oregon, Massachusetts, California, New York, and Hawaii, have high costs of living, which means that people require higher salaries to maintain their standard of living. The negative percentage change indicates that people in these states are experiencing a decrease in their purchasing power.
+
+Overall, the data suggests that people living in states with high costs of living, such as Hawaii and California, may be experiencing a decline in their purchasing power, while those living in states with low costs of living, such as Mississippi and Alabama, may be experiencing an increase in their purchasing power.**\
 **
 
 | State         | Positive % Change | Negative % Change |
@@ -384,7 +390,7 @@ state_cost_index <- data.frame(state_cost_index[order(-state_cost_index$Median_C
 
 ```
 
-A look into the percentage change in Wages after cost of living is taken into account. We see that Hawaii has the highest percentage change with an adjusted salary of almost 48%, followed by\
+\
 
 ```{r}
 # Calculate the mean paid wage per year by state

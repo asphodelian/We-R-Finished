@@ -54,7 +54,7 @@ When looking over at the three given questions, there was a common sub-question:
 
 **Will the answer change if I take standard of living into account?**
 
-While it leans more hypothetical, it did bring thoughts of perhaps we need to quantify it to answer it. In this question, we're going to dive a bit deeper on that question using the Cost of Living and the salary dataset.
+While it leans more hypothetical, it did bring thoughts of perhaps we need to quantify it to answer it. In this question, we're going to dive a bit deeper on that question using the Cost of Living and the salary data set.
 
 ### What is standard/cost of living?
 
@@ -92,9 +92,9 @@ datsal <- sal %>%
   		 !grepl("Virgin Islands", `Work_State`, ignore.case = TRUE))
 ```
 
-### About the dataset
+### About the data set
 
-The Cost of Living dataset is from the same site I have mentioned in the previous question, which was found by Russell Chan.
+The Cost of Living data set is from the same site I have mentioned in the previous question, which was found by Russell Chan.
 
 ```{r}
 # reading CoL dataset
@@ -133,7 +133,7 @@ salcost <- salcost[, c("EMPLOYER_NAME", "Job_Title_Sub", "Work_State", "PAID_WAG
 
 ### The Question
 
-- **Which are the top and bottom states in terms of salary considering adjusted wage.** 
+-   **Which are the top and bottom states in terms of salary and what change when we consider adjusted wage.**
 
 Here we will look at the top 5 states median wage, and see how much the wages change when taking into consideration the cost of living in these countries.
 
@@ -144,7 +144,7 @@ Top 5 states:
 | California    | 105000.0  | 73839.66      |
 | Washington    | 102000.0  | 91397.85      |
 | Massachusetts | 85000.0   | 62962.96      |
-|  New York     | 85000.0   | 57354.93      |
+| New York      | 85000.0   | 57354.93      |
 | Oregon        | 82846.0   | 63678.71      |
 
 Bottom 5 sates
@@ -157,17 +157,17 @@ Bottom 5 sates
 | Wyoming         | 58205.0   | 61723.22      |
 | West Virginia   | 55000.0   | 60773.48      |
 
-Then we can look at the updated list of top and bottom states which is: \
+Then we can look at the updated list of top and bottom states which is:\
 \
-5 top: \
+5 top:\
 
-| Top 5 States |  Adjusted Wage | Bottom 5 States |  Adjusted Wage |
-|--------------|----------------|-----------------|----------------|
-| Washington   |  91397.85      | Rhode Island    | 59726.96       |
-| Mississippi  | 82232.89       | Montana         | 59582.92       |
-| Utah         | 80531.31       |  New York       | 57354.93       |
-| Kansas       | 78612.72       | Alaska          | 52731.71       |
-| Tennessee    | 78292.13       | Hawaii          | 36646.66       |
+| Top 5 States | Adjusted Wage | Bottom 5 States | Adjusted Wage |
+|--------------|---------------|-----------------|---------------|
+| Washington   | 91397.85      | Rhode Island    | 59726.96      |
+| Mississippi  | 82232.89      | Montana         | 59582.92      |
+| Utah         | 80531.31      | New York        | 57354.93      |
+| Kansas       | 78612.72      | Alaska          | 52731.71      |
+| Tennessee    | 78292.13      | Hawaii          | 36646.66      |
 
 ```{r}
 
@@ -186,6 +186,25 @@ names(all_states_med_paid) <- c("State", "Median_paid_Wage")
 
 # Sort the all_states_med_paid data frame by median in descending order
 all_states_med_paid <- all_states_med_paid[order(-all_states_med_paid$Median_paid_Wage),]
+
+
+all_states_med <- merge(all_states_med_paid, all_states_med_paid, by = c("State"))
+
+print(all_states_med)
+
+```
+
+-   **If we look at job subtitles, how does salary change for top and bottom 5 considering the cost of living?**
+
+When examining job subtitles, we can observe significant changes in salaries based on the cost of living in the top and bottom five states. The top five states, which have the highest median salary, show a considerable decrease in wages after accounting for the cost of living. Conversely, the bottom five states, with the lowest median salary, exhibit a substantial increase in wages after adjusting for the cost of living, except for Montana and for management consultants in Oklahoma.
+
+It's worth noting that, in the graph depicting the top states, the adjusted wage falls below \$50,000 for most business and data analysts, while these job titles in the bottom states remain above \$50,000.
+
+The states with the most significant decrease in adjusted wages experience a decrease of approximately \$40,000 to \$50,000. However, not all job sub-titles exhibit an increase in adjusted wages; only business analysts and software engineers appear in all the states. The adjusted wage for business analysts indicates that low cost-of-living states provide better compensation than high cost-of-living states. Conversely, software engineers' paid wages show that they receive better compensation in high cost-of-living states, while adjusted wages demonstrate that they are compensated similarly across the board.
+
+```{r}
+
+
 
 ###################################################
 
@@ -207,8 +226,7 @@ names(state_job_medians) <- c("State", "Job_Title_Sub", "Median_Adjusted_Wage")
 # Order the data frame by state and mean adjusted wage in descending order
 state_job_medians <- state_job_medians[order(state_job_medians$State, -state_job_medians$Median_Adjusted_Wage),]
 
-# Print the state_job_means data frame
-print(state_job_medians)
+
 
 
 
@@ -227,8 +245,7 @@ names(state_job_med_paidwage) <- c("State", "Job_Title_Sub", "Med_Paid_Wage")
 # Order the data frame by state and mean paid wage in descending order
 state_job_med_paidwage <- state_job_med_paidwage[order(state_job_med_paidwage$State, -state_job_med_paidwage$Med_Paid_Wage),]
 
-# Print the state_job_means data frame
-print(state_job_med_paidwage)
+
 
 
 ###############################
@@ -239,6 +256,10 @@ library(scales)
 
 # Create a new data frame by merging state_job_means and state_job_means_paidwage data frames
 state_job_means_all <- merge(state_job_medians, state_job_med_paidwage, by = c("State", "Job_Title_Sub"))
+
+
+
+print(state_job_means_all)
 
 
 
@@ -263,8 +284,7 @@ names(state_job_med_b) <- c("State", "Job_Title_Sub", "Med_Adjusted_Wage")
 state_job_med_b <- state_job_med_b[order(state_job_med_b$State, -state_job_med_b$Med_Adjusted_Wage),]
 
 # Print the state_job_means data frame
-print(state_job_med_b)
-
+#print(state_job_med_b)
 
 ########################
 
@@ -280,7 +300,7 @@ names(state_job_med_paidwage_b) <- c("State", "Job_Title_Sub", "Med_Paid_Wage")
 state_job_med_paidwage_b <- state_job_med_paidwage_b[order(state_job_med_paidwage_b$State, -state_job_med_paidwage_b$Med_Paid_Wage),]
 
 # Print the state_job_means data frame
-print(state_job_med_paidwage_b)
+#print(state_job_med_paidwage_b)
 
 ############################### Here the colors are swaped. we have adjusted to be lighter and paid wage stronger color.. 
 
@@ -290,6 +310,8 @@ library(dplyr)
 
 # Create a new data frame by merging state_job_means and state_job_means_paidwage data frames
 state_job_means_all_b <- merge(state_job_med_b, state_job_med_paidwage_b, by = c("State", "Job_Title_Sub"))
+
+print(state_job_means_all_b)
 
 
 
@@ -324,7 +346,7 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 1))
 
 ```
 
-looking at cost index by state\
+\
 
 **What are the states with the largest percentage change in adjusted wage?**
 
@@ -332,18 +354,18 @@ A look into the percentage change in Wages after cost of living is taken into ac
 On the other hand, the highest change in positive percentage change was Oregon with a 20% change followed by Kansas, Alabama, Oklahoma, and Georgia. **\
 **
 
-| State                         | Positive % Change | Negative % Change  |
-|-------------------------------|-------------------|--------------------|
-| Mississippi                   | 20.05             |                    |
-| Kansas                        | 15.61             |                    |
-| Alabama                       | 13.77             |                    |
-| Oklahoma                      | 13.77             |                    |
-| Georgia                       | 12.61             |                    |
-| Oregon                        |                   | -23.14             |
-| Massachusetts                 |                   | -25.93             |
-| California                    |                   |  -29.68            |
-|  New York                     |                   | -32.52             |
-| Hawaii                        |                   | -48.27             |
+| State         | Positive % Change | Negative % Change |
+|---------------|-------------------|-------------------|
+| Mississippi   | 20.05             |                   |
+| Kansas        | 15.61             |                   |
+| Alabama       | 13.77             |                   |
+| Oklahoma      | 13.77             |                   |
+| Georgia       | 12.61             |                   |
+| Oregon        |                   | -23.14            |
+| Massachusetts |                   | -25.93            |
+| California    |                   | -29.68            |
+| New York      |                   | -32.52            |
+| Hawaii        |                   | -48.27            |
 
 ```{r}
 # Calculate the median cost index by state

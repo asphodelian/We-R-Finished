@@ -40,7 +40,6 @@ library(car)
 
 ```
 
-
 ## We-R-Finished
 
 ```{r}
@@ -59,7 +58,7 @@ While it leans more hypothetical, it did bring thoughts of perhaps we need to qu
 
 ### What is standard/cost of living?
 
-From https://worldpopulationreview.com/state-rankings/cost-of-living-index-by-state:
+From <https://worldpopulationreview.com/state-rankings/cost-of-living-index-by-state>:
 
 "Cost of living refers to the amount needed to cover basic expenses, such as food, shelter, transportation, and healthcare."
 
@@ -121,7 +120,6 @@ salcost <- merge(datsal, costate,  by.x = "Work_State", by.y = "state")
 
 Next, we will make a new column to create an adjusted wage, where we divide the paid wage per year by the cost index to even the field. We will also have a specific subset that only includes: employer name, job title sub, work state, paid wage per year, adjusted year, and Cost index.
 
-
 ```{r}
 salcost$ADJUSTED_WAGE <- (salcost$PAID_WAGE_PER_YEAR / salcost$costIndex)*100
 
@@ -133,8 +131,6 @@ salcost <- salcost[, c("EMPLOYER_NAME", "Job_Title_Sub", "Work_State", "PAID_WAG
 
 ```
 
-
-
 ### The Question
 
 What I aim to answer with the merged dataset is this:
@@ -143,27 +139,44 @@ With the adjusted wage in mind, could one be able to move and live in the work s
 
 Previously in Q2, I have used the average and max to answer it. Cost of living dataset does use averages to then make a baseline, and I was planning to use averages to answer this question. But, by Ana's suggestion, median would be far more stable than using the mean. The mean tends to be skewed if there's more or less of something, and knowing that software engineer has major outliers, this made much more sense.
 
+Here we will look at the top 5 states median wage, and see how much the wages change when taking into consideration the cost of living in these countries.
 
+Top 5 states:
 
-Here we will look at the top 5 states median wage, and see how much the wages change when taking into consideration the cost of living in these countries. 
+| Top 5 States  | Paid Wage | Adjusted Wage |
+|---------------|-----------|---------------|
+| California    | 105000.0  | 73839.66      |
+| Washington    | 102000.0  | 91397.85      |
+| Massachusetts | 85000.0   | 62962.96      |
+|  New York     | 85000.0   | 57354.93      |
+| Oregon        | 82846.0   | 63678.71      |
 
+Bottom 5 sates
+
+| Bottom 5 States | Paid Wage | Adjusted Wage |
+|-----------------|-----------|---------------|
+| Arkansas        | 63001.5   | 69308.58      |
+| Oklahoma        | 60840.0   | 69215.02      |
+| Montana         | 60000.0   | 59582.92      |
+| Wyoming         | 58205.0   | 61723.22      |
+| West Virginia   | 55000.0   | 60773.48      |
 
 ```{r}
 
-#  ADJUSTED_WAGE for each state
+#  ADJUSTED_WAGE for all states
 all_states_med_adjusted <- aggregate(salcost$ADJUSTED_WAGE, by = list(salcost$Work_State), FUN = median)
 names(all_states_med_adjusted) <- c("State", "Median_Adjusted_Wage")
 
-# Sort the state_means data frame by Mean_Adjusted_Wage in descending order
+# Sort the all_states_med_adjusted data frame by median in descending order
 all_states_med_adjusted <- all_states_med_adjusted[order(-all_states_med_adjusted$Median_Adjusted_Wage),]
 
 
-#  PAID_WAGE for each state
+#  PAID_WAGE for all states
 all_states_med_paid <- aggregate(salcost$PAID_WAGE_PER_YEAR, by = list(salcost$Work_State), FUN = median)
 
 names(all_states_med_paid) <- c("State", "Median_paid_Wage")
 
-# Sort the state_means data frame by Mean_Adjusted_Wage in descending order
+# Sort the all_states_med_paid data frame by median in descending order
 all_states_med_paid <- all_states_med_paid[order(-all_states_med_paid$Median_paid_Wage),]
 
 ###################################################
@@ -307,9 +320,8 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 1))
 
 ```
 
-
-
 looking at cost index by state
+
 ```{r}
 # Calculate the median cost index by state
 state_cost_index <- aggregate(salcost$costIndex, by = list(salcost$Work_State), FUN = median)
@@ -327,9 +339,7 @@ state_cost_index <- data.frame(state_cost_index[order(-state_cost_index$Median_C
 
 ```
 
-
-A look into the percentage change in Wages after cost of living is taken into account. We see that Hawaii has the highest percentage change with an adjusted salary of almost 48%, followed by 
-
+A look into the percentage change in Wages after cost of living is taken into account. We see that Hawaii has the highest percentage change with an adjusted salary of almost 48%, followed by
 
 ```{r}
 # Calculate the mean paid wage per year by state
@@ -398,9 +408,6 @@ ggplot(data = merged_means, aes(x = WORK_STATE_ABBREVIATION)) +
 
 
 ```
-
-
-
 
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

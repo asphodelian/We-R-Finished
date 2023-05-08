@@ -133,11 +133,7 @@ salcost <- salcost[, c("EMPLOYER_NAME", "Job_Title_Sub", "Work_State", "PAID_WAG
 
 ### The Question
 
-What I aim to answer with the merged dataset is this:
-
-With the adjusted wage in mind, could one be able to move and live in the work state they desire? Which job subcategory would allow you to do so?
-
-Previously in Q2, I have used the average and max to answer it. Cost of living dataset does use averages to then make a baseline, and I was planning to use averages to answer this question. But, by Ana's suggestion, median would be far more stable than using the mean. The mean tends to be skewed if there's more or less of something, and knowing that software engineer has major outliers, this made much more sense.
+- **Which are the top and bottom states in terms of salary considering adjusted wage.** 
 
 Here we will look at the top 5 states median wage, and see how much the wages change when taking into consideration the cost of living in these countries.
 
@@ -160,6 +156,18 @@ Bottom 5 sates
 | Montana         | 60000.0   | 59582.92      |
 | Wyoming         | 58205.0   | 61723.22      |
 | West Virginia   | 55000.0   | 60773.48      |
+
+Then we can look at the updated list of top and bottom states which is: \
+\
+5 top: \
+
+| Top 5 States |  Adjusted Wage | Bottom 5 States |  Adjusted Wage |
+|--------------|----------------|-----------------|----------------|
+| Washington   |  91397.85      | Rhode Island    | 59726.96       |
+| Mississippi  | 82232.89       | Montana         | 59582.92       |
+| Utah         | 80531.31       |  New York       | 57354.93       |
+| Kansas       | 78612.72       | Alaska          | 52731.71       |
+| Tennessee    | 78292.13       | Hawaii          | 36646.66       |
 
 ```{r}
 
@@ -188,7 +196,7 @@ top_states <- head(all_states_med_paid, 5)$State
 # Filter the data by the top 5 states
 top_states_data <- salcost[salcost$Work_State %in% top_states, ]
 
-# Calculate the mean ADJUSTED_WAGE by job subtitle and state
+# Calculate the median ADJUSTED_WAGE by job subtitle and state
 state_job_medians <- aggregate(top_states_data$ADJUSTED_WAGE, 
                              by = list(top_states_data$Work_State, top_states_data$Job_Title_Sub),
                              FUN = median)
@@ -201,7 +209,6 @@ state_job_medians <- state_job_medians[order(state_job_medians$State, -state_job
 
 # Print the state_job_means data frame
 print(state_job_medians)
-
 
 
 
@@ -222,9 +229,6 @@ state_job_med_paidwage <- state_job_med_paidwage[order(state_job_med_paidwage$St
 
 # Print the state_job_means data frame
 print(state_job_med_paidwage)
-
-
-
 
 
 ###############################
@@ -320,7 +324,23 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 1))
 
 ```
 
-looking at cost index by state
+looking at cost index by state\
+
+**What are the states with the largest percentage change in adjusted wage?  \
+**
+
+| State                         | Positive % Change | Negative % Change  |
+|-------------------------------|-------------------|--------------------|
+| Mississippi                   | 20.05             |                    |
+| Kansas                        | 15.61             |                    |
+| Alabama                       | 13.77             |                    |
+| Oklahoma                      | 13.77             |                    |
+| Georgia                       | 12.61             |                    |
+| Oregon                        |                   | -23.14             |
+| Massachusetts                 |                   | -25.93             |
+| California                    |                   |  -29.68            |
+|  New York                     |                   | -32.52             |
+| Hawaii                        |                   | -48.27             |
 
 ```{r}
 # Calculate the median cost index by state
@@ -339,7 +359,8 @@ state_cost_index <- data.frame(state_cost_index[order(-state_cost_index$Median_C
 
 ```
 
-A look into the percentage change in Wages after cost of living is taken into account. We see that Hawaii has the highest percentage change with an adjusted salary of almost 48%, followed by
+A look into the percentage change in Wages after cost of living is taken into account. We see that Hawaii has the highest percentage change with an adjusted salary of almost 48%, followed by\
+\
 
 ```{r}
 # Calculate the mean paid wage per year by state

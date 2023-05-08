@@ -187,7 +187,7 @@ names(state_job_medians) <- c("State", "Job_Title_Sub", "Median_Adjusted_Wage")
 state_job_medians <- state_job_medians[order(state_job_medians$State, -state_job_medians$Median_Adjusted_Wage),]
 
 # Print the state_job_means data frame
-#print(state_job_medians)
+print(state_job_medians)
 
 
 

@@ -34,4 +34,4 @@ Began preliminary setup work for Questions 3 and 4.
 
 4/24/2023: Finished Q3a properly. Began work on Q3b, about 80% done.
 
-5/8/2023: Q4 setup.
+5/8/2023: Finished Q4. Q3 still lacks the cost of living data set, and may need some refinement.

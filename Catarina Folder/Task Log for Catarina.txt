@@ -1,0 +1,14 @@
+#Task Log
+
+##Tasks Assigned
+- Data Exploration
+- Question 3: III. How do offered salaries compare to the prevailing wage?
+> 	Are there job sub-categories that tend to get over-paid or under-paid?
+> 	Are there companies that tend to over-pay or under-pay?
+> 	Will the answer change if I take standard of living into account?
+- Develop Question 4
+
+##Work Log:
+3/16/2023: Cleaned up branch according to group guidelines, updated ReadMe, and created personal Task Log.
+
+3/28/2023: Did some exploratory data analysis and worked on group document.

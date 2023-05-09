@@ -33,3 +33,5 @@ Began preliminary setup work for Questions 3 and 4.
 4/12/2023: Meeting with instructor gave me some clarity on how to fix the problems. Will simplify data more going forward.
 
 4/24/2023: Finished Q3a properly. Began work on Q3b, about 80% done.
+
+5/8/2023: Q4 setup.

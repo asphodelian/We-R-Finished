@@ -350,8 +350,7 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 1))
 
 **What are the states with the largest percentage change in adjusted wage?**
 
-We take look into the percentage change in Wages after cost of living is taken into account.
-A positive percentage change indicates an increase in wages, while a negative percentage change indicates a decrease in wages.
+We take look into the percentage change in Wages after cost of living is taken into account. A positive percentage change indicates an increase in wages, while a negative percentage change indicates a decrease in wages.
 
 The states with higher positive percentage changes, namely Mississippi, Kansas, Alabama, Oklahoma, and Georgia, have low costs of living, which means that people can live comfortably with lower salaries. The positive percentage change indicates that people in these states are experiencing an increase in their purchasing power.
 

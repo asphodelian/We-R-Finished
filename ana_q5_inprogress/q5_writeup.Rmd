@@ -32,6 +32,7 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 }
 </style>
 ```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_knit$set(root.dir = "C:/Users/pauli/OneDrive/Documentos/Classes 2023/311_tech")
@@ -56,13 +57,15 @@ df <- read_excel("salary_data_states.xlsx", col_types = c("text", "text", "text"
 ```
 
 ```{r}
-names(df)
+
+
+#names(df)
 #head(df)
 #View(df)
 attach(df)
 
 
-summary(df)
+#summary(df)
 
 
 
@@ -158,11 +161,11 @@ We wanted to investigate whether the nationality of the candidate affects the st
 
 ![](images/case_status_topcountries_table.png)
 
-In order to have a binary response we code certified withdraw, certified-expired and certified as positive and denied as negative. We used logistic regression analysis and ANOVA to test the significance of nationality as a predictor of case status.
+The following tests aimed to investigate the relationship between nationality and case status (positive or negative) To achieve this, we categorized certified withdraw, certified-expired, and certified as positive, and denied as negative. We employed logistic regression analysis and ANOVA to assess the significance of nationality as a predictor of case status.
 
-The logistic regression analysis showed that the intercept is significant (p \< 0.001), indicating that there is a significant relationship between the predictor variable (country) and the response variable (positive or negative status). However, the individual coefficients for the different countries were not all significant (p \> 0.05).
+Our logistic regression analysis showed a significant relationship (p < 0.001) between the predictor variable (country) and the response variable (positive or negative status), as indicated by the significant intercept. However, upon analyzing the individual coefficients for different countries, not all of them were found to be significant (p > 0.05).
 
-Therefore, we conclude that the nationality of the candidate does not have an effect on the status of the case. ion cases, but it is also necessary to consider other factors that may affect the case status.
+Given the sparse nature of the data and the non-conformity of the model assumptions, we ran a Monte Carlo simulation and a Fisher test. Both these tests yielded non-significant results. Therefore, we can conclude that the nationality of the candidate does not influence the case status in this dataset. Nonetheless, it is essential to consider other factors that may affect the case status in actual cases.
 
 ```{r}
 
@@ -194,7 +197,6 @@ chisq.test(status[,-1])
 
 
 
-
 #####################################################################
 
 
@@ -218,7 +220,7 @@ new_status <- summarize_status(status)
 model_pos <- glm(cbind(Positive,Negative) ~ factor(country), data = new_status, family = binomial)
 
 library(brglm2)
-?brglm2
+
 
 
 
@@ -237,7 +239,12 @@ fisher.test(cont_table, simulate.p.value = TRUE, B = 10000)
 
 #### Does job subtitle of the candidate affect the status o the case?
 
-We used python to visualize the relationship between job title subgroup and case status using a stacked bar chart shown bellow. It seems like the difference between case status frequency for job title subgroup does not change much, so we decided to run a chi square for independence to check if our assumption is correct. Although the result of the chi-square test suggests that there is a significant association between job title subgroup and case status. The very small p-value (\< 2.2e-16) indicates that the null hypothesis of independence between the two variables can be rejected. Therefore, the job title subgroup of the candidate does seem to have an effect on the case status.
+ To begin, we used Python to create a stacked bar chart to visualize the relationship between job title subgroup and case status. The chart indicated that there may not be a significant difference in case status frequency between job title subgroups. However, to confirm this, we conducted a chi-square test for independence.
+
+
+The results of the chi-square test suggested that there is a significant association between job title subgroup and case status. The extremely low p-value (< 2.2e-16) indicated that the null hypothesis of independence between the two variables can be rejected. Therefore, we can conclude that the job title subgroup of the candidate does indeed have an effect on the case status.
+
+
 
 ![](images/case_status_vs_jobsubgroup.png)
 
@@ -261,13 +268,12 @@ test_result <- chisq.test(ct)
 
 ```
 
-To further explore this we will look at the mosaic graph which can give us a better idea of what is happening with the status considering job title subgroup.
 
-Business analysts are more likelly to be certified than software engineers, and are and less likely to have their certification expired or withdraw compared to software engineers.
+To further explore this, we created a mosaic graph, which provided a more detailed understanding of the relationship between job title subgroup and case status. We found that business analysts are more likely to be certified compared to software engineers, and are less likely to have their certification expired or withdrawn. Data analysts are less likely to have their certification expired or withdrawn compared to software engineers.
 
-Data analysts are d less likely to have their certification expired or withdrawn compared to software engineers.
+On the other hand, software engineers are more likely to have a denied visa and are less likely to have a certified case status compared to business analysts. They are also more likely to have their certification expired, which suggests that companies didn't move forward with the hiring after their case was certified, as well as have their certification withdrawn, indicating that the application was withdrawn before the certification was granted. In conclusion, the job title subgroup of the candidate is a significant factor affecting the status of their case, and this information could be useful for companies in their hiring process.
 
-Software Engineers are more likely to have a denied a visa. They are more less likely to have a certified case status compared to business analysts and are more likely to have their certification expired , which means companies didn't move forward with the hiring after their case was certified, as well as have their certification withdrawn, which means that the applicant didn't move forward with the application after the the case was certified.
+
 
 ```{r}
 

@@ -92,9 +92,6 @@ data <- df[df$JOB_TITLE_SUBGROUP %in% JOB_TITLE_DATA, ]
 nrow(data)
 nrow(df)
 attach(data)
-
-
-
 # Define a function to map case status to short initials
 map_case_status <- function(x) {
   ifelse(x == "denied", "D", 
@@ -405,4 +402,3 @@ print(top_employers)
 
 ```
 
-\

@@ -9,7 +9,9 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 2. README
   - What you're reading now!
 ## Links
-1. [The google drive folder](https://drive.google.com/drive/folders/1M1jYp0MiyeWCBQHbs2pfAfvCYkD61lKU?usp=sharing)
+1. 
+[The google drive folder](https://drive.google.com/drive/folders/1M1jYp0MiyeWCBQHbs2pfAfvCYkD61lKU?usp=sharing)
+
 - This folder holds all the group documentation and any necessary files we may need.*
 > 2. [The overview doc](https://docs.google.com/document/d/1cgqEG4ZgZ36DACn_ysUwfLzuczyHDhThd7bskDm7z7E/edit?usp=sharing)
 >   - This doc holds the general overview of the project and includes the task assignments and meeting logs*

@@ -16,7 +16,21 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
   - csv file for standard of living question
 4. Group Summary Report
   - a report of the initial data exploration
-3. README
+5. Q&A's
+  - Question 1
+    - russellfolder
+  - Question 2
+    - Gabrielle Project Q2
+  - Question 3
+    - Question3 (Catarina)
+  - Question 4
+    - Question3 (Catarina)
+  - Question 5
+    - ana_question5
+  - Question 6
+    - ana_question5
+    - Gabrielle -Q6 
+6. README
   - What you're reading now!
 
 ## Links
@@ -28,10 +42,13 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 >   - This pdf is the analysis plan for the chosen dataset
 > 4. Work Logs
 >   - There is a work log for each member. This is to keep the overview from being too crowded, and it allows the others to keep track of their work besides on the git bash log
-> 5. [Project Code](https://docs.google.com/document/d/1SmR8a8j9Hdqpzv-xET0yI8C1_jGyZ_VTP8Bp-1U7CSQ/edit?usp=sharing)
->   - Gabrielle's code for the project. It is shown for sake of process and ease of transferring data between PC and Mac. Others may use it as a jumping point.
-> 6. [Project Data Summary](https://docs.google.com/document/d/1vna-GMBn4NaDKrJd44n8afmORMDqZ7tGsFa45WtSnyk/edit?usp=sharing)
+>   - This also includes any coding they possibly have
+> 5. [Project Data Summary](https://docs.google.com/document/d/1vna-GMBn4NaDKrJd44n8afmORMDqZ7tGsFa45WtSnyk/edit?usp=sharing)
 >   - The summary of the group's findings in their data exploration
+> 6. Group EDA
+>   - The draft/official write-ups for each question in the project
+> 7. [DA.pptx](https://docs.google.com/presentation/d/1P0l1ntCTpz9rtfh_3ZaghSBFx10eNRhM/edit?usp=sharing&ouid=116829852975256317058&rtpof=true&sd=true)
+>   - The official presentation 
 7. [Git Collaboration Exercise Repository](https://github.com/San-Francisco-State-University-DS/Git-Collaboration-Exercise)
 > This repository gives a general overview of how a group project repository should look like. It also includes instructions on the process of making a new branch, a pull request, and merging; and much more.
 
@@ -49,27 +66,25 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 3. Consider which of the three given questions you want to do
 4. Inital data exploration 
 5. Initial EDA paper turned in
-### Russell
-- Q1
-  - EDA about finished
-  - Writing up analysis
-  - Answering
-### Ana
-- Q5
-  - Developed
-  - Answering last question
-  - Planning to write up report
-### Gabrielle
-- Q2
-  - EDA
-  - Answering & Analyzing
-### Catarina
-- Q3 60% done
-- Q4 10% done
-### Group Effort
-- Q6 Development
+6. Final Report
+7. Slide presentation
+
+### Questions
+- Q1 100% Finished
+  - Russell   
+- Q2 100% Finished
+  - Gabrielle  
+- Q3 80% Finished
+  - Catarina   
+- Q4 100% Finished
+  - Catarina  
+- Q5 100% Finished
+  - Ana   
+- Q6 100% Finished
+  - Ana
+  - Gabrielle
+  - Russell   
 ### Future Tasks
 - Receive & Implement feedback changes
 - Submit for 2nd review
-- Slide presentation
 - Final Review

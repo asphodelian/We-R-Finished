@@ -102,3 +102,6 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 - Receive & Implement feedback changes
 - Submit for 2nd review
 - Final Review
+
+
+Edit by Norman on 5/9/2023

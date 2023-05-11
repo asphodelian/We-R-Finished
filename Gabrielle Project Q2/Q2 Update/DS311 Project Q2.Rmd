@@ -107,11 +107,19 @@ ssal %>%
   top_n(n = 5, wt = med_salary)
 ```
 
-For each job sub type, we see the top 5 employers in terms of who has the highest median salary ceiling. Business analyst's highest ceiling is \$677508 with the University of Texas Administration, data analyst's is \$185,000 with Knowledgent Group Inc, data scientist is with the PNC Services Group Inc at \$148,000, management consultant at 450,000 with Baker Botts LLP, and software engineer at 1,224,801 with Abacus Technical Services LLC. Admittedly, these may be outliers, especially concerning software engineer.
+For each job sub type, we see the top 5 employers in terms of who has the highest median salary ceiling. However, we will show the top company for each one: 
 
-Now, how does this compare to the average salary? For the business analyst, the top 2 companies are unchanged: University of Texas Administration and Officemax Incorporated. Data analyst has stayed pretty consistent with its top 5, just shifting around the rankings. For data scientist, the first and last companies are unchanged. The management consultant salary is nearly the same, the last entry has changed. Finally, software engineer had the most change, only one company has stayed and has become the top rank.
+Business analyst's highest ceiling is \$677,508 with the University of Texas Administration.
 
-so we see that for best highest salary ceiling, the order is software engineer, business analyst, management consultant, data scientist, and data analyst. Management consultant, data scientist, and data analyst have stayed in the same place, while business analyst and software engineer have switched places depending the type of salary.
+Data analyst's is \$185,000 with Knowledgent Group Inc.
+
+Data scientist is with the PNC Services Group Inc at \$148,000.
+
+Management consultant at \$350,000 with Baker Botts LLP.
+
+Software engineer at \$528,000 with Aliasware, Inc.
+
+so we see that for best highest median ceiling, the order is business analyst, software engineer, management consultant, data analyst, and data scientist. Compared to the previous boxplot, business analyst has went from number 4 to 1, data scientist fell from number 1 to 5, software engineer moved up 1, management consultant went down 1, and data analyst went up 1.
 
 Let's try restricting the percentiles to see if this will change the top companies and the order.
 
@@ -126,9 +134,9 @@ ssal %>%
   top_n(n = 5, wt = med_salary)
 ```
 
-We do end up with changes in the samples and different companies when we restrict the percentiles. In the max salary, business analyst, data analyst, and software engineer expanded; while data scientist and management consultant stayed the same. The order is software engineer, business analyst, data scientist, management consultant, and data analyst.
+We do end up with changes in the samples and different companies when we restrict the percentiles. 
 
-For the average salary, business analyst, management consultant, data analyst, and management consultant stayed the same sample size; and data scientist has greatly increased in that area. Business analyst, data scientist, and software have the same average: 124800. Data analyst falls short with 122000, as well as management consultant at 120000.
+
 
 We see that every single sub type went down in salary when we restricted the percentiles to 5th through 95th. Software engineer had the greatest loss out of all the job sub types, yet it still makes more out of all of them. This is quite confounding admittedly, how software engineer is such an umbrella term. But I suppose this means you do have more diverse skills, therefore could have a higher salary than most.
 

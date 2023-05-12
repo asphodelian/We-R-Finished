@@ -148,11 +148,5 @@ Software engineer went from \$528,000 with Aliasware, Inc to \$124,999.90 with Z
 
 We see that every single sub type went down in salary when we restricted the percentiles to 5th through 95th. Software engineer had the greatest loss out of all the job sub types, yet it still makes more out of all of them. This is quite confounding admittedly, how software engineer is such an umbrella term. But I suppose this means you do have more diverse skills, therefore could have a higher salary than most.
 
-#### c. Will the answer change if I take standard of living into account?
-
-If I took the standard of living into account, my answer will change. I would not want to move to New York, knowing how it's equally as expensive as the Bay Area. Texas suffers from extreme heat and cold, their infrastructure was unable to handle the extreme cold. Also those states on the east coast also suffer from severe winters, so I'd rather be somewhere where winter isn't as severe
-
-I would probably, out of all the ten states, would want to move to Illinois or Washington. Despite knowing Illinois has a high crime rate, I personally have family in Illinois, so I would be okay moving there. Meanwhile, Washington perhaps is a little closer to what I'm used to, so it's also a safer bet for those who are non-white.
-
 ```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
 ```

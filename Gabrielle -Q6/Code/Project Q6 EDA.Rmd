@@ -1,0 +1,136 @@
+---
+title: "DS311 Q6"
+author: "Gabrielle Salamanca"
+date: "April 13, 2023"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## We-R-Finished
+
+Reading the data into R
+
+```{r}
+library(readr)
+library(dplyr)
+# dataset
+COL <- read_csv("./CostOfLiving2023.csv", show_col_types = FALSE)
+coldf <- COL[, !(names(COL) %in% c("fips"))]
+head(coldf)
+```
+
+Making columns into variables
+
+```{r}
+state <- coldf$state
+density <- coldf$densityMi
+pop2023 <- coldf$pop2023
+pop2022 <- coldf$pop2022
+pop2020 <- coldf$pop2019
+pop2019 <- coldf$pop2019
+pop2010 <- coldf$pop2010
+growthRate <- coldf$growthRate
+growth <- coldf$growth
+growth2010 <- coldf$growthSince2010
+costIndex <- coldf$costIndex
+grocery <- coldf$groceryCost
+housing <- coldf$housingCost
+utility <- coldf$utilitiesCost
+transport <- coldf$transportationCost
+misc <- coldf$miscCost
+```
+
+Top 10 states
+
+```{r}
+top10 <- c("Texas", "New York", "New Jersey", "Illinois", 
+           "Massachusetts", "Virginia", "Pennsylvania", 
+           "Washington", "Michigan", "North Carolina")
+# filter
+live <- coldf[, -2:-10]
+live <- live[order(live$state), decreasing = TRUE,]
+top <- live[c(13, 21, 22, 30, 32, 33, 38, 43, 46, 47),]
+top
+```
+
+Cost Index testing
+
+```{r}
+n <- 5
+# Illinois
+IL <- 98.4 + 86.6 + 96.5 + 105.8 + 96.7
+ILcost <- IL/n
+trueIL <- 94.3
+cat("The average index in Illinois is", ILcost, ", and the cost index is", trueIL, "\n")
+
+# Massachusetts
+MA <- 119.3 + 177.6 + 111.1 + 111.3 + 116.1
+MAcost <- MA/n
+trueMA <- 135.0
+cat("The average index in Massachusetts is", MAcost, ", and the cost index is", trueMA, "\n")
+
+# Michigan
+MI <- 90.1 + 80.7 + 99.7 + 103.2 + 96.4
+MIcost <- MI/n
+trueMI <- 91.3
+cat("The average index in Michigan is", MIcost, ", and the cost index is", trueMI, "\n")
+
+# New Jersey
+NJ <- 107.3 + 136.6 + 104.6 + 105.5 + 106.6
+NJcost <- NJ/n
+trueNJ <- 115.2
+cat("The average index in New Jersey is", ILcost, ", and the cost index is", trueIL, "\n")
+
+# New York
+NY <- 118.4 + 230.1 + 99.8 + 108.7 + 114.8
+NYcost <- NY/n
+trueNY <- 148.2
+cat("The average index in New York is", NYcost, ", and the cost index is", trueNY, "\n")
+
+# North Carolina
+NC <- 97.6 + 88.6 + 97.7 + 92.8 + 99.2
+NCcost <- NC/n
+trueNC <- 95.7
+cat("The average index in North Carolina is", NCcost, ", and the cost index is", trueNC, "\n")
+
+# Pennsylvania
+PA <-  107.8 + 98.0 + 109.7 + 105.6 + 102.9
+PAcost <- PA/n
+truePA <- 102.5
+cat("The average index in Pennsylvania is", PAcost, ", and the cost index is", truePA, "\n")
+
+# Texas
+TX <- 90.8 + 83.8 + 103.2 + 94.1 + 97.0
+TXcost <- TX/n
+trueTX <- 92.1
+cat("The average index in Texas is", TXcost, ", and the cost index is", trueTX, "\n")
+
+# Virginia
+VA <- 95.2 + 111.5 + 96.7 + 90.4 + 100.2
+VAcost <- VA/n
+trueVA <- 101.8
+cat("The average index in Illinois is", VAcost, ", and the cost index is", trueVA, "\n")
+
+# Washington
+WA <- 108.4 + 119.0 + 90.8 + 117.4+ 110.4
+WAcost <- WA/n
+trueWA <- 111.6
+cat("The average index in Washington is", WAcost, ", and the cost index is", trueWA)
+```
+
+**Explaining cost of index definition**
+
+World Population Review. “Cost of Living Index by State 2023.” Cost of Living Index by State 2023, World Population Review , 2023, https://worldpopulationreview.com/state-rankings/cost-of-living-index-by-state. 
+
+Cost of living refers to the amount needed to cover basic expenses, such as food, shelter, transportation, and healthcare. However, costs of living can vary significantly across regions. Cost of living indexes help a person better understand and quantify these differences. Cost of living indexes are used by employers when determining wages or government agencies when determining the need for interventions, such as annual adjustments to Social Security benefits. Individuals also use these metrics when considering relocating, especially for a job.
+
+Cost of living indexes are calculated by first determining a baseline for comparison. When comparing costs across states, the average cost of living in the United States is used as the baseline set at 100. States are then measured against this baseline. For example, a state with a cost of living index of 200 is twice as expensive as the national average. Likewise, living in a state with an index of 50 will cost about half the national average.
+
+A closer look at the national costs of living is needed to better understand costs across states. The average household in the United States spends 61,334 a year on expenses. On average, 34.9% of spending, or roughly 1,784 a month, is dedicated to housing and housing-related costs. The median price of a single-family home in the United States is 273,992. Nationwide, the average rent for a two-bedroom apartment runs $1,154 a month.
+
+The average American household dedicates a further 16% of spending to transportation, an average of 9,826 a year. Annual healthcare costs average another 5,177 annually. Food, including groceries and eating out, costs another 7,317 a year or 609.75 a month. The average monthly cost for utilities in the U.S. is 370.16.
+
+Nationwide, the median household income is 67,521 a year, while personal income for individuals is 35,805. The living wage for the United States is 68,808 annually for a family of four.

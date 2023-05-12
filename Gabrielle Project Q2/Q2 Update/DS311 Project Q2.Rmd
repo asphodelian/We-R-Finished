@@ -134,9 +134,17 @@ ssal %>%
   top_n(n = 5, wt = med_salary)
 ```
 
-We do end up with changes in the samples and different companies when we restrict the percentiles. 
+We do end up with changes in the samples and different companies when we restrict the percentiles: 
 
+Business analyst went from \$677,508 to \$124,800, the employer changing from the University of Texas Administration to Accelerated Innovators Inc.
 
+Data analyst went from \$185,000 to \$122,000, the employer changing from Knowledgent Group Inc to UBS Services LLC.
+
+Data scientist went from  \$148,00 to \$124,800, the employer changing from PNC Services Group Inc to Edataforce Consulting LLC.
+
+Management consultant went from \$350,000 with Baker Botts LLP to \$120,000 with Fuel Exchange LLC.
+
+Software engineer went from \$528,000 with Aliasware, Inc to \$124,999.90 with Zulily Inc.	
 
 We see that every single sub type went down in salary when we restricted the percentiles to 5th through 95th. Software engineer had the greatest loss out of all the job sub types, yet it still makes more out of all of them. This is quite confounding admittedly, how software engineer is such an umbrella term. But I suppose this means you do have more diverse skills, therefore could have a higher salary than most.
 

@@ -253,10 +253,20 @@ The results of the chi-square test suggested that there is a significant associa
 
 # Create a contingency table of job title subgroup and case status
 ct <- table(data$CASE_STATUS_SHORT, data$JOB_TITLE_SUBGROUP)
+# Create a copy of the contingency table
+ct2 <- ct
+
+# Rename the job titles
+colnames(ct2) <- c("BA", "DA", "DS", "MC", "SE")
+
+# Print the renamed contingency table
+ct2
+
+
 
 # Conduct a chi-square test of independence
 res <- chisq.test(ct)
-
+summary (res)
 # Interpret the results
 if (res$p.value < 0.05) {
   print("There is a significant association between job title subgroup and case status.")
@@ -280,7 +290,24 @@ On the other hand, software engineers are more likely to have a denied visa and 
 # Load the necessary packages
 library(vcd)
 
+map_case_status <- function(x) {
+  ifelse(x == "software engineer", "SE", 
+         ifelse(x == "business analyst", "BA",
+                ifelse(x == "management consultant", "MC",
+                       ifelse(x == "data analyst", "DA", 
+                              ifelse(x == "data scientist", "DS", "U"))))) # "U" for unknown
+}
+
+# Apply the function to create a new variable
+data$JOB_TITLE_SUBGROUP <- map_case_status(data$JOB_TITLE_SUBGROUP)
+
+?mosaicplot
 # Create the mosaic plot
 mosaicplot(table(data$CASE_STATUS_SHORT, data$JOB_TITLE_SUBGROUP), shade=TRUE, 
            main="Mosaic plot of CASE_STATUS and JOB_TITLE_SUBGROUP")
+
+
+
+
+
 ```

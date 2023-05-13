@@ -1,0 +1,152 @@
+---
+title: "DS311 Project Q2"
+author: "Gabrielle Salamanca"
+date: "March 17, 2023"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## We-R-Finished
+
+Before we can dive into the question, we must load in the necessary libraries and read the dataset into the markdown.
+
+```{r}
+# loading libraries
+library(readxl)
+library(caret)
+library(ggplot2)
+library(dplyr)
+
+# dataset overview
+salary <- read_excel("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/salary/salary_data_states.xlsx")
+
+# renaming columns
+colnames(salary)[1] = "Case Number"
+colnames(salary)[2] = "Case Status"
+colnames(salary)[3] = "Received Date"
+colnames(salary)[4] = "Decision Date"
+colnames(salary)[5] = "Employer Name"
+colnames(salary)[6] = "Submitted Prevail Wage"
+colnames(salary)[7] = "SPrW Unit"
+colnames(salary)[8] = "Submitted Paid Wage"
+colnames(salary)[9] = "SPaW Unit"
+colnames(salary)[10] = "Job Title"
+colnames(salary)[11] = "Work City"
+colnames(salary)[12] = "Required Edu"
+colnames(salary)[13] = "Required College Major"
+colnames(salary)[14] = "Exp Req"
+colnames(salary)[15] = "Exp Req (Months)"
+colnames(salary)[16] = "Citizenship"
+colnames(salary)[17] = "Prevail Wage SOC Code"
+colnames(salary)[18] = "PWSOC Title"
+colnames(salary)[19] = "Work State"
+colnames(salary)[20] = "WS Abb"
+colnames(salary)[21] = "WPostal Code"
+colnames(salary)[22] = "Full Time"
+colnames(salary)[23] = "Visa Class"
+colnames(salary)[24] = "Prevail Wage/Yr"
+colnames(salary)[25] = "Paid Wage/Yr"
+colnames(salary)[26] = "Job Title Sub"
+colnames(salary)[27] = "Order"
+```
+
+Now, we must remove the sub job titles that have teaching jobs. The question specifically asks for data-related salaries in the job sub-categories, therefore we must remove: professor, attorney, assistant professor, and teacher.
+
+```{r}
+# filter
+sal <- salary %>%
+  filter(!grepl("professor", `Job Title Sub`, ignore.case = TRUE) & 
+           !grepl("attorney", `Job Title Sub`, ignore.case = TRUE) &
+           !grepl("assistant professor", `Job Title Sub`, ignore.case = TRUE) & 
+           !grepl("teacher", `Job Title Sub`, ignore.case = TRUE))
+jobTitleSub <- as.factor(sal$`Job Title Sub`)
+```
+
+### II. What states (of those I am willing to move to) have the highest paying data-related salaries?
+
+This is quite a broad range of states, but we will remove any US territories first and foremost for obvious reasons. This means Guam, Guamam, Palau, Northern Mariana Islands, Puerto Rico, and Virgin Islands will not be considered.
+
+```{r}
+# filtering states
+datsal <- sal %>%
+  filter(!grepl("Guam", `Work State`, ignore.case = TRUE) & 
+           !grepl("Guamam", `Work State`, ignore.case = TRUE) &
+           !grepl("Palau", `Work State`, ignore.case = TRUE) & 
+           !grepl("Northern Mariana Islands", `Work State`, ignore.case = TRUE) &
+           !grepl("Puerto Rico", `Work State`, ignore.case = TRUE) &
+           !grepl("Virgin Islands", `Work State`, ignore.case = TRUE))
+```
+
+And we will make a new dataframe containing the states that had the largest frequency.
+
+```{r}
+topState <- c("Texas", "New York",
+          	"New Jersey", "Illinois", "Massachusetts",
+          	"Virginia", "Pennsylvania", "Washington",
+          	"Michigan", "North Carolina")
+ssal <- datsal[datsal$`Work State` %in% topState, ]
+# data-related only
+ssal$Sub <- factor(ssal$`Job Title Sub`, levels = c("business analyst", "data analyst", "data scientist", "management consultant", "software engineer"))
+Sub <- ssal$Sub
+```
+
+#### b. Which companies have the highest salaries for those sub-types?
+
+```{r}
+# median salary
+ssal %>%
+  group_by(Sub, `Employer Name`) %>%
+  summarise(med_salary = median(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(med_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = med_salary)
+```
+
+For each job sub type, we see the top 5 employers in terms of who has the highest median salary ceiling. However, we will show the top company for each one: 
+
+Business analyst's highest ceiling is \$677,508 with the University of Texas Administration.
+
+Data analyst's is \$185,000 with Knowledgent Group Inc.
+
+Data scientist is with the PNC Services Group Inc at \$148,000.
+
+Management consultant at \$350,000 with Baker Botts LLP.
+
+Software engineer at \$528,000 with Aliasware, Inc.
+
+so we see that for best highest median ceiling, the order is business analyst, software engineer, management consultant, data analyst, and data scientist. Compared to the previous boxplot, business analyst has went from number 4 to 1, data scientist fell from number 1 to 5, software engineer moved up 1, management consultant went down 1, and data analyst went up 1.
+
+Let's try restricting the percentiles to see if this will change the top companies and the order.
+
+```{r}
+# median salary
+ssal %>%
+  filter(`Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  group_by(Sub, `Employer Name`) %>%
+  summarise(med_salary = median(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(med_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = med_salary)
+```
+
+We do end up with changes in the samples and different companies when we restrict the percentiles: 
+
+Business analyst went from \$677,508 to \$124,800, the employer changing from the University of Texas Administration to Accelerated Innovators Inc.
+
+Data analyst went from \$185,000 to \$122,000, the employer changing from Knowledgent Group Inc to UBS Services LLC.
+
+Data scientist went from  \$148,00 to \$124,800, the employer changing from PNC Services Group Inc to Edataforce Consulting LLC.
+
+Management consultant went from \$350,000 with Baker Botts LLP to \$120,000 with Fuel Exchange LLC.
+
+Software engineer went from \$528,000 with Aliasware, Inc to \$124,999.90 with Zulily Inc.	
+
+We see that every single sub type went down in salary when we restricted the percentiles to 5th through 95th. Software engineer had the greatest loss out of all the job sub types, yet it still makes more out of all of them. This is quite confounding admittedly, how software engineer is such an umbrella term. But I suppose this means you do have more diverse skills, therefore could have a higher salary than most.
+
+```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
+```

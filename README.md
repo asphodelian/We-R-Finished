@@ -61,10 +61,11 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
  
 ## The Tasks
 ### For ALL
+
 1. Clone the repo
 2. Explore the dataset in your desired coding langauge
 3. Consider which of the three given questions you want to do
-<<<<<<< HEAD
+HEAD
 4. Inital data exploration 
 5. Initial EDA paper turned in
 6. Final Report
@@ -75,7 +76,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
   - Russell   
 - Q2 100% Finished
   - Gabrielle  
-- Q3 80% Finished
+- Q3 100% Finished
   - Catarina   
 - Q4 100% Finished
   - Catarina  
@@ -85,19 +86,9 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
   - Ana
   - Gabrielle
   - Russell   
-=======
-4. Inital data exploration paper
-### Russell
-- Answering Q1
-### Ana
-- Developing Q5
-### Gabrielle
-- Answering Q2
-- EDA for Q6
-### Catarina
-- Answering Q3
-- Devveloping Q4
->>>>>>> 5b62cee (Update README.md)
+
+5b62cee (Update README.md)
+
 ### Future Tasks
 - Receive & Implement feedback changes
 - Submit for 2nd review
@@ -105,3 +96,4 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 
 
 Edit by Norman on 5/9/2023
+Merge by Catarina on 5/11/2023

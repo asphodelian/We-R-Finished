@@ -32,7 +32,6 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 }
 </style>
 ```
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_knit$set(root.dir = "C:/Users/pauli/OneDrive/Documentos/Classes 2023/311_tech")
@@ -45,9 +44,15 @@ library(car)
 
 #### - Are specific job titles being offered to candidates of a specific nationality?
 
+Job_title_subgroup x country_of_citizenship
+
 #### - Does the nationality of the candidate affect the status of case?
 
+country_of_citizenship x case_status
+
 #### - Does job subtitle of the candidate affect the status o the case?
+
+Job_title_subgroup x case_status
 
 ```{r}
 library(readxl)
@@ -137,21 +142,19 @@ First we conducted an analysis in python looking at the top10 countries with hig
 
 Key takeaways considering the top 10 countries with higher hiring percentage:
 
--   Software engineers are the most sough out professionals across the board in the top 10 countries.
+-   Across the board, for all top 10 countries, software engineers are the most sought-after of all data-related job titles.
 
--   Countries such as Canada, Russia, Taiwan, and China have over 90% of its hiring pool being directed to software engineers professionals.
+-   Over 90% of candidates from Canada, Russia, Taiwan, and China are hired for software engineering jobs.
 
--   Ukraine only hire software engineers
+-   Candidates from Ukraine are hired exclusively as software engineers.
 
--   Nepal has the highest percentage of individuals working as business analysts, with over 28%. followed by Pakistan with over 18%.
+-   Nepal has the highest percentage of individuals hired as business analysts, with over 28% of the job title pool, followed by Pakistan with over 18%.
 
--   Mexico has the highest percentage of individuals working as data analysts with over 6% of the pool of job titles.
+-   Candidates from Mexico are the most hired for data analyst positions, with over 6% of the hiring pool for job titles.
 
--   Taiwan and China have the highest percentage of
+-   China and Taiwan have the highest percentage of individuals hired as data scientists, with over 1.4% and 1.3%, respectively.
 
--   China and Taiwan have the highest percentage of individuals working as data scientists, with over 1.4% and 1.3%.
-
--   Pakistan has the highest percentage of individuals working as management consultants, with over 1.3%.
+-   Candidates from Pakistan have the highest percentage of individuals hired as management consultants, with over 1.3% of the hiring pool for job titles.
 
     ![](images/job_percentage_bargraph.png)
 
@@ -163,7 +166,7 @@ We wanted to investigate whether the nationality of the candidate affects the st
 
 The following tests aimed to investigate the relationship between nationality and case status (positive or negative) To achieve this, we categorized certified withdraw, certified-expired, and certified as positive, and denied as negative. We employed logistic regression analysis and ANOVA to assess the significance of nationality as a predictor of case status.
 
-Our logistic regression analysis showed a significant relationship (p < 0.001) between the predictor variable (country) and the response variable (positive or negative status), as indicated by the significant intercept. However, upon analyzing the individual coefficients for different countries, not all of them were found to be significant (p > 0.05).
+Our logistic regression analysis showed a significant relationship (p \< 0.001) between the predictor variable (country) and the response variable (positive or negative status), as indicated by the significant intercept. However, upon analyzing the individual coefficients for different countries, not all of them were found to be significant (p \> 0.05).
 
 Given the sparse nature of the data and the non-conformity of the model assumptions, we ran a Monte Carlo simulation and a Fisher test. Both these tests yielded non-significant results. Therefore, we can conclude that the nationality of the candidate does not influence the case status in this dataset. Nonetheless, it is essential to consider other factors that may affect the case status in actual cases.
 
@@ -239,12 +242,9 @@ fisher.test(cont_table, simulate.p.value = TRUE, B = 10000)
 
 #### Does job subtitle of the candidate affect the status o the case?
 
- To begin, we used Python to create a stacked bar chart to visualize the relationship between job title subgroup and case status. The chart indicated that there may not be a significant difference in case status frequency between job title subgroups. However, to confirm this, we conducted a chi-square test for independence.
+To begin, we used Python to create a stacked bar chart to visualize the relationship between job title subgroup and case status. The chart indicated that there may not be a significant difference in case status frequency between job title subgroups. However, to confirm this, we conducted a chi-square test for independence.
 
-
-The results of the chi-square test suggested that there is a significant association between job title subgroup and case status. The extremely low p-value (< 2.2e-16) indicated that the null hypothesis of independence between the two variables can be rejected. Therefore, we can conclude that the job title subgroup of the candidate does indeed have an effect on the case status.
-
-
+The results of the chi-square test suggested that there is a significant association between job title subgroup and case status. The extremely low p-value (\< 2.2e-16) indicated that the null hypothesis of independence between the two variables can be rejected. Therefore, we can conclude that the job title subgroup of the candidate does indeed have an effect on the case status.
 
 ![](images/case_status_vs_jobsubgroup.png)
 
@@ -253,10 +253,20 @@ The results of the chi-square test suggested that there is a significant associa
 
 # Create a contingency table of job title subgroup and case status
 ct <- table(data$CASE_STATUS_SHORT, data$JOB_TITLE_SUBGROUP)
+# Create a copy of the contingency table
+ct2 <- ct
+
+# Rename the job titles
+colnames(ct2) <- c("BA", "DA", "DS", "MC", "SE")
+
+# Print the renamed contingency table
+ct2
+
+
 
 # Conduct a chi-square test of independence
 res <- chisq.test(ct)
-
+summary (res)
 # Interpret the results
 if (res$p.value < 0.05) {
   print("There is a significant association between job title subgroup and case status.")
@@ -268,19 +278,33 @@ test_result <- chisq.test(ct)
 
 ```
 
-
 To further explore this, we created a mosaic graph, which provided a more detailed understanding of the relationship between job title subgroup and case status. We found that business analysts are more likely to be certified compared to software engineers, and are less likely to have their certification expired or withdrawn. Data analysts are less likely to have their certification expired or withdrawn compared to software engineers.
 
 On the other hand, software engineers are more likely to have a denied visa and are less likely to have a certified case status compared to business analysts. They are also more likely to have their certification expired, which suggests that companies didn't move forward with the hiring after their case was certified, as well as have their certification withdrawn, indicating that the application was withdrawn before the certification was granted. In conclusion, the job title subgroup of the candidate is a significant factor affecting the status of their case, and this information could be useful for companies in their hiring process.
-
-
 
 ```{r}
 
 # Load the necessary packages
 library(vcd)
 
+map_case_status <- function(x) {
+  ifelse(x == "software engineer", "SE", 
+         ifelse(x == "business analyst", "BA",
+                ifelse(x == "management consultant", "MC",
+                       ifelse(x == "data analyst", "DA", 
+                              ifelse(x == "data scientist", "DS", "U"))))) # "U" for unknown
+}
+
+# Apply the function to create a new variable
+data$JOB_TITLE_SUBGROUP <- map_case_status(data$JOB_TITLE_SUBGROUP)
+
+?mosaicplot
 # Create the mosaic plot
 mosaicplot(table(data$CASE_STATUS_SHORT, data$JOB_TITLE_SUBGROUP), shade=TRUE, 
            main="Mosaic plot of CASE_STATUS and JOB_TITLE_SUBGROUP")
+
+
+
+
+
 ```

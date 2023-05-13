@@ -1,0 +1,316 @@
+---
+title: "DS311 Project Q2"
+author: "Gabrielle Salamanca"
+date: "March 17, 2023"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## We-R-Finished
+
+Before we can dive into the question, we must load in the necessary libraries and read the dataset into the markdown.
+
+```{r}
+# loading libraries
+library(readxl)
+library(caret)
+library(ggplot2)
+library(dplyr)
+
+# dataset overview
+salary <- read_excel("C:/Users/knigh/OneDrive/Desktop/Github/We-R-Finished/salary/salary_data_states.xlsx")
+```
+
+Next, let's rename the columns to make it easier for us to read.
+
+```{r}
+# renaming columns
+colnames(salary)[1] = "Case Number"
+colnames(salary)[2] = "Case Status"
+colnames(salary)[3] = "Received Date"
+colnames(salary)[4] = "Decision Date"
+colnames(salary)[5] = "Employer Name"
+colnames(salary)[6] = "Submitted Prevail Wage"
+colnames(salary)[7] = "SPrW Unit"
+colnames(salary)[8] = "Submitted Paid Wage"
+colnames(salary)[9] = "SPaW Unit"
+colnames(salary)[10] = "Job Title"
+colnames(salary)[11] = "Work City"
+colnames(salary)[12] = "Required Edu"
+colnames(salary)[13] = "Required College Major"
+colnames(salary)[14] = "Exp Req"
+colnames(salary)[15] = "Exp Req (Months)"
+colnames(salary)[16] = "Citizenship"
+colnames(salary)[17] = "Prevail Wage SOC Code"
+colnames(salary)[18] = "PWSOC Title"
+colnames(salary)[19] = "Work State"
+colnames(salary)[20] = "WS Abb"
+colnames(salary)[21] = "WPostal Code"
+colnames(salary)[22] = "Full Time"
+colnames(salary)[23] = "Visa Class"
+colnames(salary)[24] = "Prevail Wage/Yr"
+colnames(salary)[25] = "Paid Wage/Yr"
+colnames(salary)[26] = "Job Title Sub"
+colnames(salary)[27] = "Order"
+```
+
+Now, we must remove the sub job titles that have teaching jobs. The question specifically asks for data-related salaries in the job sub-categories, therefore we must remove: professor, attorney, assistant professor, and teacher.
+
+```{r}
+# filter
+sal <- salary %>%
+  filter(!grepl("professor", `Job Title Sub`, ignore.case = TRUE) & 
+           !grepl("attorney", `Job Title Sub`, ignore.case = TRUE) &
+           !grepl("assistant professor", `Job Title Sub`, ignore.case = TRUE) & 
+           !grepl("teacher", `Job Title Sub`, ignore.case = TRUE))
+jobTitleSub <- as.factor(sal$`Job Title Sub`)
+summary(jobTitleSub)
+```
+
+### II. What states (of those I am willing to move to) have the highest paying data-related salaries?
+
+This is quite a broad range of states, but we will remove any US territories first and foremost for obvious reasons. This means Guam, Guamam, Palau, Northern Mariana Islands, Puerto Rico, and Virgin Islands will not be considered.
+
+```{r}
+# filtering states
+datsal <- sal %>%
+  filter(!grepl("Guam", `Work State`, ignore.case = TRUE) & 
+           !grepl("Guamam", `Work State`, ignore.case = TRUE) &
+           !grepl("Palau", `Work State`, ignore.case = TRUE) & 
+           !grepl("Northern Mariana Islands", `Work State`, ignore.case = TRUE) &
+           !grepl("Puerto Rico", `Work State`, ignore.case = TRUE) &
+           !grepl("Virgin Islands", `Work State`, ignore.case = TRUE))
+```
+
+Now, that still leaves us with a large amount of states. When I tried running graphs to include work state and the job title sub variables, R had difficulty running them, because it was far too many to handle.
+
+Now, the question asks *"What states (of those I am willing to move to)"*. Considering the group is staying in the Bay Area, we may be more picky about where we would want to live. California is much more friendly towards immigrants and quite open to people of all walks of life. We may be biased to stay within the West Coast, especially considering the natural disasters and how certain minorities are treated here either by law or general perception. This would greatly narrow the scope, so I have decided to use the top 10 work states as my pool, minus California. My reasoning is because we are already in California, and the state has a frequency of:
+
+```{r}
+CAfreq <- table(datsal$`Work State`)["California"]
+CAfreq
+```
+
+This state completely dwarfs the others. See here:
+
+```{r}
+TXfreq <- table(datsal$`Work State`)["Texas"]
+NYfreq <- table(datsal$`Work State`)["New York"]
+NJfreq <- table(datsal$`Work State`)["New Jersey"]
+ILfreq <- table(datsal$`Work State`)["Illinois"]
+MAfreq <- table(datsal$`Work State`)["Massachusetts"]
+VAfreq <- table(datsal$`Work State`)["Virginia"]
+PAfreq <- table(datsal$`Work State`)["Pennsylvania"]
+WAfreq <- table(datsal$`Work State`)["Washington"]
+MIfreq <- table(datsal$`Work State`)["Michigan"]
+NCfreq <- table(datsal$`Work State`)["North Carolina"]
+# dataframe
+Frequency <- c(TXfreq, NYfreq, NJfreq, ILfreq, MAfreq, VAfreq, PAfreq, WAfreq, MIfreq, NCfreq)
+stateFreq <- data.frame(Frequency)
+stateFreq
+```
+
+California would skew the graphs if it were included, so we will only use these states for this question.
+
+```{r}
+topState <- c("Texas", "New York",
+          	"New Jersey", "Illinois", "Massachusetts",
+          	"Virginia", "Pennsylvania", "Washington",
+          	"Michigan", "North Carolina")
+ssal <- datsal[datsal$`Work State` %in% topState, ]
+```
+
+#### a. Differences between job sub-categories?
+
+```{r}
+# variables
+stateAbb <- ssal$`WS Abb`
+jobSub <- ssal$`Job Title Sub`
+
+# job sub/state plot
+ggplot(ssal, aes(x = stateAbb, fill = jobSub)) + 
+  geom_bar() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(x = "Work State Abbreviation", y = "Count", title = "Job Subcategories in Each State")
+
+# state/job sub
+ggplot(ssal, aes(x = jobSub, fill = stateAbb)) + 
+  geom_bar() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(x = "Job Title Sub", y = "Count", title = "States for Each Job Subcategory")
+```
+
+We see that software engineer and business analyst are the largest proportions compared to any other job sub-category in the first graph, especially in the second. Let's see how each sub-type does in terms of salary.
+
+```{r}
+# variable(s)
+paidWage <- ssal$`Paid Wage/Yr`
+
+# paid wage boxplot
+ggplot(ssal, aes(x = jobSub, y = paidWage, fill = jobSub)) +
+  geom_boxplot() +
+  labs(title = "Paid Wage/Year by Job Sub-Type",
+   	x = "Job Sub-Type",
+   	y = "Paid Wage/Year",
+   	fill = "Job Sub-Type")
+
+# no outliers
+ggplot(ssal, aes(x = jobSub, y = paidWage, fill = jobSub)) +
+  geom_boxplot() +
+  labs(title = "Paid Wage/Year by Job Sub-Type",
+   	x = "Job Sub-Type",
+   	y = "Paid Wage/Year",
+   	fill = "Job Sub-Type") +
+  scale_y_continuous(limits = quantile(paidWage, c(0.1, 0.9)))
+```
+
+We see that we have many outliers in the first graph, especially in software engineer. But it seems management consultant and data scientist have larger salary ranges compared to the rest of the job sub-types. Now, if we did get rid of the data points outside of 10th and 90th percentile, we get pretty much a similar story. An analyst makes less than a data scientist, management consultant, and software engineer. These three jobs pay well, but it seems software engineer is the only one that's being advertised to the most out of the them. Let's see if it holds true for each state. We will only showcase the graphs without the outliers.
+
+```{r}
+# variable
+ssal$Sub <- factor(ssal$`Job Title Sub`, levels = c("business analyst", "data analyst", "data scientist", "management consultant", "software engineer"))
+
+# Texas
+ssal %>%
+  filter(`Work State` == "Texas", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "darkorange1", color = "darkorange4") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Texas")
+
+# New York
+ssal %>%
+  filter(`Work State` == "New York", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "lightblue", color = "skyblue4") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in New York")
+
+# New Jersey
+ssal %>%
+  filter(`Work State` == "New Jersey", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "moccasin", color = "khaki3") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in New Jersey")
+
+# Illinois
+ssal %>%
+  filter(`Work State` == "Illinois", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "darkorange1", color = "navyblue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Illinois")
+
+# Massachussetts
+ssal %>%
+  filter(`Work State` == "Massachusetts", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "goldenrod2", color = "darkslateblue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Massachusetts")
+
+# Virginia
+ssal %>%
+  filter(`Work State` == "Virginia", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "seashell", color = "dodgerblue4") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Virginia")
+
+# Pennsylvania
+ssal %>%
+  filter(`Work State` == "Pennsylvania", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "gold2", color = "royalblue4") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in Pennsylvania")
+
+# Washington
+ssal %>%
+  filter(`Work State` == "Washington", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "springgreen4", color = "gold3") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution Washington")
+
+# Michigan
+ssal %>%
+  filter(`Work State` == "Michigan", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "darkslateblue", color = "goldenrod3") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution Michigan")
+
+# North Carolina
+ssal %>%
+  filter(`Work State` == "North Carolina", `Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  ggplot(aes(x = Sub, y = `Paid Wage/Yr`)) +
+  geom_boxplot(fill = "skyblue", color = "steelblue") +
+  labs(x = "Job Sub-Type", y = "Paid Wage/Year", title = "Salary Distribution in North Carolina")
+```
+
+We see in these graphs, generally the data scientist, management consultant, and software engineer are the higher paying jobs compared to the analyst jobs. Which one had the higher salary shifted in each state. But the most common patterns were, from highest to lowest: data scientist, management consultant, and software engineer; management consultant, data scientist, and software engineer. The most striking graph in these 10 was North Carolina, where data scientist was the lowest of the top 3. We even see that the analyst jobs even have a much larger quartile box, and that data scientist and management consultant have the lowest medians in the NC graph.
+
+Ultimately, there is a difference in salaries between the job sub-types. The analyst jobs won't be the highest paying in most states, so the other three will be the main ones I'd want to apply to. If I wanted to apply to the management consultant jobs, I would want to move to North Carolina, Michigan, Pennsylvania, and Texas. As for data scientist, I would want to move to New York, New Jersey, Illinois and Washington. As for software engineer, I would move to Virginia. However, considering I would most likely start in the analyst job first, North Carolina, Washington, and New York would be my choices.
+
+#### b. Which companies have the highest salaries for those sub-types?
+
+```{r}
+# max salary
+ssal %>%
+  group_by(Sub, `Employer Name`) %>%
+  summarise(max_salary = max(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(max_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = max_salary)
+
+# avg salary
+ssal %>%
+  group_by(Sub, `Employer Name`) %>%
+  summarise(avg_salary = mean(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(avg_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = avg_salary)
+```
+
+For each job sub type, we see the top 5 employers in terms of who has the highest salary ceiling. Business analyst's highest ceiling is 125,0784 with the University of Texas Administration, data analyst's is 185,000 with Knowledgent Group Inc, data scientist is with the PNC Services Group Inc at 205,000, management consultant at 450,000 with Baker Botts LLP, and software engineer at 1,224,801 with Abacus Technical Services LLC. Admittedly, these may be outliers, especially concerning software engineer. 
+
+Now, how does this compare to the average salary? For the business analyst, the top 2 companies are unchanged: University of Texas Administration and Officemax Incorporated. Data analyst has stayed pretty consistent with its top 5, just shifting around the rankings. For data scientist, the first and last companies are unchanged. The management consultant salary is nearly the same, the last entry has changed. Finally, software engineer had the most change, only one company has stayed and has become the top rank. 
+
+so we see that for best highest salary ceiling, the order is software engineer, business analyst, management consultant, data scientist, and data analyst. Management consultant, data scientist, and data analyst have stayed in the same place, while business analyst and software engineer have switched places depending the type of salary.
+
+Let's try restricting the percentiles to see if this will change the top companies and the order.
+
+```{r}
+#max salary
+ssal %>%
+  filter(`Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  group_by(Sub, `Employer Name`) %>%
+  summarise(max_salary = max(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(max_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = max_salary)
+
+# avg salary
+ssal %>%
+  filter(`Paid Wage/Yr` > quantile(`Paid Wage/Yr`, 0.05) & `Paid Wage/Yr` < quantile(`Paid Wage/Yr`, 0.95)) %>%
+  group_by(Sub, `Employer Name`) %>%
+  summarise(avg_salary = mean(`Paid Wage/Yr`)) %>%
+  arrange(Sub, desc(avg_salary)) %>%
+  group_by(Sub) %>%
+  top_n(n = 5, wt = avg_salary)
+```
+
+We do end up with changes in the samples and different companies when we restrict the percentiles. In the max salary, business analyst, data analyst, and software engineer expanded; while data scientist and management consultant stayed the same. The order is software engineer, business analyst, data scientist, management consultant, and data analyst.
+
+For the average salary, business analyst, management consultant, data analyst, and management consultant stayed the same sample size; and data scientist has greatly increased in that area. Business analyst, data scientist, and software have the same average: 124800. Data analyst falls short with 122000, as well as management consultant at 120000. 
+
+We see that every single sub type went down in salary when we restricted the percentiles to 5th through 95th. Software engineer had the greatest loss out of all the job sub types, yet it still makes more out of all of them. This is quite confounding admittedly, how software engineer is such an umbrella term. But I suppose this means you do have more diverse skills, therefore could have a higher salary than most.
+
+#### c. Will the answer change if I take standard of living into account?
+
+If I took the standard of living into account, my answer will change. I would not want to move to New York, knowing how it's equally as expensive as the Bay Area. Texas suffers from extreme heat and cold, their infrastructure was unable to handle the extreme cold. Also those states on the east coast also suffer from severe winters, so I'd rather be somewhere where winter isn't as severe
+
+I would probably, out of all the ten states, would want to move to Illinois or Washington. Despite knowing Illinois has a high crime rate, I personally have family in Illinois, so I would be okay moving there. Meanwhile, Washington perhaps is a little closer to what I'm used to, so it's also a safer bet for those who are non-white.
+
+
+
+```{r, ref.label=knitr::all_labels(), echo = TRUE, eval = FALSE}
+```

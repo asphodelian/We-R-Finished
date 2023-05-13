@@ -1,0 +1,10 @@
+# Salary Q2 Update
+## May 11 
+- new branch added into Q2 folder
+- Copy-pasted DS311 Project Q2 into branch
+	- Removed the questions I'm not updating
+	- Removed max and average
+	- Added in median
+	- Rewrote the write-up
+	- renamed file
+	- removed dupe file

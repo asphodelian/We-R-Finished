@@ -93,6 +93,58 @@ nrow(data)
 nrow(df)
 attach(data)
 
+
+
+# Define a function to map case status to short initials
+map_case_status <- function(x) {
+  ifelse(x == "denied", "D", 
+         ifelse(x == "certified-withdrawn", "CW",
+                ifelse(x == "certified", "C",
+                       ifelse(x == "withdrawn", "W", 
+                              ifelse(x == "certified-expired", "CE", "U"))))) # "U" for unknown
+}
+
+# Apply the function to create a new variable
+data$CASE_STATUS_SHORT <- map_case_status(data$CASE_STATUS)
+
+
+
+# Create a contingency table of job title subgroup and case status
+ct <- table(data$CASE_STATUS_SHORT, data$JOB_TITLE_SUBGROUP)
+
+# Conduct a chi-square test of independence
+res <- chisq.test(ct)
+
+# Interpret the results
+if (res$p.value < 0.05) {
+  print("There is a significant association between job title subgroup and case status.")
+} else {
+  print("There is no significant association between job title subgroup and case status.")
+}
+
+test_result <- chisq.test(ct)
+
+
+# Load the necessary packages
+library(vcd)
+
+# Create the mosaic plot
+mosaicplot(table(data$CASE_STATUS_SHORT, data$JOB_TITLE_SUBGROUP), shade=TRUE, 
+           main="Mosaic plot of CASE_STATUS and JOB_TITLE_SUBGROUP")
+
+# Extract standardized residuals
+residuals <- resid(test_result, type="standardized")
+
+# Print the residuals
+print(residuals)
+
+
+
+#business analysts are more likelly to be certified than software engeneers.
+#software engeneers are less likely to be certified than all the other datajobs. 
+
+
+
 ```
 
 ## Descriptive statistics

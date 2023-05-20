@@ -13,8 +13,9 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
   - russelfolder
 3. CostOfLiving
   - csv file for standard of living question
-4. Group Summary Report
-  - a report of the initial data exploration
+4. Reports
+  - Group report of the initial data exploration
+  - Final project report
 5. Q&As
   - Q1
     - russellfolder

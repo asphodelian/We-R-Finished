@@ -9,7 +9,7 @@ Welcome! You are currently in the official repository of We R Finished, a DS 311
 2. Data Exploration
   - Catarina Folder
   - Paula_testBranch
-  - gabranch-data-explore/Gabrielle Folder
+  - Gabrielle Explore Folder
   - russelfolder
 3. CostOfLiving
   - csv file for standard of living question
